@@ -139,6 +139,7 @@ void create_temp_tab(lv_obj_t * parent_tab) {
 
     lv_obj_set_size(cont, LV_PCT(100), LV_PCT(100));
     lv_obj_set_layout(cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_COLUMN);
 
     lv_obj_set_style_border_width(cont, 0, 0);
     lv_obj_set_style_pad_all(cont, 0, 0);
@@ -148,18 +149,22 @@ void create_temp_tab(lv_obj_t * parent_tab) {
     temp_bar_dbl = lv_bar_create(cont);
     lv_obj_set_pos(temp_bar_dbl, 10, 10);
     lv_obj_set_size(temp_bar_dbl, 440, 10);
+    lv_bar_set_range(temp_bar_dbl, 0, 100);
     
     temp_bar_dbr = lv_bar_create(cont);
     lv_obj_set_pos(temp_bar_dbr, 10, 25);
     lv_obj_set_size(temp_bar_dbr, 440, 10);
+    lv_bar_set_range(temp_bar_dbr, 0, 100);
     
     temp_bar_arm = lv_bar_create(cont);
     lv_obj_set_pos(temp_bar_arm, 10, 40);
     lv_obj_set_size(temp_bar_arm, 440, 10);
+    lv_bar_set_range(temp_bar_arm, 0, 100);
     
     temp_bar_clw = lv_bar_create(cont);
     lv_obj_set_pos(temp_bar_clw, 10, 55);
     lv_obj_set_size(temp_bar_clw, 440, 10);
+    lv_bar_set_range(temp_bar_clw, 0, 100);
 
     lv_obj_set_style_radius(temp_bar_dbl, 8, LV_PART_MAIN);
     lv_obj_set_style_radius(temp_bar_dbr, 8, LV_PART_MAIN);
@@ -202,6 +207,8 @@ void create_temp_tab(lv_obj_t * parent_tab) {
 
         pros::Task temp_task(temp_update_task, (void*)"TEMP_TASK");
     }
+
+    pros::Task temp_task(temp_update_task, (void*)"TEMP_TASK");
 }
 
 void create_auton_tab(lv_obj_t * parent_tab) {
@@ -209,6 +216,10 @@ void create_auton_tab(lv_obj_t * parent_tab) {
 
     lv_obj_set_size(cont, LV_PCT(100), LV_PCT(100));
     lv_obj_set_layout(cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_ROW_WRAP);
+    lv_obj_set_style_pad_column(cont, 15, 0);
+    lv_obj_set_style_pad_row(cont, 15, 0); 
+    lv_obj_set_flex_align(cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER);
 
     lv_obj_set_style_border_width(cont, 0, 0);
     lv_obj_set_style_pad_all(cont, 0, 0);
@@ -218,10 +229,11 @@ void create_auton_tab(lv_obj_t * parent_tab) {
     auton_status_label = lv_label_create(cont);
     lv_label_set_text(auton_status_label, "Selected: None");
     lv_obj_set_pos(auton_status_label, 10, 10);
+    lv_obj_set_width(auton_status_label, LV_PCT(90));
 
     lv_obj_t * none_btn = lv_btn_create(cont);
     lv_obj_set_pos(none_btn, 10, 50);
-    lv_obj_set_size(none_btn, 100, 40);
+    lv_obj_set_size(none_btn, LV_PCT(45), 40);
     lv_obj_set_user_data(none_btn, (void*)0);
     lv_obj_add_event_cb(none_btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(none_btn, &style_m3_btn, 0);
@@ -233,7 +245,7 @@ void create_auton_tab(lv_obj_t * parent_tab) {
 
     lv_obj_t * skills_btn = lv_btn_create(cont);
     lv_obj_set_pos(skills_btn, 230, 50);
-    lv_obj_set_size(skills_btn, 100, 40);
+    lv_obj_set_size(skills_btn, LV_PCT(45), 40);
     lv_obj_set_user_data(skills_btn, (void*)5);
     lv_obj_add_event_cb(skills_btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(skills_btn, &style_m3_btn, 0);
@@ -245,7 +257,7 @@ void create_auton_tab(lv_obj_t * parent_tab) {
 
     lv_obj_t * red_left_btn = lv_btn_create(cont);
     lv_obj_set_pos(red_left_btn, 10, 110);
-    lv_obj_set_size(red_left_btn, 100, 40);
+    lv_obj_set_size(red_left_btn, LV_PCT(45), 40);
     lv_obj_set_user_data(red_left_btn, (void*)1);
     lv_obj_add_event_cb(red_left_btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(red_left_btn, &style_m3_btn, 0);
@@ -257,7 +269,7 @@ void create_auton_tab(lv_obj_t * parent_tab) {
 
     lv_obj_t * red_right_btn = lv_btn_create(cont);
     lv_obj_set_pos(red_right_btn, 230, 110);
-    lv_obj_set_size(red_right_btn, 100, 40);
+    lv_obj_set_size(red_right_btn, LV_PCT(45), 40);
     lv_obj_set_user_data(red_right_btn, (void*)2);
     lv_obj_add_event_cb(red_right_btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(red_right_btn, &style_m3_btn, 0);
@@ -269,7 +281,7 @@ void create_auton_tab(lv_obj_t * parent_tab) {
 
     lv_obj_t * blu_left_btn = lv_btn_create(cont);
     lv_obj_set_pos(blu_left_btn, 10, 170);
-    lv_obj_set_size(blu_left_btn, 100, 40);
+    lv_obj_set_size(blu_left_btn, LV_PCT(45), 40);
     lv_obj_set_user_data(blu_left_btn, (void*)3);
     lv_obj_add_event_cb(blu_left_btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(blu_left_btn, &style_m3_btn, 0);
@@ -281,7 +293,7 @@ void create_auton_tab(lv_obj_t * parent_tab) {
 
     lv_obj_t * blu_right_btn = lv_btn_create(cont);
     lv_obj_set_pos(blu_right_btn, 230, 170);
-    lv_obj_set_size(blu_right_btn, 100, 40);
+    lv_obj_set_size(blu_right_btn, LV_PCT(45), 40);
     lv_obj_set_user_data(blu_right_btn, (void*)4);
     lv_obj_add_event_cb(blu_right_btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(blu_right_btn, &style_m3_btn, 0);
