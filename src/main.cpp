@@ -11,8 +11,8 @@ void initialize() {
     arm_motor.set_gearing(pros::v5::MotorGears::red);
     claw_motor.set_gearing(pros::v5::MotorGears::green);
 
-    drivebase_left.set_reversed(true);
-    drivebase_right.set_reversed(true);
+    drivebase_left.set_reversed(false);
+    drivebase_right.set_reversed(false);
     arm_motor.set_reversed(false);
     claw_motor.set_reversed(false);
 
@@ -54,9 +54,9 @@ void opcontrol() {
             claw_motor.brake();
         }
 
-        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
+        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
             arm_motor.move(127);
-        } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN)) {
+        } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
             arm_motor.move(-127);
         } else {
             arm_motor.brake();

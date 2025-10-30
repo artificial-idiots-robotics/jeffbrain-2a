@@ -77,7 +77,6 @@ void temp_update_task(void* param) {
             lv_bar_set_value(bars[i], current_temp, LV_ANIM_ON);
 
             if (current_temp > 999.0) {
-                lv_bar_set_value(bars[i], 0, LV_ANIM_ON);
                 lv_obj_set_style_bg_color(current_bar, lv_palette_main(LV_PALETTE_ORANGE), LV_PART_INDICATOR);
             } else if (current_temp > 55.0) {
                 lv_obj_set_style_bg_color(current_bar, lv_palette_main(LV_PALETTE_RED), LV_PART_INDICATOR);
@@ -152,17 +151,17 @@ void create_temp_tab(lv_obj_t * parent_tab) {
     lv_bar_set_range(temp_bar_dbl, 0, 100);
     
     temp_bar_dbr = lv_bar_create(cont);
-    lv_obj_set_pos(temp_bar_dbr, 10, 25);
+    lv_obj_set_pos(temp_bar_dbr, 10, 40);
     lv_obj_set_size(temp_bar_dbr, 440, 10);
     lv_bar_set_range(temp_bar_dbr, 0, 100);
     
     temp_bar_arm = lv_bar_create(cont);
-    lv_obj_set_pos(temp_bar_arm, 10, 40);
+    lv_obj_set_pos(temp_bar_arm, 10, 70);
     lv_obj_set_size(temp_bar_arm, 440, 10);
     lv_bar_set_range(temp_bar_arm, 0, 100);
     
     temp_bar_clw = lv_bar_create(cont);
-    lv_obj_set_pos(temp_bar_clw, 10, 55);
+    lv_obj_set_pos(temp_bar_clw, 10, 100);
     lv_obj_set_size(temp_bar_clw, 440, 10);
     lv_bar_set_range(temp_bar_clw, 0, 100);
 
@@ -188,25 +187,21 @@ void create_temp_tab(lv_obj_t * parent_tab) {
     lv_obj_set_style_radius(temp_bar_arm, 8, LV_PART_INDICATOR);
     lv_obj_set_style_radius(temp_bar_clw, 8, LV_PART_INDICATOR);
 
-    if (false) { // I don't want to comment everything out, I'm too lazy. - Aiden
-        temp_label_dbl = lv_label_create(cont); // Fixed because I'll probably use these objects later - Aiden
-        lv_label_set_text(temp_label_dbl, "DBL: -- C");
-        lv_obj_set_pos(temp_label_dbl, 10, 10);
+    temp_label_dbl = lv_label_create(cont); // Fixed because I'll probably use these objects later - Aiden
+    lv_label_set_text(temp_label_dbl, "Drivebase left");
+    lv_obj_set_pos(temp_label_dbl, 10, 25);
 
-        temp_label_dbr = lv_label_create(cont);
-        lv_label_set_text(temp_label_dbr, "DBR: -- C");
-        lv_obj_set_pos(temp_label_dbr, 10, 40);
+    temp_label_dbr = lv_label_create(cont);
+    lv_label_set_text(temp_label_dbr, "Drivebase right");
+    lv_obj_set_pos(temp_label_dbr, 10, 55);
 
-        temp_label_arm = lv_label_create(cont);
-        lv_label_set_text(temp_label_arm, "ARM: -- C");
-        lv_obj_set_pos(temp_label_arm, 200, 10);
+    temp_label_arm = lv_label_create(cont);
+    lv_label_set_text(temp_label_arm, "Arm");
+    lv_obj_set_pos(temp_label_arm, 10, 85);
 
-        temp_label_clw = lv_label_create(cont);
-        lv_label_set_text(temp_label_clw, "CLW: -- C");
-        lv_obj_set_pos(temp_label_clw, 200, 40);
-
-        pros::Task temp_task(temp_update_task, (void*)"TEMP_TASK");
-    }
+    temp_label_clw = lv_label_create(cont);
+    lv_label_set_text(temp_label_clw, "Claw");
+    lv_obj_set_pos(temp_label_clw, 10, 115);
 
     pros::Task temp_task(temp_update_task, (void*)"TEMP_TASK");
 }
