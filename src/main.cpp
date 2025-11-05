@@ -8,7 +8,7 @@
 void initialize() {
 	drivebase_left.set_gearing(pros::v5::MotorGears::green);
     drivebase_right.set_gearing(pros::v5::MotorGears::green);
-    arm_motor.set_gearing(pros::v5::MotorGears::red);
+    arm_motor.set_gearing(pros::v5::MotorGears::green);
     claw_motor.set_gearing(pros::v5::MotorGears::green);
 
     drivebase_left.set_reversed(false);
