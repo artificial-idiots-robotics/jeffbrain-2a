@@ -5,8 +5,8 @@
 
 const double LMOTOR_GEAR_RATIO = 18.0;
 const double RMOTOR_GEAR_RATIO = 18.0;
-const double AMOTOR_GEAR_RATIO = 18.0;
-const double CMOTOR_GEAR_RATIO = 18.0;
+const double LMOTOR_WHEEL_DIAMETER = 4.0;
+const double RMOTOR_WHEEL_DIAMETER = 4.0;
 
 // Utility functions
 double inchesToDegrees(double inches, double gear_ratio, double wheel_diameter) {
@@ -17,6 +17,10 @@ double inchesToDegrees(double inches, double gear_ratio, double wheel_diameter) 
 
 void driveForwardDegrees(pros::Motor targetMotor, double degrees) {
     targetMotor.move_relative(degrees, 100);
+}
+
+void driveForwardInches(pros::Motor targetMotor, double inches, double gear_ratio, double wheel_diameter) {
+    driveForwardDegrees(targetMotor, inchesToDegrees(inches, gear_ratio, wheel_diameter));
 }
 
 // Initial function
