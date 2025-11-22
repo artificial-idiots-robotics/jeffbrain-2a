@@ -40,6 +40,8 @@ void initialize() {
     arm_motor.set_reversed(false);
     claw_motor.set_reversed(false);
 
+    pros::MotorGroup drivebase({1, 2});
+
     initialize_interface();
 }
 

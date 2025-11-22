@@ -20,7 +20,10 @@ lv_obj_t * temp_label_dbr = NULL;
 lv_obj_t * temp_label_arm = NULL;
 lv_obj_t * temp_label_clw = NULL;
 
+pros::MotorGroup drivebase({1, 2});
+
 lv_obj_t * auton_status_label = NULL;
+lv_obj_t * test_in_move_function_label = NULL;
 lv_obj_t * toggle_display_image = NULL;
 lv_obj_t * config_dropdown = NULL;
 
@@ -390,12 +393,23 @@ void create_settings_tab(lv_obj_t * parent_tab) {
 }
 
 static void test_in_move_function_action(void* param) {
-    driveForwardInches(drivebase, 5.0, DRIVEBASE_GEAR_RATIO, 4.0);
+    std::cout << "Jeffbrain2: TEST MOVE task initiated." << std::endl;
+    double inches_to_move = 5.0;
+    double degrees = inchesToDegrees(inches_to_move, DRIVEBASE_GEAR_RATIO, 4.0);
 
-    double degrees = inchesToDegrees(5.0, DRIVEBASE_GEAR_RATIO, 4.0);
-    while (std::abs(drivebase.get_position() - degrees) > 5) {
+    drivebase_left.move_relative(degrees, 100);
+    drivebase_right.move_relative(degrees, 100); 
+
+    const double error_threshold = 15.0;
+
+    while (std::abs(drivebase_left.get_position() - degrees) > error_threshold) {
         pros::delay(10); 
     }
+    
+    drivebase_left.move(0);
+    drivebase_right.move(0);
+
+    std::cout << "Jeffbrain2: TEST MOVE task completed.";
 }
 
 static void test_in_move_function_action_taskhandler(lv_event_t * e) {
@@ -420,7 +434,7 @@ void create_test_tab(lv_obj_t * parent_tab) {
     lv_obj_set_pos(test_tab_label, 10, 10);
     lv_obj_set_width(test_tab_label, LV_PCT(90));
     
-    lv_obj_t * test_in_move_function = lv_button_create(cont);
+    lv_obj_t * test_in_move_function = lv_btn_create(cont);
     lv_obj_set_pos(test_in_move_function, 10, 50);
     lv_obj_set_size(test_in_move_function, LV_PCT(45), 40);
     lv_obj_add_event_cb(test_in_move_function, test_in_move_function_action_taskhandler, LV_EVENT_CLICKED, NULL);
@@ -428,7 +442,7 @@ void create_test_tab(lv_obj_t * parent_tab) {
     lv_obj_set_style_bg_color(test_in_move_function, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
     lv_obj_set_style_shadow_width(test_in_move_function, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
 
-    lv_obj_t * test_in_move_function_label = lv_label_create(test_in_move_function);
+    test_in_move_function_label = lv_label_create(test_in_move_function);
     lv_label_set_text(test_in_move_function_label, "TEST MOVE");
 }
 
