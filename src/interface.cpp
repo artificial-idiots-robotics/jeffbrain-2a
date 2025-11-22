@@ -389,6 +389,49 @@ void create_settings_tab(lv_obj_t * parent_tab) {
     }
 }
 
+static void test_in_move_function_action(void* param) {
+    driveForwardInches(drivebase, 5.0, DRIVEBASE_GEAR_RATIO, 4.0);
+
+    double degrees = inchesToDegrees(5.0, DRIVEBASE_GEAR_RATIO, 4.0);
+    while (std::abs(drivebase.get_position() - degrees) > 5) {
+        pros::delay(10); 
+    }
+}
+
+static void test_in_move_function_action_taskhandler(lv_event_t * e) {
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+        pros::Task testTask(test_in_move_function_action, NULL, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "TEST MOVE");
+    }
+}
+
+void create_test_tab(lv_obj_t * parent_tab) {
+    lv_obj_t * cont = lv_obj_create(parent_tab);
+
+    lv_obj_set_size(cont, LV_PCT(100), LV_PCT(100));
+    lv_obj_set_layout(cont, LV_LAYOUT_FLEX);
+
+    lv_obj_set_style_border_width(cont, 0, 0);
+    lv_obj_set_style_pad_all(cont, 0, 0);
+    lv_obj_set_style_bg_opa(cont, LV_OPA_TRANSP, 0);
+    lv_obj_set_style_radius(cont, 0, 0);
+
+    lv_obj_t * test_tab_label = lv_label_create(cont);
+    lv_label_set_text(test_tab_label, "Testing functions");
+    lv_obj_set_pos(test_tab_label, 10, 10);
+    lv_obj_set_width(test_tab_label, LV_PCT(90));
+    
+    lv_obj_t * test_in_move_function = lv_button_create(cont);
+    lv_obj_set_pos(test_in_move_function, 10, 50);
+    lv_obj_set_size(test_in_move_function, LV_PCT(45), 40);
+    lv_obj_add_event_cb(test_in_move_function, test_in_move_function_action_taskhandler, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_style(test_in_move_function, &style_m3_btn, 0);
+    lv_obj_set_style_bg_color(test_in_move_function, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+    lv_obj_set_style_shadow_width(test_in_move_function, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+
+    lv_obj_t * test_in_move_function_label = lv_label_create(test_in_move_function);
+    lv_label_set_text(test_in_move_function_label, "TEST MOVE");
+}
+
 void initialize_interface() {
     lv_style_init(&style_base);
     lv_style_set_bg_color(&style_base, M3_BACKGROUND_COLOR);
@@ -434,6 +477,9 @@ void initialize_interface() {
 
     lv_obj_t * settings_tab = lv_tabview_add_tab(main_tabview, "Settings");
     create_settings_tab(settings_tab);
+
+    lv_obj_t * test_tab = lv_tabview_add_tab(main_tabview, "Test");
+    create_test_tab(test_tab);
 
     lv_tabview_set_act(main_tabview, 1, LV_ANIM_ON); 
 }
