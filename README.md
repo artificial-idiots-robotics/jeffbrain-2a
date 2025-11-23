@@ -8,4 +8,6 @@ See jeffbrain2-a and jeffbrain2-b for more information.
 
 Jeffbrain 2 (Program C) is our most advanced version of Jeffbrain 2.
 
-It features temperature monitors for the four motors on Jeff 2, an autonomous routine selector with 6 routines, an image selector (which currently only has one image), a settings menu (which currently only has one setting, a Control Mode setting), and a Material Design 3 (Material You) style.
+It uses LVGL for its interface, allowing settings to be updated quickly, stats to be monitored properly, and Minnow to be displayed cutely. (Minnow is Aiden's sister's cat.)
+
+The autonomous routines and operator control use LemLib for precise measurement, and also because we plan to add more motors to Jeff 2 at some point. We're still working on making it actually function for now. We got completely destroyed last competition.
