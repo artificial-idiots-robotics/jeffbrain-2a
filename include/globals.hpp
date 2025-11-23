@@ -10,6 +10,7 @@ extern pros::Motor claw_motor;
 
 extern pros::MotorGroup drivebase_l;
 extern pros::MotorGroup drivebase_r;
+extern lemlib::Chassis chassis;
 
 extern pros::Controller master_controller;
 extern pros::Controller partner_controller;

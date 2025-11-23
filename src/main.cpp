@@ -25,18 +25,19 @@ void driveForwardInches(pros::MotorGroup& targetMotorGroup, double inches, doubl
 
 // Initial function
 void initialize() {
-	drivebase_left.set_gearing(pros::v5::MotorGears::green);
-    drivebase_right.set_gearing(pros::v5::MotorGears::green);
+    chassis.setPose(0, 0 , 0);
+	drivebase_lf.set_gearing(pros::v5::MotorGears::green);
+    drivebase_rf.set_gearing(pros::v5::MotorGears::green);
     arm_motor.set_gearing(pros::v5::MotorGears::green);
     claw_motor.set_gearing(pros::v5::MotorGears::green);
 
-    drivebase_left.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    drivebase_right.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    drivebase_lf.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    drivebase_rf.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
     arm_motor.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
     claw_motor.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
-    drivebase_left.set_reversed(false);
-    drivebase_right.set_reversed(false);
+    drivebase_lf.set_reversed(false);
+    drivebase_rf.set_reversed(false);
     arm_motor.set_reversed(false);
     claw_motor.set_reversed(false);
 
@@ -88,13 +89,13 @@ void opcontrol() {
         if (control_mode == 0) {
             int dir = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
             int turn = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
-            drivebase_left.move(((turn * 0.6) + dir) * 0.8);
-            drivebase_right.move(((turn * 0.6) - dir) * 0.8);
+            
+            chassis.arcade(dir, turn);
         } else if (control_mode == 1) {
             int leftdrive = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
             int rightdrive = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
-            drivebase_left.move(leftdrive);
-            drivebase_right.move(-rightdrive);
+            
+            chassis.tank(leftdrive, rightdrive);
         }
 
         if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
