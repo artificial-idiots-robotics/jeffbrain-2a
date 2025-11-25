@@ -9,6 +9,11 @@ pros::Motor claw_motor (7);
 pros::MotorGroup drivebase_l ({1}, pros::MotorGears::green);
 pros::MotorGroup drivebase_r ({2}, pros::MotorGears::green);
 
+pros::adi::DigitalOut pneumatics_piston_a('F');
+
+pros::adi::DigitalOut status_LED_1('G');
+pros::adi::DigitalOut status_LED_2('H');
+
 // Remind me to replace these values with the actual numbers.
 lemlib::Drivetrain drivebase (
     &drivebase_l, // Left motors
@@ -19,11 +24,12 @@ lemlib::Drivetrain drivebase (
     2 // Horizontal drift
 );
 
-/* // Honestly, just read the variable names.
-pros::Imu imu(10);
-pros::Rotation horizontal_encoder(20);
+// Honestly, just read the variable names.
+// pros::Imu imu(10); ... we don't have an IMU.
+pros::adi::Encoder horizontal_encoder('A', 'B', true);
 pros::adi::Encoder vertical_encoder('C', 'D', true);
 
+/* We're not ready for this step yet.
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -5.75);
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib:: Omniwheel::NEW_275, -2.5); */
 
