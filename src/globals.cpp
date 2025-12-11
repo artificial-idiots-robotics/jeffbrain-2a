@@ -17,7 +17,7 @@ pros::adi::DigitalOut pneumatics_piston_1('F');
 pros::adi::DigitalOut status_LED_1('G');
 pros::adi::DigitalOut status_LED_2('H');
 
-// Remind me to replace these values with the actual numbers.
+// TODO: Replace numbers when Jeff 2+ is complete.
 lemlib::Drivetrain drivebase (
     &drivebase_l, // Left motors
     &drivebase_r, // Right motors

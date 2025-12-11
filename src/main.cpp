@@ -26,22 +26,29 @@ void driveForwardInches(pros::MotorGroup& targetMotorGroup, double inches, doubl
 // Initial function
 void initialize() {
     chassis.setPose(0, 0 , 0);
-	drivebase_lf.set_gearing(pros::v5::MotorGears::green);
-    drivebase_rf.set_gearing(pros::v5::MotorGears::green);
-    arm_motor.set_gearing(pros::v5::MotorGears::green);
-    claw_motor.set_gearing(pros::v5::MotorGears::green);
+	drivebase_lf.set_gearing(pros::v5::MotorGears::blue);
+    drivebase_rf.set_gearing(pros::v5::MotorGears::blue);
+    drivebase_lb.set_gearing(pros::v5::MotorGears::blue);
+    drivebase_rb.set_gearing(pros::v5::MotorGears::blue);
+    intake_motor_a.set_gearing(pros::v5::MotorGears::red);
+    intake_motor_b.set_gearing(pros::v5::MotorGears::red);
+    chain_motor.set_gearing(pros::v5::MotorGears::red);
 
     drivebase_lf.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
     drivebase_rf.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    arm_motor.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    claw_motor.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    drivebase_lb.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    drivebase_rb.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    intake_motor_a.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    intake_motor_b.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    chain_motor.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
 
     drivebase_lf.set_reversed(false);
     drivebase_rf.set_reversed(false);
-    arm_motor.set_reversed(false);
-    claw_motor.set_reversed(false);
-
-    pros::MotorGroup drivebase({1, 2});
+    drivebase_lb.set_reversed(false);
+    drivebase_rb.set_reversed(false);
+    intake_motor_a.set_reversed(false);
+    intake_motor_b.set_reversed(false);
+    chain_motor.set_reversed(false);
 
     initialize_interface();
 }
@@ -98,21 +105,21 @@ void opcontrol() {
             chassis.tank(leftdrive, rightdrive);
         }
 
-        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-            claw_motor.move(127);
-        } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-            claw_motor.move(-127);
-        } else {
-            claw_motor.brake();
-        }
+        // if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+        //     claw_motor.move(127);
+        // } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+        //     claw_motor.move(-127);
+        // } else {
+        //     claw_motor.brake();
+        // }
 
-        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-            arm_motor.move(127);
-        } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
-            arm_motor.move(-127);
-        } else {
-            arm_motor.brake();
-        }
+        // if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+        //     arm_motor.move(127);
+        // } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+        //     arm_motor.move(-127);
+        // } else {
+        //     arm_motor.brake();
+        // }
 
         pros::delay(5);
 	}

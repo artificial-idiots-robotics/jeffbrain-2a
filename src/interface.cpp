@@ -87,14 +87,8 @@ void temp_update_task(void* param) {
         chain_motor_tempbar
     };
 
-    const char *names[] = {
-        "DBLF", "DBRF", "DBLB", "DBRB", "INA", "INB", "CHN"
-    };
-
-    static char buffer[32];
-
     while (true) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 7; i++) {
             double current_temp = motors[i]->get_temperature();
             // double current_temp = 42.0; <- Declare static value to debug task code.
             lv_obj_t *current_bar = bars[i];
@@ -118,6 +112,7 @@ void create_temp_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = lv_obj_create(parent_tab);
 
     lv_obj_set_size(cont, LV_PCT(100), LV_PCT(100));
+
     lv_obj_set_layout(cont, LV_LAYOUT_FLEX);
     lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_COLUMN);
 
@@ -126,68 +121,96 @@ void create_temp_tab(lv_obj_t * parent_tab) {
     lv_obj_set_style_bg_opa(cont, LV_OPA_TRANSP, 0);
     lv_obj_set_style_radius(cont, 0, 0);
 
-    drivebase_lf_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(drivebase_lf_tempbar, 10, 10);
-    lv_obj_set_size(drivebase_lf_tempbar, 440, 10);
+    lv_obj_t * drivebase_lf_cont = lv_obj_create(cont);
+    lv_obj_set_width(drivebase_lf_cont, LV_PCT(100));
+    lv_obj_set_height(drivebase_lf_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(drivebase_lf_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(drivebase_lf_cont, LV_FLEX_FLOW_ROW);
+
+    drivebase_lf_tempbar = lv_bar_create(drivebase_lf_cont);
+    lv_obj_set_size(drivebase_lf_tempbar, 240, 10);
     lv_bar_set_range(drivebase_lf_tempbar, 0, 100);
     
-    drivebase_lf_templabel = lv_label_create(cont);
+    drivebase_lf_templabel = lv_label_create(drivebase_lf_cont);
     lv_label_set_text(drivebase_lf_templabel, "Drivebase front left");
-    lv_obj_set_pos(drivebase_lf_templabel, 10, 25);
 
-    drivebase_rf_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(drivebase_rf_tempbar, 10, 40);
-    lv_obj_set_size(drivebase_rf_tempbar, 440, 10);
+    lv_obj_t * drivebase_rf_cont = lv_obj_create(cont);
+    lv_obj_set_width(drivebase_rf_cont, LV_PCT(100));
+    lv_obj_set_height(drivebase_rf_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(drivebase_rf_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(drivebase_rf_cont, LV_FLEX_FLOW_ROW);
+
+    drivebase_rf_tempbar = lv_bar_create(drivebase_rf_cont);
+    lv_obj_set_size(drivebase_rf_tempbar, 240, 10);
     lv_bar_set_range(drivebase_rf_tempbar, 0, 100);
     
-    drivebase_rf_templabel = lv_label_create(cont);
+    drivebase_rf_templabel = lv_label_create(drivebase_rf_cont);
     lv_label_set_text(drivebase_rf_templabel, "Drivebase front right");
-    lv_obj_set_pos(drivebase_rf_templabel, 10, 55);
 
-    drivebase_lb_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(drivebase_lb_tempbar, 10, 70);
-    lv_obj_set_size(drivebase_lb_tempbar, 440, 10);
+    lv_obj_t * drivebase_lb_cont = lv_obj_create(cont);
+    lv_obj_set_width(drivebase_lb_cont, LV_PCT(100));
+    lv_obj_set_height(drivebase_lb_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(drivebase_lb_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(drivebase_lb_cont, LV_FLEX_FLOW_ROW);
+
+    drivebase_lb_tempbar = lv_bar_create(drivebase_lb_cont);
+    lv_obj_set_size(drivebase_lb_tempbar, 240, 10);
     lv_bar_set_range(drivebase_lb_tempbar, 0, 100);
 
-    drivebase_lb_templabel = lv_label_create(cont);
+    drivebase_lb_templabel = lv_label_create(drivebase_lb_cont);
     lv_label_set_text(drivebase_lb_templabel, "Drivebase back left");
-    lv_obj_set_pos(drivebase_lb_templabel, 10, 85);
 
-    drivebase_rb_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(drivebase_rb_tempbar, 10, 100);
-    lv_obj_set_size(drivebase_rb_tempbar, 440, 10);
+    lv_obj_t * drivebase_rb_cont = lv_obj_create(cont);
+    lv_obj_set_width(drivebase_rb_cont, LV_PCT(100));
+    lv_obj_set_height(drivebase_rb_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(drivebase_rb_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(drivebase_rb_cont, LV_FLEX_FLOW_ROW);
+
+    drivebase_rb_tempbar = lv_bar_create(drivebase_rb_cont);
+    lv_obj_set_size(drivebase_rb_tempbar, 240, 10);
     lv_bar_set_range(drivebase_rb_tempbar, 0, 100);
 
-    drivebase_rb_templabel = lv_label_create(cont);
+    drivebase_rb_templabel = lv_label_create(drivebase_rb_cont);
     lv_label_set_text(drivebase_rb_templabel, "Drivebase back right");
-    lv_obj_set_pos(drivebase_rb_templabel, 10, 115);
 
-    intake_motor_a_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(intake_motor_a_tempbar, 10, 130);
-    lv_obj_set_size(intake_motor_a_tempbar, 440, 10);
+    lv_obj_t * intake_motor_a_cont = lv_obj_create(cont);
+    lv_obj_set_width(intake_motor_a_cont, LV_PCT(100));
+    lv_obj_set_height(intake_motor_a_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(intake_motor_a_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(intake_motor_a_cont, LV_FLEX_FLOW_ROW);
+
+    intake_motor_a_tempbar = lv_bar_create(intake_motor_a_cont);
+    lv_obj_set_size(intake_motor_a_tempbar, 240, 10);
     lv_bar_set_range(intake_motor_a_tempbar, 0, 100);
     
-    intake_motor_a_templabel = lv_label_create(cont);
+    intake_motor_a_templabel = lv_label_create(intake_motor_a_cont);
     lv_label_set_text(intake_motor_a_templabel, "Intake motor A");
-    lv_obj_set_pos(intake_motor_a_templabel, 10, 145);
 
-    intake_motor_b_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(intake_motor_b_tempbar, 10, 160);
-    lv_obj_set_size(intake_motor_b_tempbar, 440, 10);
+    lv_obj_t * intake_motor_b_cont = lv_obj_create(cont);
+    lv_obj_set_width(intake_motor_b_cont, LV_PCT(100));
+    lv_obj_set_height(intake_motor_b_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(intake_motor_b_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(intake_motor_b_cont, LV_FLEX_FLOW_ROW);
+
+    intake_motor_b_tempbar = lv_bar_create(intake_motor_b_cont);
+    lv_obj_set_size(intake_motor_b_tempbar, 240, 10);
     lv_bar_set_range(intake_motor_b_tempbar, 0, 100);
 
-    intake_motor_b_templabel = lv_label_create(cont);
+    intake_motor_b_templabel = lv_label_create(intake_motor_b_cont);
     lv_label_set_text(intake_motor_b_templabel, "Intake motor B");
-    lv_obj_set_pos(intake_motor_b_templabel, 10, 175);
 
-    chain_motor_tempbar = lv_bar_create(cont);
-    lv_obj_set_pos(chain_motor_tempbar, 10, 190);
-    lv_obj_set_size(chain_motor_tempbar, 440, 10);
+    lv_obj_t * chain_motor_cont = lv_obj_create(cont);
+    lv_obj_set_width(chain_motor_cont, LV_PCT(100));
+    lv_obj_set_height(chain_motor_cont, LV_SIZE_CONTENT);
+    lv_obj_set_layout(chain_motor_cont, LV_LAYOUT_FLEX);
+    lv_obj_set_flex_flow(chain_motor_cont, LV_FLEX_FLOW_ROW);
+
+    chain_motor_tempbar = lv_bar_create(chain_motor_cont);
+    lv_obj_set_size(chain_motor_tempbar, 240, 10);
     lv_bar_set_range(chain_motor_tempbar, 0, 100);
 
-    chain_motor_templabel = lv_label_create(cont);
+    chain_motor_templabel = lv_label_create(chain_motor_cont);
     lv_label_set_text(chain_motor_templabel, "Chain motor");
-    lv_obj_set_pos(chain_motor_templabel, 10, 205);
 
     lv_obj_set_style_radius(drivebase_lf_tempbar, 8, LV_PART_MAIN);
     lv_obj_set_style_radius(drivebase_rf_tempbar, 8, LV_PART_MAIN);
@@ -374,7 +397,6 @@ void create_image_tab(lv_obj_t * parent_tab) {
 static void drive_mode_dropdown_action(lv_event_t * e) {
     lv_obj_t * dropdown = (lv_obj_t *)lv_event_get_target(e);
     
-    // Check if the event was a value change
     if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
         int selected_index = lv_dropdown_get_selected(dropdown);
         control_mode = selected_index;
