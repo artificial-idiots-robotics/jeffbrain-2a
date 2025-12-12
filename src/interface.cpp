@@ -1,10 +1,10 @@
 #include "interface.hpp"
 #include "globals.hpp"
 
-lv_color_t M3_ACCENT_COLOR = lv_color_hex(0x6750A4);
-lv_color_t M3_SURFACE_COLOR = lv_color_hex(0x201A2B);
-lv_color_t M3_BACKGROUND_COLOR = lv_color_hex(0x1C1B1F);
-int M3_RADIUS = 20;
+const lv_color_t M3_ACCENT_COLOR = lv_color_hex(0x6750A4);
+const lv_color_t M3_SURFACE_COLOR = lv_color_hex(0x201A2B);
+const lv_color_t M3_BACKGROUND_COLOR = lv_color_hex(0x1C1B1F);
+const int M3_RADIUS = 20;
 
 static lv_style_t style_base;
 static lv_style_t style_m3_btn;
