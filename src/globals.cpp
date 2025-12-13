@@ -20,20 +20,6 @@ pros::adi::DigitalOut pneumatics_piston_1('F');
 pros::adi::DigitalOut status_LED_1('G');
 pros::adi::DigitalOut status_LED_2('H');
 
-// Constants
-const int CONTROL_MODE_ARCADE = 0;
-const int CONTROL_MODE_TANK = 1;
-const int AUTON_ROUTINE_NONE = 0;
-const int AUTON_ROUTINE_RED_LEFT = 1;
-const int AUTON_ROUTINE_RED_RIGHT = 2;
-const int AUTON_ROUTINE_BLU_LEFT = 3;
-const int AUTON_ROUTINE_BLU_RIGHT = 4;
-const int AUTON_ROUTINE_SKILLS = 5;
-
-
-
-
-
 // TODO: Replace numbers when Jeff 2+ is complete.
 lemlib::Drivetrain drivebase (
     &drivebase_l, // Left motors
