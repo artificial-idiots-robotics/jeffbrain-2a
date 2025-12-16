@@ -1,6 +1,4 @@
-#include "interface.hpp";
-
-lv_obj_t * test_in_move_function_label = NULL;
+#include "interface.hpp"
 
 void testmove_button_action(lv_event_t * e) {
     if (lv_event_get_code(e) == LV_EVENT_CLICKED) {

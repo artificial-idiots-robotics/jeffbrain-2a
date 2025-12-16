@@ -1,6 +1,4 @@
-#include "interface.hpp";
-
-lv_obj_t * auton_status_label = NULL;
+#include "interface.hpp"
 
 static void auton_btn_click_action(lv_event_t * e) {
     lv_obj_t * btn = (lv_obj_t *)lv_event_get_target(e);

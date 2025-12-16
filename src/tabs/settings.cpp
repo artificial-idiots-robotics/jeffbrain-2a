@@ -1,6 +1,4 @@
-#include "interface.hpp";
-
-lv_obj_t * config_dropdown = NULL;
+#include "interface.hpp"
 
 static void drive_mode_dropdown_action(lv_event_t * e) {
     lv_obj_t * dropdown = (lv_obj_t *)lv_event_get_target(e);

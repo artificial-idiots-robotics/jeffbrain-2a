@@ -6,10 +6,10 @@ const lv_color_t M3_SURFACE_COLOR = lv_color_hex(0x201A2B);
 const lv_color_t M3_BACKGROUND_COLOR = lv_color_hex(0x1C1B1F);
 const int M3_RADIUS = 20;
 
-static lv_style_t style_base;
-static lv_style_t style_m3_btn;
-static lv_style_t style_tempbar_main;
-static lv_style_t style_tempbar_indicator;
+lv_style_t style_base;
+lv_style_t style_m3_btn;
+lv_style_t style_tempbar_main;
+lv_style_t style_tempbar_indicator;
 
 lv_obj_t * main_tabview = NULL;
 
@@ -30,8 +30,6 @@ lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t fl
 
     return cont;
 }
-
-
 
 void initialize_interface() {
     lv_style_init(&style_base);

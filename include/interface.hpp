@@ -40,6 +40,7 @@ extern lv_obj_t * auton_status_label;
 
 extern ControlMode control_mode;
 extern AutonRoutine selected_auton;
+extern Images images_available;
 
 typedef struct {
     lv_obj_t * container;
@@ -54,13 +55,21 @@ typedef struct {
     int user_id;
 } auton_button_data_t;
 
+typedef struct {
+    const char * label_text;
+    lv_coord_t x_pos;
+    lv_coord_t y_pos;
+    int user_id;
+} image_button_data_t;
+
 extern pros::MotorGroup drivebase;
 extern pros::MotorGroup intake_motors;
 
-extern const lv_img_dsc_t creature;
+extern const lv_img_dsc_t minnow_a;
+
+lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow);
 
 void initialize_interface();
-lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow);
 void temp_update_task(void* param);
 void create_auton_tab(lv_obj_t * parent_tab);
 void create_temp_tab(lv_obj_t * parent_tab);
@@ -69,8 +78,8 @@ void create_settings_tab(lv_obj_t * parent_tab);
 void create_stats_tab(lv_obj_t * parent_tab);
 void create_test_tab(lv_obj_t * parent_tab);
 static void auton_btn_click_action(lv_event_t * e);
-lv_obj_t * create_auton_button(lv_obj_t * parent, const auton_button_data_t * data);
 
+const MAX_IMAGES = 1;
 
 
 #endif // _INTERFACE_HPP_

@@ -1,4 +1,4 @@
-#include "interface.hpp";
+#include "interface.hpp"
 
 lv_obj_t * toggle_display_image = NULL;
 
@@ -16,28 +16,45 @@ static void image_button_action(lv_event_t * e) {
     }
 }
 
+lv_obj_t * create_image_button(lv_obj_t * parent, const image_button_data_t * data) {
+    lv_obj_t * btn = lv_btn_create(parent);
+    lv_obj_set_pos(btn, data->x_pos, data->y_pos);
+    lv_obj_set_size(btn, 100, 40);
+    lv_obj_set_user_data(btn, (void*)(intptr_t)data->user_id);
+    lv_obj_add_event_cb(btn, image_button_action, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_style(btn, &style_m3_btn, 0);
+    lv_obj_set_style_bg_color(btn, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+    lv_obj_set_style_shadow_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+
+    lv_obj_t * label = lv_label_create(btn);
+    lv_label_set_text(label, data->label_text);
+
+    lv_obj_set_style_bg_color(btn, LV_COLOR_MAKE(255, 0, 0), LV_PART_MAIN | LV_STATE_DEFAULT);
+}
+
 void create_image_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_ROW);
 
-    lv_obj_t * image_btn = lv_btn_create(cont);
-    lv_obj_set_pos(image_btn, 10, 10);
-    lv_obj_set_size(image_btn, 100, 40);
-    lv_obj_add_event_cb(image_btn, image_button_action, LV_EVENT_CLICKED, NULL);
-    lv_obj_add_style(image_btn, &style_m3_btn, 0);
-    lv_obj_set_style_bg_color(image_btn, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
-    lv_obj_set_style_shadow_width(image_btn, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+    const image_button_data_t image_buttons[] = {
+        {"Minnow", 10, 10, static_cast<int>(Images::MINNOW_A)}
+    };
 
-    lv_obj_t * image_label = lv_label_create(image_btn);
-    lv_label_set_text(image_label, "Minnow");
+    const lv_img_dsc_t * image_sources[] = {
+        &minnow_a
+    };
 
-    lv_obj_set_style_bg_color(image_btn, LV_COLOR_MAKE(255, 0, 0), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_t * image_objects[] = {};
 
-    extern const lv_img_dsc_t creature; 
+    for (const auto& button_data : image_buttons) {
+        create_image_button(cont, &button_data);
+    }
 
-    toggle_display_image = lv_img_create(cont);
-    lv_img_set_src(toggle_display_image, &creature);
-    lv_obj_move_foreground(toggle_display_image);
+    extern const lv_img_dsc_t minnow_a;
 
-    lv_obj_align(toggle_display_image, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_add_flag(toggle_display_image, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_t * minnow_a_imageobj = lv_img_create(cont);
+    lv_img_set_src(minnow_a_imageobj, &minnow_a);
+    lv_obj_move_foreground(minnow_a_imageobj);
+
+    lv_obj_align(minnow_a_imageobj, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_add_flag(minnow_a_imageobj, LV_OBJ_FLAG_HIDDEN);
 }

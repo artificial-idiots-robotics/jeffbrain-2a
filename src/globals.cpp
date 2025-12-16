@@ -1,27 +1,23 @@
 #include "main.h"
 #include "globals.hpp"
 
-// Motors
-pros::Motor drivebase_lf (1);
-pros::Motor drivebase_rf (2);
-pros::Motor drivebase_lb (3);
-pros::Motor drivebase_rb (4);
-pros::Motor intake_motor_a (5);
-pros::Motor intake_motor_b (6);
-pros::Motor chain_motor (7);
+pros::Motor drivebase_lf(1);
+pros::Motor drivebase_rf(2);
+pros::Motor drivebase_lb(3);
+pros::Motor drivebase_rb(4);
+pros::Motor intake_motor_a(5);
+pros::Motor intake_motor_b(6);
+pros::Motor chain_motor(7);
 
-// Motor groups
-pros::MotorGroup drivebase_l ({-1, -3}, pros::MotorGears::blue);
-pros::MotorGroup drivebase_r ({2, 4}, pros::MotorGears::blue);
-pros::MotorGroup intake_motors ({5, 6}, pros::MotorGears::red);
-
-// 3-wire digital outputs
+pros::MotorGroup drivebase_l({-1, -3}, pros::MotorGears::blue);
+pros::MotorGroup drivebase_r({2, 4}, pros::MotorGears::blue);
+pros::MotorGroup intake_motors({5, 6}, pros::MotorGears::red);
 pros::adi::DigitalOut pneumatics_piston_1('F');
 pros::adi::DigitalOut status_LED_1('G');
 pros::adi::DigitalOut status_LED_2('H');
 
 // TODO: Replace numbers when Jeff 2+ is complete.
-lemlib::Drivetrain drivebase (
+lemlib::Drivetrain drivebase(
     &drivebase_l, // Left motors
     &drivebase_r, // Right motors
     10, // Track width (inches)
