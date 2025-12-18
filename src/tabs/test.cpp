@@ -18,6 +18,23 @@ static TestPhase current_test_phase = TestPhase::IDLE;
 lv_obj_t * modal_cont = NULL;
 lv_obj_t * phase_cont = NULL;
 
+static void jog_motor_cb(lv_event_t * e) {
+    pros::Motor* m = (pros::Motor*)lv_event_get_user_data(e);
+
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+        m.move(port > 0 ? 127 : -127);
+    } else if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
+        m.move(0);
+    }
+}
+
+static void piston_toggle_cb(lv_event_t * e) {
+    pros::adi::DigitalOut * p = (pros::adi::DigitalOut*)lv_event_get_user_data(e);
+    lv_obj_t * sw = lv_event_get_target(e);
+
+    p->set_value(lv_obj_has_state(sw, LV_STATE_CHECKED));
+}
+
 void render_phase() {
     lv_obj_clean(phase_cont);
 
@@ -30,18 +47,99 @@ void render_phase() {
         };
 
         case TestPhase::SENSORS: {
-            // TODO: Add gauges for the two encoders, and add a status indicator for the bumper.
             lv_obj_t * lbl = lv_label_create(phase_cont);
             lv_label_set_text(lbl, "Sensor testing");
             lv_obj_center(lbl);
+
+            lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
+            lv_obj_set_flex_align(phase_cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+
+            lv_obj_t * bumper_monitor_cont = lv_obj_create(phase_cont);
+            lv_obj_set_width(bumper_monitor_cont, LV_PCT(100));
+            lv_obj_set_height(bumper_monitor_cont, LV_SIZE_CONTENT);
+            lv_obj_set_flex_flow(bumper_monitor_cont, LV_FLEX_FLOW_ROW);
+
+            lv_obj_t * bumper_monitor = lv_led_create(bumper_monitor_cont);
+            lv_obj_set_size(bumper_monitor, 20, 20);
+            lv_led_off(bumper_monitor);
+
+            lv_obj_t * bumper_monitor_label = lv_label_create(bumper_monitor_cont);
+            lv_label_set_text(bumper_monitor_label, "Bumper sensor");
+
+            lv_obj_t * x_encoder_monitor_cont = lv_obj_create(phase_cont);
+            lv_obj_set_width(x_encoder_monitor_cont, LV_PCT(100));
+            lv_obj_set_height(x_encoder_monitor_cont, LV_SIZE_CONTENT);
+            lv_obj_set_flex_flow(x_encoder_monitor_cont, LV_FLEX_FLOW_ROW);
+
+            lv_obj_t * x_encoder_monitor = lv_bar_create(x_encoder_monitor_cont);
+            lv_obj_set_size(x_encoder_monitor, 180, 10);
+            lv_bar_set_range(x_encoder_monitor, 0, 359);
+
+            lv_obj_t * x_encoder_monitor_label = lv_label_create(x_encoder_monitor_cont);
+            lv_label_set_text(x_encoder_monitor_label, "X encoder");
+
+            lv_obj_t * y_encoder_monitor_cont = lv_obj_create(phase_cont);
+            lv_obj_set_width(y_encoder_monitor_cont, LV_PCT(100));
+            lv_obj_set_height(y_encoder_monitor_cont, LV_SIZE_CONTENT);
+            lv_obj_set_flex_flow(y_encoder_monitor_cont, LV_FLEX_FLOW_ROW);
+
+            lv_obj_t * y_encoder_monitor = lv_bar_create(y_encoder_monitor_cont);
+            lv_obj_set_size(y_encoder_monitor, 180, 10);
+            lv_bar_set_range(y_encoder_monitor, 0, 359);
+
+            lv_obj_t * y_encoder_monitor_label = lv_label_create(y_encoder_monitor_cont);
+            lv_label_set_text(y_encoder_monitor_label, "Y encoder");
+
             break;
         };
 
         case TestPhase::DRIVEBASE_MOTORS: {
-            // TODO: Add four buttons for testing the four drivebase motors.
+            lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
+
             lv_obj_t * lbl = lv_label_create(phase_cont);
             lv_label_set_text(lbl, "Drivebase motor testing");
             lv_obj_center(lbl);
+
+            lv_obj_t * drivebase_lf_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(LV_PCT(90), 40);
+            lv_obj_align(drivebase_lf_test_btn, LV_ALIGN_CENTER, -50, 0);
+            lv_obj_set_user_data(drivebase_lf_test_btn, &drivebase_lf);
+            lv_obj_add_event_cb(drivebase_lf_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * drivebase_lf_test_label = lv_label_create(drivebase_lf_test_btn);
+            lv_label_set_text(drivebase_lf_test_label, "Test drivebase LF");
+            lv_obj_center(drivebase_lf_test_label);
+
+            lv_obj_t * drivebase_rf_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(LV_PCT(90), 40);
+            lv_obj_align(drivebase_rf_test_btn, LV_ALIGN_CENTER, -50, 0);
+            lv_obj_set_user_data(drivebase_rf_test_btn, &drivebase_rf);
+            lv_obj_add_event_cb(drivebase_rf_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * drivebase_rf_test_label = lv_label_create(drivebase_rf_test_btn);
+            lv_label_set_text(drivebase_rf_test_label, "Test drivebase RF");
+            lv_obj_center(drivebase_rf_test_label);
+
+            lv_obj_t * drivebase_lb_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(LV_PCT(90), 40);
+            lv_obj_align(drivebase_lb_test_btn, LV_ALIGN_CENTER, -50, 0);
+            lv_obj_set_user_data(drivebase_lb_test_btn, &drivebase_lb);
+            lv_obj_add_event_cb(drivebase_lb_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * drivebase_lb_test_label = lv_label_create(drivebase_lb_test_btn);
+            lv_label_set_text(drivebase_lb_test_label, "Test drivebase LB");
+            lv_obj_center(drivebase_lb_test_label);
+
+            lv_obj_t * drivebase_rb_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(LV_PCT(90), 40);
+            lv_obj_align(drivebase_rb_test_btn, LV_ALIGN_CENTER, -50, 0);
+            lv_obj_set_user_data(drivebase_rb_test_btn, &drivebase_rb);
+            lv_obj_add_event_cb(drivebase_rb_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * drivebase_rb_test_label = lv_label_create(drivebase_rb_test_btn);
+            lv_label_set_text(drivebase_rb_test_label, "Test drivebase RB");
+            lv_obj_center(drivebase_rb_telst_label);
+
             break;
         };
 
