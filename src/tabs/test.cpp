@@ -21,9 +21,19 @@ void render_phase() {
 
     switch (current_test_phase) {
         case TestPhase::IDLE: {
-            // Idle. Do something, I have to go now.
+            lv_obj_t * lbl = lv_label_create(phase_cont);
+            lv_label_set_text(lbl, "Start testing?");
+            lv_obj_center(lbl);
             break;
         };
+
+        case TestPhase::SENSORS: {
+            lv_obj_t * lbl = lv_label_create(phase_cont);
+            lv_label_set_text(lbl, "Sensor testing");
+            lv_obj_center(lbl);
+            // I have to go again.
+            break;
+        }
     }
 }
 
