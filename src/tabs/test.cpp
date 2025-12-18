@@ -22,9 +22,19 @@ static void jog_motor_cb(lv_event_t * e) {
     pros::Motor* m = (pros::Motor*)lv_event_get_user_data(e);
 
     if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
-        m.move(port > 0 ? 127 : -127);
+        m.move(127);
     } else if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
         m.move(0);
+    }
+}
+
+static void jog_motor_g_cb(lv_event_t * e) {
+    pros::MotorGroup* mg = (pros::MotorGroup*)lv_event_get_user_data(e);
+
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+        mg.move(127);
+    } else if (lv_event_get_code(e) == LV_EVENT_RELEASED) {
+        mg.move(0);
     }
 }
 
@@ -104,7 +114,7 @@ void render_phase() {
             lv_obj_set_size(LV_PCT(90), 40);
             lv_obj_align(drivebase_lf_test_btn, LV_ALIGN_CENTER, -50, 0);
             lv_obj_set_user_data(drivebase_lf_test_btn, &drivebase_lf);
-            lv_obj_add_event_cb(drivebase_lf_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+            lv_obj_add_event_cb(drivebase_lf_test_btn, jog_motor_cb, LV_EVENT_ALL, NULL);
 
             lv_obj_t * drivebase_lf_test_label = lv_label_create(drivebase_lf_test_btn);
             lv_label_set_text(drivebase_lf_test_label, "Test drivebase LF");
@@ -114,7 +124,7 @@ void render_phase() {
             lv_obj_set_size(LV_PCT(90), 40);
             lv_obj_align(drivebase_rf_test_btn, LV_ALIGN_CENTER, -50, 0);
             lv_obj_set_user_data(drivebase_rf_test_btn, &drivebase_rf);
-            lv_obj_add_event_cb(drivebase_rf_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+            lv_obj_add_event_cb(drivebase_rf_test_btn, jog_motor_cb, LV_EVENT_ALL, NULL);
 
             lv_obj_t * drivebase_rf_test_label = lv_label_create(drivebase_rf_test_btn);
             lv_label_set_text(drivebase_rf_test_label, "Test drivebase RF");
@@ -124,7 +134,7 @@ void render_phase() {
             lv_obj_set_size(LV_PCT(90), 40);
             lv_obj_align(drivebase_lb_test_btn, LV_ALIGN_CENTER, -50, 0);
             lv_obj_set_user_data(drivebase_lb_test_btn, &drivebase_lb);
-            lv_obj_add_event_cb(drivebase_lb_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+            lv_obj_add_event_cb(drivebase_lb_test_btn, jog_motor_cb, LV_EVENT_ALL, NULL);
 
             lv_obj_t * drivebase_lb_test_label = lv_label_create(drivebase_lb_test_btn);
             lv_label_set_text(drivebase_lb_test_label, "Test drivebase LB");
@@ -134,20 +144,42 @@ void render_phase() {
             lv_obj_set_size(LV_PCT(90), 40);
             lv_obj_align(drivebase_rb_test_btn, LV_ALIGN_CENTER, -50, 0);
             lv_obj_set_user_data(drivebase_rb_test_btn, &drivebase_rb);
-            lv_obj_add_event_cb(drivebase_rb_test_btn, motor_jog_cb, LV_EVENT_ALL, NULL);
+            lv_obj_add_event_cb(drivebase_rb_test_btn, jog_motor_cb, LV_EVENT_ALL, NULL);
 
             lv_obj_t * drivebase_rb_test_label = lv_label_create(drivebase_rb_test_btn);
             lv_label_set_text(drivebase_rb_test_label, "Test drivebase RB");
-            lv_obj_center(drivebase_rb_telst_label);
+            lv_obj_center(drivebase_rb_test_label);
 
             break;
         };
 
         case TestPhase::DRIVEBASE_SIDES: {
-            // TODO: Add button for testing drivebase motors as two groups.
+            lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
+
             lv_obj_t * lbl = lv_label_create(phase_cont);
             lv_label_set_text(lbl, "Drivebase motor group testing");
             lv_obj_center(lbl);
+
+            lv_obj_t * drivebase_l_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(drivebase_l_test_btn, LV_PCT(90), 40);
+            lv_obj_align(drivebase_l_test_btn, LV_ALIGN_CENTER, -50, 0);
+            lv_obj_set_user_data(drivebase_l_test_btn, &drivebase_l);
+            lv_obj_add_event_cb(drivebase_l_test_btn, jog_motor_g_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * drivebase_l_test_label = lv_label_create(phase_cont);
+            lv_label_set_text(drivebase_l_test_label, "Test drivebase left");
+            lv_obj_center(drivebase_l_test_label);
+
+            lv_obj_t * drivebase_r_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(drivebase_r_test_btn, LV_PCT(90), 40);
+            lv_obj_align(drivebase_r_test_btn, LV_ALIGN_CENTER, -50, 0);
+            lv_obj_set_user_data(drivebase_r_test_btn, &drivebase_r);
+            lv_obj_add_event_cb(drivebase_r_test_btn, jog_motor_g_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * drivebase_r_test_label = lv_label_create(phase_cont);
+            lv_label_set_text(drivebase_r_test_label, "Test drivebase right");
+            lv_obj_center(drivebase_r_test_label);
+
             break;
         };
 
@@ -160,10 +192,33 @@ void render_phase() {
         };
 
         case TestPhase::INTAKE_MOTORS {
-            // TODO: Add buttons for testing the two intake motors separately.
+            lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
+
             lv_obj_t * lbl = lv_label_create(phase_cont);
             lv_label_set_text(lbl, "Intake motor testing");
             lv_obj_center(lbl);
+            break;
+
+            lv_obj_t * intake_motor_a_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(intake_motor_a_test_btn, LV_PCT(90), 40);
+            lv_obj_align(intake_motor_a_test_btn, LV_ALIGN_CENTER, -50, 0)
+            lv_obj_set_user_data(intake_motor_a_test_btn, &intake_motor_a);
+            lv_obj_add_event_cb(intake_motor_a_test_btn, jog_motor_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * intake_motor_a_test_label = lv_label_create(intake_motor_a_test_btn);
+            lv_label_set_text(intake_motor_a_test_label, "Intake motor A test");
+            lv_obj_center(intake_motor_a_test_label);
+
+            lv_obj_t * intake_motor_b_test_btn = lv_btn_create(phase_cont);
+            lv_obj_set_size(intake_motor_b_test_btn, LV_PCT(90), 40);
+            lv_obj_align(intake_motor_b_test_btn, LV_ALIGN_CENTER, -50, 0)
+            lv_obj_set_user_data(intake_motor_b_test_btn, &intake_motor_b);
+            lv_obj_add_event_cb(intake_motor_b_test_btn, jog_motor_cb, LV_EVENT_ALL, NULL);
+
+            lv_obj_t * intake_motor_b_test_label = lv_label_create(intake_motor_b_test_btn);
+            lv_label_set_text(intake_motor_b_test_label, "Intake motor B test");
+            lv_obj_center(intake_motor_b_test_label);
+
             break;
         };
 
@@ -184,10 +239,36 @@ void render_phase() {
         };
 
         case TestPhase::PNEUMATICS {
-            // TODO: Add button for testing piston.
+            lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
+            
             lv_obj_t * lbl = lv_label_create(phase_cont);
             lv_label_set_text(lbl, "Pneumatics piston testing");
             lv_obj_center(lbl);
+            
+            lv_obj_t * pnuematics_piston_a_test_sw_cont = lv_obj_create(phase_cont);
+            lv_obj_set_width(pnuematics_piston_a_test_sw_cont, LV_PCT(100));
+            lv_obj_set_height(pnuematics_piston_a_test_sw_cont, LV_SIZE_CONTENT);
+            lv_obj_set_flex_flow(pnuematics_piston_a_test_sw_cont, LV_FLEX_FLOW_ROW);
+
+            lv_obj_t * pnuematics_piston_a_test_sw = lv_switch_create(pnuematics_piston_a_test_sw_cont);
+            lv_obj_set_user_data(pnuematics_piston_a_test_sw, &pneumatics_piston_a);
+            lv_obj_add_event_cb(pnuematics_piston_a_test_sw, piston_toggle_cb, LV_EVENT_VALUE_CHANGED, NULL);
+
+            lv_obj_t * pnuematics_piston_a_test_sw_label = lv_label_create(pnuematics_piston_a_test_sw_cont);
+            lv_label_set_text("Pneumatics piston A");
+
+            lv_obj_t * pneumatics_piston_b_test_sw_cont = lv_obj_create(phase_cont);
+            lv_obj_set_width(pneumatics_piston_b_test_sw_cont, LV_PCT(100));
+            lv_obj_set_height(pneumatics_piston_b_test_sw_cont, LV_SIZE_CONTENT);
+            lv_obj_set_flex_flow(pneumatics_piston_b_test_sw_cont, LV_FLEX_FLOW_ROW);
+
+            lv_obj_t * pneumatics_piston_b_test_sw = lv_switch_create(pneumatics_piston_b_test_sw_cont);
+            lv_obj_set_user_data(pneumatics_piston_b_test_sw, &pneumatics_piston_b);
+            lv_obj_add_event_cb(pneumatics_piston_b_test_sw, piston_toggle_cb, LV_EVENT_VALUE_CHANGED, NULL);
+
+            lv_obj_t * pneumatics_piston_b_test_sw_label = lv_label_create(pneumatics_piston_b_test_sw_cont);
+            lv_label_set_text("Pneumatics piston B");
+
             break;
         };
 
