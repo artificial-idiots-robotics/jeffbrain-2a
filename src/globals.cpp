@@ -3,15 +3,15 @@
 
 pros::Motor drivebase_lf(1);
 pros::Motor drivebase_rf(2);
-pros::Motor drivebase_lb(3);
-pros::Motor drivebase_rb(4);
-pros::Motor intake_motor_a(5);
-pros::Motor intake_motor_b(6);
-pros::Motor chain_motor(7);
+pros::Motor drivebase_lb(4);
+pros::Motor drivebase_rb(5);
+pros::Motor intake_motor_a(6);
+pros::Motor intake_motor_b(8);
+pros::Motor chain_motor(9);
 
-pros::MotorGroup drivebase_l({-1, -3}, pros::MotorGears::blue);
-pros::MotorGroup drivebase_r({2, 4}, pros::MotorGears::blue);
-pros::MotorGroup intake_motors({5, 6}, pros::MotorGears::red);
+pros::MotorGroup drivebase_l({-1, -4}, pros::MotorGears::blue);
+pros::MotorGroup drivebase_r({2, 5}, pros::MotorGears::blue);
+pros::MotorGroup intake_motors({6, 8}, pros::MotorGears::red);
 pros::adi::DigitalOut pneumatics_piston_1('F');
 pros::adi::DigitalOut status_LED_1('G');
 pros::adi::DigitalOut status_LED_2('H');

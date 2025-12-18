@@ -59,8 +59,8 @@ typedef struct {
     const char * label_text;
     lv_coord_t x_pos;
     lv_coord_t y_pos;
-    int user_id;
-} image_button_data_t;
+    const lv_img_dsc_t * src;
+} image_data_t;
 
 extern pros::MotorGroup drivebase;
 extern pros::MotorGroup intake_motors;
@@ -68,6 +68,7 @@ extern pros::MotorGroup intake_motors;
 extern const lv_img_dsc_t minnow_a;
 
 lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow);
+lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src, lv_coord_t x_pos, lv_coord_t y_pos);
 
 void initialize_interface();
 void temp_update_task(void* param);
@@ -79,7 +80,6 @@ void create_stats_tab(lv_obj_t * parent_tab);
 void create_test_tab(lv_obj_t * parent_tab);
 static void auton_btn_click_action(lv_event_t * e);
 
-const MAX_IMAGES = 1;
-
+const int MAX_IMAGES = 2;
 
 #endif // _INTERFACE_HPP_
