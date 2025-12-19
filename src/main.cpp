@@ -3,12 +3,10 @@
 #include "globals.hpp"
 #include "interface.hpp"
 
-// Initial function
 void initialize() {
     chassis.setPose(0, 0, 0);
 
-    // Set gearings
-	drivebase_lf.set_gearing(pros::v5::MotorGears::blue);
+    drivebase_lf.set_gearing(pros::v5::MotorGears::blue);
     drivebase_rf.set_gearing(pros::v5::MotorGears::blue);
     drivebase_lb.set_gearing(pros::v5::MotorGears::blue);
     drivebase_rb.set_gearing(pros::v5::MotorGears::blue);
@@ -16,16 +14,14 @@ void initialize() {
     intake_motor_b.set_gearing(pros::v5::MotorGears::red);
     chain_motor.set_gearing(pros::v5::MotorGears::red);
 
-    // Set encoder units
-    drivebase_lf.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    drivebase_rf.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    drivebase_lb.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    drivebase_rb.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    intake_motor_a.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    intake_motor_b.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
-    chain_motor.set_encoder_units(pros::E_MOTOR_ENCODER_DEGREES);
+    drivebase_lf.set_encoder_units(pros::MotorEncoderUnits::degrees);
+    drivebase_rf.set_encoder_units(pros::MotorEncoderUnits::degrees);
+    drivebase_lb.set_encoder_units(pros::MotorEncoderUnits::degrees);
+    drivebase_rb.set_encoder_units(pros::MotorEncoderUnits::degrees);
+    intake_motor_a.set_encoder_units(pros::MotorEncoderUnits::degrees);
+    intake_motor_b.set_encoder_units(pros::MotorEncoderUnits::degrees);
+    chain_motor.set_encoder_units(pros::MotorEncoderUnits::degrees);
 
-    // Set reverse states
     drivebase_lf.set_reversed(false);
     drivebase_rf.set_reversed(false);
     drivebase_lb.set_reversed(false);
@@ -37,13 +33,9 @@ void initialize() {
     initialize_interface();
 }
 
-// DISABLED mode
 void disabled() {}
 
-// Runs after INITIALIZE when connected to VEX Competition
-void competition_initialize() {
-	
-}
+void competition_initialize() {}
 
 void autonomous() {
     switch (selected_auton) {

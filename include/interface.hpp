@@ -16,23 +16,6 @@ extern lv_style_t style_tempbar_main;
 extern lv_style_t style_tempbar_indicator;
 
 extern lv_obj_t * main_tabview;
-
-extern lv_obj_t * drivebase_lf_tempbar;
-extern lv_obj_t * drivebase_rf_tempbar;
-extern lv_obj_t * drivebase_lb_tempbar;
-extern lv_obj_t * drivebase_rb_tempbar;
-extern lv_obj_t * intake_motor_a_tempbar;
-extern lv_obj_t * intake_motor_b_tempbar;
-extern lv_obj_t * chain_motor_tempbar;
-
-extern lv_obj_t * drivebase_lf_templabel;
-extern lv_obj_t * drivebase_rf_templabel;
-extern lv_obj_t * drivebase_lb_templabel;
-extern lv_obj_t * drivebase_rb_templabel;
-extern lv_obj_t * intake_motor_a_templabel;
-extern lv_obj_t * intake_motor_b_templabel;
-extern lv_obj_t * chain_motor_templabel;
-
 extern lv_obj_t * config_dropdown;
 extern lv_obj_t * test_in_move_function_label;
 
@@ -40,7 +23,6 @@ extern lv_obj_t * auton_status_label;
 
 extern ControlMode control_mode;
 extern AutonRoutine selected_auton;
-extern Images images_available;
 
 typedef struct {
     lv_obj_t * container;
@@ -71,14 +53,12 @@ lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t fl
 lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src, lv_coord_t x_pos, lv_coord_t y_pos);
 
 void initialize_interface();
-void temp_update_task(void* param);
 void create_auton_tab(lv_obj_t * parent_tab);
 void create_temp_tab(lv_obj_t * parent_tab);
 void create_image_tab(lv_obj_t * parent_tab);
 void create_settings_tab(lv_obj_t * parent_tab);
 void create_stats_tab(lv_obj_t * parent_tab);
 void create_test_tab(lv_obj_t * parent_tab);
-static void auton_btn_click_action(lv_event_t * e);
 
 const int MAX_IMAGES = 2;
 

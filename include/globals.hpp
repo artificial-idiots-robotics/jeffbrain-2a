@@ -42,8 +42,4 @@ enum class AutonRoutine {
     SKILLS = 5
 };
 
-enum class Images {
-    MINNOW_A = 0,
-};
-
 #endif // _GLOBALS_HPP_
