@@ -28,12 +28,6 @@ extern lemlib::Chassis chassis;
 extern pros::Controller master_controller;
 extern pros::Controller partner_controller;
 
-extern const double LMOTOR_GEAR_RATIO;
-extern const double RMOTOR_GEAR_RATIO;
-extern const double DRIVEBASE_GEAR_RATIO;
-extern const double LMOTOR_WHEEL_DIAMETER;
-extern const double RMOTOR_WHEEL_DIAMETER;
-
 enum class ControlMode {
     ARCADE = 0,
     TANK = 1

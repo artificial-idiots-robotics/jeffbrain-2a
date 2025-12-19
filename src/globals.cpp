@@ -74,9 +74,3 @@ lemlib::Chassis chassis(drivebase, lateral_controller, angular_controller, senso
 
 pros::Controller master_controller(pros::E_CONTROLLER_MASTER);
 pros::Controller partner_controller(pros::E_CONTROLLER_PARTNER);
-
-const double LMOTOR_GEAR_RATIO = 18.0;
-const double RMOTOR_GEAR_RATIO = 18.0;
-const double DRIVEBASE_GEAR_RATIO = 18.0;
-const double LMOTOR_WHEEL_DIAMETER = 4.0;
-const double RMOTOR_WHEEL_DIAMETER = 4.0;
