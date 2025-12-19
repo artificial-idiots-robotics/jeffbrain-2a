@@ -3,7 +3,6 @@
 #ifndef _GLOBALS_
 #define _GLOBALS_
 
-// Motors
 extern pros::Motor drivebase_lf;
 extern pros::Motor drivebase_rf;
 extern pros::Motor drivebase_lb;
@@ -12,32 +11,29 @@ extern pros::Motor intake_motor_a;
 extern pros::Motor intake_motor_b;
 extern pros::Motor chain_motor;
 
-// Motor groups
 extern pros::MotorGroup drivebase_l;
 extern pros::MotorGroup drivebase_r;
 
-// 3-wire digital outputs
+extern pros::adi::DigitalIn bumper_sensor;
+
+extern pros::adi::Encoder horizontal_encoder;
+extern pros::adi::Encoder vertical_encoder;
+
 extern pros::adi::DigitalOut pneumatics_piston_1;
 extern pros::adi::DigitalOut status_LED_1;
 extern pros::adi::DigitalOut status_LED_2;
 
-// Chassis
 extern lemlib::Chassis chassis;
 
-// Controllers
 extern pros::Controller master_controller;
 extern pros::Controller partner_controller;
 
-// Constants
 extern const double LMOTOR_GEAR_RATIO;
 extern const double RMOTOR_GEAR_RATIO;
 extern const double DRIVEBASE_GEAR_RATIO;
 extern const double LMOTOR_WHEEL_DIAMETER;
 extern const double RMOTOR_WHEEL_DIAMETER;
 
-
-
-// Enumerations
 enum class ControlMode {
     ARCADE = 0,
     TANK = 1

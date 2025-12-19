@@ -12,6 +12,12 @@ pros::Motor chain_motor(9);
 pros::MotorGroup drivebase_l({-1, -4}, pros::MotorGears::blue);
 pros::MotorGroup drivebase_r({2, 5}, pros::MotorGears::blue);
 pros::MotorGroup intake_motors({6, 8}, pros::MotorGears::red);
+
+pros::adi::Encoder horizontal_encoder('A', 'B', true);
+pros::adi::Encoder vertical_encoder('C', 'D', true);
+
+pros::adi::DigitalIn bumper_sensor('E');
+
 pros::adi::DigitalOut pneumatics_piston_1('F');
 pros::adi::DigitalOut status_LED_1('G');
 pros::adi::DigitalOut status_LED_2('H');
@@ -28,9 +34,6 @@ lemlib::Drivetrain drivebase(
 
 // Honestly, just read the variable names.
 // pros::Imu imu(10); ... we don't have an IMU.
-
-pros::adi::Encoder horizontal_encoder('A', 'B', true);
-pros::adi::Encoder vertical_encoder('C', 'D', true);
 
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -5.75);
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib:: Omniwheel::NEW_275, -2.5);
