@@ -117,6 +117,12 @@ void telemetry_task_fn(void* param) {
     }
 }
 
+lv_obj_t * create_test_phase_label(lv_obj_t * parent, std::string labelText) {
+    lv_obj_t * label = lv_label_create(parent);
+    lv_label_set_text(label, labelText);
+    lv_obj_center(label);
+}
+
 void render_phase() {
     bumper_led_ptr = NULL;
     x_encoder_bar_ptr = NULL;
@@ -126,18 +132,15 @@ void render_phase() {
 
     switch (current_test_phase) {
         case TestPhase::IDLE: {
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Start testing?");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Jeff 2+ diagnostics");
+
             break;
         };
 
         case TestPhase::SENSORS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Sensor testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Sensor tests");
 
             lv_obj_t * bumper_monitor_cont = lv_obj_create(phase_cont);
             lv_obj_set_width(bumper_monitor_cont, LV_PCT(100));
@@ -181,9 +184,8 @@ void render_phase() {
         case TestPhase::DRIVEBASE_MOTORS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Drivebase motor testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Drivebase motor tests")
+            create_test_phase_label(phase_cont, "Individual testing");
 
             lv_obj_t * drivebase_lf_test_btn = create_motor_test_btn(phase_cont, "Test drivebase LF", drivebase_lf);
             lv_obj_t * drivebase_rf_test_btn = create_motor_test_btn(phase_cont, "Test drivebase RF", drivebase_rf);
@@ -196,9 +198,8 @@ void render_phase() {
         case TestPhase::DRIVEBASE_SIDES: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Drivebase motor group testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Drivebase motor tests");
+            create_test_phase_label(phase_cont, "Group testing");
 
             lv_obj_t * drivebase_l_test_btn = create_motor_group_test_btn(phase_cont, "Test drivebase left", drivebase_l);
             lv_obj_t * drivebase_r_test_btn = create_motor_group_test_btn(phase_cont, "Test drivebase right", drivebase_r);
@@ -209,9 +210,8 @@ void render_phase() {
         case TestPhase::CHASSIS_MOVEMENT: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Drivebase chassis movement");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Lemlib configuration tests");
+            create_test_phase_label(phase_cont, "Chassis movement");
 
             lv_obj_t * forward_btn = lv_btn_create(phase_cont);
             lv_obj_set_size(forward_btn, LV_PCT(90), 40);
@@ -228,10 +228,8 @@ void render_phase() {
         case TestPhase::INTAKE_MOTORS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Intake motor testing");
-            lv_obj_center(lbl);
-            break;
+            create_test_phase_label(phase_cont, "Intake motor tests");
+            create_test_phase_label(phase_cont, "Individual testing");
 
             lv_obj_t * intake_motor_a_test_btn = create_motor_test_btn(phase_cont, "Intake motor A test", intake_motor_a);
             lv_obj_t * intake_motor_b_test_btn = create_motor_test_btn(phase_cont, "Intake motor B test", intake_motor_b);
@@ -242,9 +240,8 @@ void render_phase() {
         case TestPhase::INTAKE_GROUP: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Intake motor group testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Intake motor tests");
+            create_test_phase_label(phase_cont, "Group testing");
 
             lv_obj_t * intake_motors_test_btn = create_motor_group_test_btn(phase_cont, "Intake motors test", intake_motors);
 
@@ -254,9 +251,9 @@ void render_phase() {
         case TestPhase::CHAIN: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Chain motor testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Motor tests");
+            create_test_phase_label(phase_cont, "Chain motor");
+            create_test_phase_label(phase_cont, "Individual testing");
 
             lv_obj_t * chain_motor_test_btn = create_motor_test_btn(phase_cont, "Chain motor test", chain_motor);
 
@@ -266,9 +263,8 @@ void render_phase() {
         case TestPhase::PNEUMATICS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
             
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Pneumatics piston testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Pneumatics tests");
+            create_test_phase_label(phase_cont, "Ensure air tank is filled.");
             
             lv_obj_t * pneumatics_piston_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 1", pneumatics_piston_1);
 
@@ -278,9 +274,7 @@ void render_phase() {
         case TestPhase::STATUS_LEDS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Status LED testing");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "LED tests");
 
             lv_obj_t * status_led_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 1", status_LED_1);
             lv_obj_t * status_led_2_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 2", status_LED_2);
@@ -289,9 +283,8 @@ void render_phase() {
         };
 
         case TestPhase::COMPLETE: {
-            lv_obj_t * lbl = lv_label_create(phase_cont);
-            lv_label_set_text(lbl, "Testing complete!");
-            lv_obj_center(lbl);
+            create_test_phase_label(phase_cont, "Diagnostics complete.");
+
             break;
         };
     }
@@ -346,12 +339,18 @@ void create_test_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
     
     lv_obj_t * start_testing_btn = lv_btn_create(cont);
-    lv_obj_set_pos(start_testing_btn, 10, 10);
     lv_obj_set_size(start_testing_btn, 150, 40);
     lv_obj_add_event_cb(start_testing_btn, start_testing_btn_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(start_testing_btn, &style_m3_btn, 0);
     lv_obj_set_style_bg_color(start_testing_btn, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
     lv_obj_set_style_shadow_width(start_testing_btn, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+
+    lv_obj_t * lemlib_tuning_btn = lv_btn_create(cont);
+    lv_obj_set_size(lemlib_tuning_btn, 150, 40);
+    lv_obj_add_event_cb(lemlib_tuning_btn, lemlib_tuning_btn_action, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_style(lemlib_tuning_btn, &style_m3_btn, 0);
+    lv_obj_set_style_bg_color(lemlib_tuning_btn, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+
 
     pros::Task telemetry_task(telemetry_task_fn);
 }
