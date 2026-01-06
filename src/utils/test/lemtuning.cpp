@@ -191,7 +191,9 @@ void render_phase() {
             lv_label_set_text(lbl2, "Anti-windup");
             lv_obj_center(lbl2);
 
-            // TODO: Add object for changing anti-windup.
+            lv_obj_t * antiwindup_tuning_spinbox = create_lemtuning_spinbox_object(phase_cont, "anti-windup", &testingLateralAntiWindup, 0, 1000, 4, 2);
+            create_lemtuning_spinbox_minus_btn(phase_cont, antiwindup_tuning_spinbox);
+            create_lemtuning_spinbox_plus_btn(phase_cont, antiwindup_tuning_spinbox);
 
             break;
         };
@@ -208,9 +210,16 @@ void render_phase() {
             lv_obj_center(lbl2);
 
             // TODO: Add object for changing small error range.
-            // TODO: Add object for changing small error range timeout.
+            
+            lv_obj_t * small_error_range_timeout_tuning_spinbox = create_lemtuning_spinbox_object(phase_cont, "small error range timeout", &testingLateralSmallErrorTimeout, 0, 1000, 4, 0);
+            create_lemtuning_spinbox_minus_btn(phase_cont, small_error_range_timeout_tuning_spinbox);
+            create_lemtuning_spinbox_plus_btn(phase_cont, small_error_range_timeout_tuning_spinbox);
+
             // TODO: Add object for changing large error range.
-            // TODO: Add object for changing large error range timeout.
+
+            lv_obj_t * large_error_range_timeout_tuning_spinbox = create_lemtuning_spinbox_object(phase_cont, "large error range timeout", &testingLateralLargeErrorTimeout, 0, 1000, 4, 0);
+            create_lemtuning_spinbox_minus_btn(phase_cont, large_error_range_timeout_tuning_spinbox);
+            create_lemtuning_spinbox_plus_btn(phase_cont, large_error_range_timeout_tuning_spinbox);
 
             break;
         };
