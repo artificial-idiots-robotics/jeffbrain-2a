@@ -48,6 +48,63 @@ int testingAngularLargeErrorRange = 0;
 int testingAngularLargeErrorTimeout = 0;
 int testingAngularSlew = 0;
 
+lv_obj_t * create_lemtuning_spinbox_object(lv_obj_t * parent, const char * labelText, int * boundVariable, int min, int max, int totalDigits, int decimalPosition) {
+    lv_obj_t * spinbox = lv_spinbox_create(parent);
+    lv_spinbox_set_range(spinbox, min, max);
+    lv_spinbox_set_value(spinbox, *boundVariable);
+    lv_spinbox_set_digit_format(spinbox, totalDigits, decimalPosition);
+    lv_obj_set_width(spinbox, 100);
+
+    lv_obj_add_event_cb(spinbox, [](lv_event_t * e) {
+        lv_obj_t * sb = (lv_obj_t *)lv_event_get_target(e);
+        int * var = (int *)lv_event_get_user_data(e);
+
+        if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
+            *var = lv_spinbox_get_value(sb);
+        }
+    }, LV_EVENT_ALL, boundVariable);
+
+    return spinbox;
+}
+
+lv_obj_t * create_lemtuning_spinbox_minus_btn(lv_obj_t * parent, lv_obj_t * spinbox) {
+    lv_obj_t * btn = lv_btn_create(parent);
+    lv_obj_set_size(btn, 40, 40);
+    lv_obj_align_to(btn, spinbox, LV_ALIGN_LEFT_MID, -5, 0);
+    lv_obj_add_event_cb(btn, [](lv_event_t * e) {
+        lv_obj_t * sb = (lv_obj_t *)lv_event_get_user_data(e);
+
+        if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+            lv_spinbox_decrement(sb);
+        }
+    }, LV_EVENT_ALL, spinbox);
+
+    lv_obj_t * label = lv_label_create(btn);
+    lv_label_set_text(label, "-");
+    lv_obj_center(label);
+
+    return btn;
+}
+
+lv_obj_t * create_lemtuning_spinbox_plus_btn(lv_obj_t * parent, lv_obj_t * spinbox) {
+    lv_obj_t * btn = lv_btn_create(parent);
+    lv_obj_set_size(btn, 40, 40);
+    lv_obj_align_to(btn, spinbox, LV_ALIGN_RIGHT_MID, 5, 0);
+    lv_obj_add_event_cb(btn, [](lv_event_t * e) {
+        lv_obj_t * sb = (lv_obj_t *)lv_event_get_user_data(e);
+
+        if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+            lv_spinbox_increment(sb);
+        }
+    }, LV_EVENT_ALL, spinbox);
+
+    lv_obj_t * label = lv_label_create(btn);
+    lv_label_set_text(label, "+");
+    lv_obj_center(label);
+
+    return btn;
+}
+
 void render_phase() {
     lv_obj_clean(phase_cont);
 
@@ -78,7 +135,6 @@ void render_phase() {
             lv_obj_center(lbl);
 
             // TODO: Add object for changing track width.
-            // TODO: Add dropdown for changing wheel type.
             // TODO: Add object for changing RPM.
             // TOOD: Add object for changing horizontal drift.
 
@@ -92,9 +148,7 @@ void render_phase() {
             lv_label_set_text(lbl, "Tracking wheel object configurations");
             lv_obj_center(lbl);
 
-            // TODO: Add dropdown for horizontal tracking wheel type.
             // TODO: Add something for something with the horizontal tracking wheel.
-
             // TODO: That again, but for the vertical tracking wheel.
 
             break;
@@ -111,9 +165,17 @@ void render_phase() {
             lv_label_set_text(lbl2, "Gain (k)");
             lv_obj_center(lbl2);
 
-            // TODO: Add object for changing kP.
-            // TODO: Add object for changing kI.
-            // TODO: Add object for changing kD.
+            lv_obj_t * kP_tuning_spinbox = create_lemtuning_spinbox_object(phase_cont, "kP", &testingLateralkP, 0, 1000, 4, 2);
+            create_lemtuning_spinbox_minus_btn(phase_cont, kP_tuning_spinbox);
+            create_lemtuning_spinbox_plus_btn(phase_cont, kP_tuning_spinbox);
+
+            lv_obj_t * kI_tuning_spinbox = create_lemtuning_spinbox_object(phase_cont, "kI", &testingLateralkI, 0, 1000, 4, 2);
+            create_lemtuning_spinbox_minus_btn(phase_cont, kI_tuning_spinbox);
+            create_lemtuning_spinbox_plus_btn(phase_cont, kI_tuning_spinbox);
+
+            lv_obj_t * kD_tuning_spinbox = create_lemtuning_spinbox_object(phase_cont, "kD", &testingLateralkD, 0, 1000, 4, 2);
+            create_lemtuning_spinbox_minus_btn(phase_cont, kD_tuning_spinbox);
+            create_lemtuning_spinbox_plus_btn(phase_cont, kD_tuning_spinbox);
 
             break;
         };
