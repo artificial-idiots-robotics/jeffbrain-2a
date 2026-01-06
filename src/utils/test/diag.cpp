@@ -1,3 +1,4 @@
+#include "interface.hpp"
 #include "tabs/test.hpp"
 
 enum class TestPhase {
@@ -91,7 +92,7 @@ lv_obj_t * create_digital_out_toggle_sw(lv_obj_t * parent, const char * label_te
     return sw;
 }
 
-void telemetry_task_fn(void* param) {
+void diag_sensors_telemetry_task_fn(void* param) {
     while (true) {
         if (current_test_phase == TestPhase::SENSORS) {
             if (bumper_led_ptr != NULL) {
@@ -117,7 +118,7 @@ void telemetry_task_fn(void* param) {
     }
 }
 
-lv_obj_t * create_test_phase_label(lv_obj_t * parent, std::string labelText) {
+lv_obj_t * create_test_phase_label(lv_obj_t * parent, char * labelText) {
     lv_obj_t * label = lv_label_create(parent);
     lv_label_set_text(label, labelText);
     lv_obj_center(label);
@@ -184,7 +185,7 @@ void render_phase() {
         case TestPhase::DRIVEBASE_MOTORS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
-            create_test_phase_label(phase_cont, "Drivebase motor tests")
+            create_test_phase_label(phase_cont, "Drivebase motor tests");
             create_test_phase_label(phase_cont, "Individual testing");
 
             lv_obj_t * drivebase_lf_test_btn = create_motor_test_btn(phase_cont, "Test drivebase LF", drivebase_lf);

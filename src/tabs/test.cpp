@@ -18,5 +18,5 @@ void create_test_tab(lv_obj_t * parent_tab) {
     lv_obj_set_style_bg_color(start_lemtuning_btn, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
     lv_obj_set_style_shadow_width(start_lemtuning_btn, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
 
-    pros::Task telemetry_task(telemetry_task_fn);
+    pros::Task telemetry_task(diag_sensors_telemetry_task_fn);
 }
