@@ -30,4 +30,17 @@ void create_settings_tab(lv_obj_t * parent_tab) {
         lv_obj_set_style_bg_color(list, M3_ACCENT_COLOR, LV_PART_SELECTED);
         lv_obj_set_style_text_color(list, lv_color_white(), LV_PART_SELECTED);
     }
+
+    lv_obj_t * speed_spinbox = lv_spinbox_create(cont);
+    lv_spinbox_set_digit_format(speed_spinbox, 3, 0);
+    lv_spinbox_set_range(speed_spinbox, 0, 100);
+    lv_spinbox_set_value(speed_spinbox, 100);
+    
+    lv_obj_add_event_cb(speed_spinbox, [](lv_event_t * e) {
+        if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
+            lv_obj_t * sb = (lv_obj_t *)lv_event_get_target(e);
+            int * var = (int *)lv_event_get_user_data(e);
+            if (var) *var = lv_spinbox_get_value(sb);
+        }
+    }, LV_EVENT_VALUE_CHANGED, &max_drive_speed);
 }

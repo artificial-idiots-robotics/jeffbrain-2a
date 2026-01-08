@@ -23,7 +23,7 @@ extern lv_obj_t * auton_status_label;
 
 extern ControlMode control_mode;
 extern AutonRoutine selected_auton;
-extern int drive_speed_modifier;
+extern int max_drive_speed;
 
 typedef struct {
     lv_obj_t * container;
