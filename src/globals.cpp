@@ -32,8 +32,7 @@ lemlib::Drivetrain drivebase(
     2 // Horizontal drift
 );
 
-// Honestly, just read the variable names.
-// pros::Imu imu(10); ... we don't have an IMU.
+// pros::Imu imu(10); Jeff 2+ does not have an IMU installed yet. They're too expensive.
 
 lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, -5.75);
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib:: Omniwheel::NEW_275, -2.5);
