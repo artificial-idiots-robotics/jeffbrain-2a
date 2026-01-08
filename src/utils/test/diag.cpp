@@ -297,7 +297,7 @@ static void next_phase_cb(lv_event_t * e) {
         return;
     }
 
-    current_test_phase == static_cast<TestPhase>((int)current_test_phase + 1);
+    current_test_phase = static_cast<TestPhase>((int)current_test_phase + 1);
     render_phase();
 }
 
