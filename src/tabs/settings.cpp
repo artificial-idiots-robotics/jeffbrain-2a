@@ -19,7 +19,7 @@ void create_settings_tab(lv_obj_t * parent_tab) {
 
     lv_obj_set_style_radius(control_mode_dropdown, 15, LV_PART_MAIN);
     lv_obj_set_style_bg_color(control_mode_dropdown, lv_color_hex(0x49454F), LV_PART_MAIN);    
-    lv_obj_set_style_bg_color(control_mode_dropdown, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED);
+    lv_obj_set_style_bg_color(control_mode_dropdown, M3_ACCENT_COLOR, (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_PRESSED));
     lv_obj_set_style_text_color(control_mode_dropdown, lv_color_white(), LV_PART_MAIN);
 
     lv_obj_t * list = lv_dropdown_get_list(control_mode_dropdown);

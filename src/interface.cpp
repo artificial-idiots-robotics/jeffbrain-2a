@@ -14,7 +14,7 @@ lv_style_t style_tempbar_indicator;
 lv_obj_t * main_tabview = NULL;
 
 AutonRoutine selected_auton = AutonRoutine::NONE;
-ControlMode control_mode = ControlMode::TANK;
+ControlMode control_mode = ControlMode::ARCADE;
 
 lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow) {
     lv_obj_t * cont = lv_obj_create(parent_tab);
@@ -66,10 +66,10 @@ void initialize_interface() {
 
     lv_obj_set_style_radius(tab_bar, M3_RADIUS, LV_PART_INDICATOR);
     lv_obj_set_style_bg_color(tab_bar, M3_ACCENT_COLOR, LV_PART_INDICATOR);
-    lv_obj_set_style_text_color(tab_bar, lv_color_hex(0xFFFBFE), LV_STATE_CHECKED | LV_PART_ITEMS);
+    lv_obj_set_style_text_color(tab_bar, lv_color_hex(0xFFFBFE), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_ITEMS));
 
-    lv_obj_set_style_width(tab_bar, LV_PCT(100), LV_STATE_CHECKED | LV_PART_INDICATOR);
-    lv_obj_set_style_height(tab_bar, LV_PCT(100), LV_STATE_CHECKED | LV_PART_INDICATOR);
+    lv_obj_set_style_width(tab_bar, LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
+    lv_obj_set_style_height(tab_bar, LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
 
     lv_obj_set_style_bg_color(main_tabview, M3_SURFACE_COLOR, LV_PART_MAIN);
     lv_obj_set_style_pad_all(main_tabview, 0, LV_PART_MAIN);

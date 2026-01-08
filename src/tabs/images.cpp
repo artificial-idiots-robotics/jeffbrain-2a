@@ -20,10 +20,10 @@ static void image_button_action(lv_event_t * e) {
     if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
         if (lv_obj_has_flag(target_image, LV_OBJ_FLAG_HIDDEN)) {
             lv_obj_clear_flag(target_image, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_set_style_bg_color(btn, LV_COLOR_MAKE(0, 255, 0), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(btn, LV_COLOR_MAKE(0, 255, 0), (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_DEFAULT));
         } else {
             lv_obj_add_flag(target_image, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_set_style_bg_color(btn, LV_COLOR_MAKE(255, 0, 0), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_color(btn, LV_COLOR_MAKE(255, 0, 0), (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_DEFAULT));
         }
     }
 }

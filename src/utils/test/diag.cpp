@@ -118,7 +118,7 @@ void diag_sensors_telemetry_task_fn(void* param) {
     }
 }
 
-lv_obj_t * create_test_phase_label(lv_obj_t * parent, char * labelText) {
+void create_test_phase_label(lv_obj_t * parent, const char * labelText) {
     lv_obj_t * label = lv_label_create(parent);
     lv_label_set_text(label, labelText);
     lv_obj_center(label);

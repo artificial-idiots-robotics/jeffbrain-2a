@@ -1,5 +1,7 @@
 #include "interface.hpp"
 
+lv_obj_t * auton_status_label = NULL;
+
 static void auton_btn_click_action(lv_event_t * e) {
     lv_obj_t * btn = (lv_obj_t *)lv_event_get_target(e);
 
@@ -26,8 +28,8 @@ lv_obj_t * create_auton_button(lv_obj_t * parent, const auton_button_data_t * da
     lv_obj_set_user_data(btn, (void*)(intptr_t)data->user_id);
     lv_obj_add_event_cb(btn, auton_btn_click_action, LV_EVENT_CLICKED, NULL);
     lv_obj_add_style(btn, &style_m3_btn, 0);
-    lv_obj_set_style_bg_color(btn, M3_ACCENT_COLOR, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
-    lv_obj_set_style_shadow_width(btn, 0, LV_PART_MAIN | LV_STATE_PRESSED | LV_STATE_CHECKED);
+    lv_obj_set_style_bg_color(btn, M3_ACCENT_COLOR, (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_PRESSED) | LV_STATE_CHECKED);
+    lv_obj_set_style_shadow_width(btn, 0, (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_PRESSED) | LV_STATE_CHECKED);
 
     lv_obj_t * label = lv_label_create(btn);
     lv_label_set_text(label, data->label_text);
