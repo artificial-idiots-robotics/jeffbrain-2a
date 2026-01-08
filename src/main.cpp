@@ -80,7 +80,7 @@ void opcontrol() {
                 int dir = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
                 int turn = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-                chassis.arcade(dir, turn);
+                chassis.arcade(dir / (drive_speed_modifier / 100.0), turn / (drive_speed_modifier / 100.0));
                 break;
             }
 
@@ -88,7 +88,7 @@ void opcontrol() {
                 int leftdrive = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
                 int rightdrive = master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
-                chassis.tank(leftdrive, rightdrive);
+                chassis.tank(leftdrive / (drive_speed_modifier / 100.0), rightdrive / (drive_speed_modifier / 100.0));
                 break;
             }
 

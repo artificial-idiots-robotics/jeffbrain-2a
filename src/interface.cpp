@@ -15,6 +15,7 @@ lv_obj_t * main_tabview = NULL;
 
 AutonRoutine selected_auton = AutonRoutine::NONE;
 ControlMode control_mode = ControlMode::ARCADE;
+int drive_speed_modifier = 100;
 
 lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow) {
     lv_obj_t * cont = lv_obj_create(parent_tab);
