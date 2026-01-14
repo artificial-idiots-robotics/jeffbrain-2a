@@ -31,11 +31,12 @@ static void image_button_action(lv_event_t * e) {
 void create_image_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_ROW);
 
-    extern const lv_img_dsc_t minnow_a;
-
     const image_data_t images[] = {
-        {"Minnow A", 10, 10, &minnow_a},
-        {"Minnow B", 10, 10, nullptr} // Placeholder for second image
+        {"Minnow", 10, 10, &minnow},
+        {"Beetle", 10, 10, &beetle},
+        {"Goose", 10, 10, &goose},
+        {"Oreo", 10, 10, &oreo},
+        {"Smudge", 10, 10, &smudge}
     };
 
     int count = sizeof(images) / sizeof(images[0]);

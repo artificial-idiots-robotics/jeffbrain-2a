@@ -49,7 +49,11 @@ typedef struct {
 extern pros::MotorGroup drivebase;
 extern pros::MotorGroup intake_motors;
 
-extern const lv_img_dsc_t minnow_a;
+extern const lv_img_dsc_t minnow;
+extern const lv_img_dsc_t beetle;
+extern const lv_img_dsc_t goose;
+extern const lv_img_dsc_t oreo;
+extern const lv_img_dsc_t smudge;
 
 lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow);
 lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src, lv_coord_t x_pos, lv_coord_t y_pos);
