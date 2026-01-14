@@ -41,8 +41,6 @@ typedef struct {
 
 typedef struct {
     const char * label_text;
-    lv_coord_t x_pos;
-    lv_coord_t y_pos;
     const lv_img_dsc_t * src;
 } image_data_t;
 
@@ -66,6 +64,6 @@ void create_settings_tab(lv_obj_t * parent_tab);
 void create_stats_tab(lv_obj_t * parent_tab);
 void create_test_tab(lv_obj_t * parent_tab);
 
-const int MAX_IMAGES = 2;
+const int MAX_IMAGES = 5;
 
 #endif // _INTERFACE_HPP_

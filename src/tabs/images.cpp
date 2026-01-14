@@ -9,10 +9,9 @@ static void hide_modal_event_cb(lv_event_t * e) {
     lv_obj_add_flag(modal_overlay, LV_OBJ_FLAG_HIDDEN);
 }   
 
-lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src, lv_coord_t x_pos, lv_coord_t y_pos) {
+lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src) {
     lv_obj_t * img = lv_img_create(parent);
     lv_img_set_src(img, src);
-    lv_obj_set_pos(img, x_pos, y_pos);
     lv_obj_align(img, LV_ALIGN_CENTER, 0, 0);
     lv_obj_add_flag(img, LV_OBJ_FLAG_HIDDEN);
     return img;
@@ -51,17 +50,17 @@ void create_image_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
     const image_data_t images[] = {
-        {"Minnow", 10, 10, &minnow},
-        {"Beetle", 10, 10, &beetle},
-        {"Goose", 10, 10, &goose},
-        {"Oreo", 10, 10, &oreo},
-        {"Smudge", 10, 10, &smudge}
+        {"Minnow", &minnow},
+        {"Beetle", &beetle},
+        {"Goose", &goose},
+        {"Oreo", &oreo},
+        {"Smudge", &smudge}
     };
 
     int count = sizeof(images) / sizeof(images[0]);
 
     for (int i = 0; i < count; i++) {
-        image_objects[i] = create_image_obj(cont, images[i].src, images[i].x_pos, images[i].y_pos);
+        image_objects[i] = create_image_obj(cont, images[i].src);
 
         lv_obj_t * btn = lv_btn_create(cont);
         lv_obj_set_size(btn, 100, 40);
