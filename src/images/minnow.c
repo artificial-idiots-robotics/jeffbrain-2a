@@ -6,11 +6,7 @@
     #endif
 #endif
 
-#if defined(LV_LVGL_H_INCLUDE_SIMPLE)
-    #include "lvgl.h"
-#else
-    #include "liblvgl/lvgl.h"
-#endif
+#include "liblvgl/lvgl.h"
 
 
 #ifndef LV_ATTRIBUTE_MEM_ALIGN
