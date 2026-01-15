@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-#include "cpp/dislike/dislike.h"
+#include "lib/material-color/dislike/dislike.h"
 
 #include <cmath>
 
-#include "cpp/cam/hct.h"
+#include "lib/material-color/cam/hct.h"
 
 namespace material_color_utilities {
 

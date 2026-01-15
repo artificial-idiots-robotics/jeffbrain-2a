@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "cpp/quantize/wsmeans.h"
+#include "lib/material-color/quantize/wsmeans.h"
 
 #include <algorithm>
 #include <cmath>
@@ -27,8 +27,7 @@
 #include <unordered_set>
 #include <vector>
 
-#include "absl/container/flat_hash_map.h"
-#include "cpp/quantize/lab.h"
+#include "lib/material-color/quantize/lab.h"
 
 constexpr int kMaxIterations = 100;
 constexpr double kMinDeltaE = 3.0;
@@ -64,9 +63,9 @@ QuantizerResult QuantizeWsmeans(const std::vector<Argb>& input_pixels,
   }
 
   uint32_t pixel_count = input_pixels.size();
-  absl::flat_hash_map<Argb, int> pixel_to_count;
+  uint32_t pixel_count = input_pixels.size();
+  std::unordered_map<Argb, int> pixel_to_count;
   std::vector<uint32_t> pixels;
-  pixels.reserve(pixel_count);
   std::vector<Lab> points;
   points.reserve(pixel_count);
   for (Argb pixel : input_pixels) {
@@ -75,7 +74,7 @@ QuantizerResult QuantizeWsmeans(const std::vector<Argb>& input_pixels,
     // std::unordered_map 10.2 ms
     // absl::btree_map 9.0 ms
     // absl::flat_hash_map 8.0 ms
-    absl::flat_hash_map<Argb, int>::iterator it = pixel_to_count.find(pixel);
+    std::unordered_map<Argb, int>::iterator it = pixel_to_count.find(pixel);
     if (it != pixel_to_count.end()) {
       it->second++;
 

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#include "cpp/contrast/contrast.h"
+#include "lib/material-color/contrast/contrast.h"
 
 #include <algorithm>
 #include <cmath>
 
-#include "cpp/utils/utils.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 // Given a color and a contrast ratio to reach, the luminance of a color that

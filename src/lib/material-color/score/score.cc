@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "cpp/score/score.h"
+#include "lib/material-color/score/score.h"
 
 #include <algorithm>
 #include <cmath>
@@ -23,8 +23,8 @@
 #include <utility>
 #include <vector>
 
-#include "cpp/cam/hct.h"
-#include "cpp/utils/utils.h"
+#include "lib/material-color/cam/hct.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 
