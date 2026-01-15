@@ -62,10 +62,12 @@ QuantizerResult QuantizeWsmeans(const std::vector<Argb>& input_pixels,
     max_colors = 256;
   }
 
+  uint32_t pixel_count = input_pixels.size();
+  uint32_t pixel_count = input_pixels.size();
   std::unordered_map<Argb, int> pixel_to_count;
   std::vector<uint32_t> pixels;
   std::vector<Lab> points;
-  points.reserve(input_pixels.size());
+  points.reserve(pixel_count);
   for (Argb pixel : input_pixels) {
     // tested over 1000 runs with 128 colors, 12544 (112 x 112)
     // std::map 10.9 ms
