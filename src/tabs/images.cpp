@@ -20,10 +20,6 @@ lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src) {
 static void image_button_action(lv_event_t * e) {
     int index = (int)(intptr_t)lv_obj_get_user_data((lv_obj_t *)lv_event_get_target(e));
 
-    if (index < 0 || index >= MAX_IMAGES || !image_objects[index]) {
-        return;
-    }
-
     lv_obj_t * target_image = image_objects[index];
 
     if (modal_overlay) {
@@ -51,7 +47,6 @@ void create_modal_system() {
 }
 
 void create_image_tab(lv_obj_t * parent_tab) {
-    create_modal_system();
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
     const image_data_t images[] = {
@@ -77,6 +72,5 @@ void create_image_tab(lv_obj_t * parent_tab) {
         
         lv_obj_t * label = lv_label_create(btn);
         lv_label_set_text(label, images[i].label_text);
-        lv_obj_center(label);
     }
 }
