@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-#include "lib/material-color/scheme/scheme_content.h"
+#include "cpp/scheme/scheme_content.h"
 
 #include <cmath>
 
-#include "lib/material-color/cam/hct.h"
-#include "lib/material-color/dislike/dislike.h"
-#include "lib/material-color/dynamiccolor/dynamic_scheme.h"
-#include "lib/material-color/dynamiccolor/variant.h"
-#include "lib/material-color/palettes/tones.h"
-#include "lib/material-color/temperature/temperature_cache.h"
+#include "cpp/cam/hct.h"
+#include "cpp/dislike/dislike.h"
+#include "cpp/dynamiccolor/dynamic_scheme.h"
+#include "cpp/dynamiccolor/variant.h"
+#include "cpp/palettes/tones.h"
+#include "cpp/temperature/temperature_cache.h"
 
 namespace material_color_utilities {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "lib/material-color/dynamiccolor/dynamic_color.h"
+#include "cpp/dynamiccolor/dynamic_color.h"
 
 #include <algorithm>
 #include <cmath>
@@ -23,11 +23,11 @@
 #include <string>
 #include <vector>
 
-#include "lib/material-color/cam/hct.h"
-#include "lib/material-color/contrast/contrast.h"
-#include "lib/material-color/dynamiccolor/dynamic_scheme.h"
-#include "lib/material-color/dynamiccolor/tone_delta_pair.h"
-#include "lib/material-color/palettes/tones.h"
+#include "cpp/cam/hct.h"
+#include "cpp/contrast/contrast.h"
+#include "cpp/dynamiccolor/dynamic_scheme.h"
+#include "cpp/dynamiccolor/tone_delta_pair.h"
+#include "cpp/palettes/tones.h"
 
 namespace material_color_utilities {
 

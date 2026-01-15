@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-#include "lib/material-color/scheme/scheme_expressive.h"
+#include "cpp/scheme/scheme_expressive.h"
 
 #include <vector>
 
-#include "lib/material-color/cam/hct.h"
-#include "lib/material-color/dynamiccolor/dynamic_scheme.h"
-#include "lib/material-color/dynamiccolor/variant.h"
-#include "lib/material-color/palettes/tones.h"
+#include "cpp/cam/hct.h"
+#include "cpp/dynamiccolor/dynamic_scheme.h"
+#include "cpp/dynamiccolor/variant.h"
+#include "cpp/palettes/tones.h"
 
 namespace material_color_utilities {
 

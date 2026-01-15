@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-#include "lib/material-color/palettes/tones.h"
+#include "cpp/palettes/tones.h"
 
 #include <cmath>
 
-#include "lib/material-color/cam/cam.h"
-#include "lib/material-color/cam/hct.h"
+#include "cpp/cam/cam.h"
+#include "cpp/cam/hct.h"
 
 namespace material_color_utilities {
 

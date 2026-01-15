@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#include "lib/material-color/utils/utils.h"
+#include "cpp/utils/utils.h"
 
 #include <math.h>
 
@@ -24,8 +24,7 @@
 #include <cstdio>
 #include <string>
 
-#include <iomanip>
-#include <sstream>
+#include "absl/strings/str_cat.h"
 
 namespace material_color_utilities {
 
@@ -137,14 +136,11 @@ double RotationDirection(const double from, const double to) {
   double increasing_difference = SanitizeDegreesDouble(to - from);
   return increasing_difference <= 180.0 ? 1.0 : -1.0;
 }
+
 // Converts a color in ARGB format to a hexadecimal string in lowercase.
 //
 // For instance: hex_from_argb(0xff012345) == "ff012345"
-std::string HexFromArgb(Argb argb) {
-  std::stringstream ss;
-  ss << std::hex << std::setw(8) << std::setfill('0') << argb;
-  return ss.str();
-}
+std::string HexFromArgb(Argb argb) { return absl::StrCat(absl::Hex(argb)); }
 
 Argb IntFromLstar(const double lstar) {
   double y = YFromLstar(lstar);

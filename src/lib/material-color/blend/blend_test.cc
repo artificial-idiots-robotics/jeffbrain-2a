@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,29 +14,18 @@
  * limitations under the License.
  */
 
-#include "cpp/dislike/dislike.h"
+#include "lib/material-color/blend/blend.h"
 
-#include <cmath>
-
-#include "cpp/cam/hct.h"
+#include "testing/base/public/gunit.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 
-bool IsDisliked(Hct hct) {
-  double roundedHue = std::round(hct.get_hue());
-
-  bool hue_passes = roundedHue >= 90.0 && roundedHue <= 111.0;
-  bool chroma_passes = std::round(hct.get_chroma()) > 16.0;
-  bool tone_passes = std::round(hct.get_tone()) < 65.0;
-
-  return hue_passes && chroma_passes && tone_passes;
+namespace {
+TEST(BlendTest, RedToBlue) {
+  int blended = BlendHctHue(0xffff0000, 0xff0000ff, 0.8);
+  EXPECT_EQ(HexFromArgb(blended), "ff905eff");
 }
+}  // namespace
 
-Hct FixIfDisliked(Hct hct) {
-  if (IsDisliked(hct)) {
-    return Hct(hct.get_hue(), hct.get_chroma(), 70.0);
-  }
-
-  return hct;
-}
 }  // namespace material_color_utilities
