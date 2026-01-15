@@ -44,6 +44,32 @@ typedef struct {
     const lv_img_dsc_t * src;
 } image_data_t;
 
+struct RobotTheme {
+    lv_color_t primary;
+    lv_color_t on_primary;
+    lv_color_t primary_container;
+    lv_color_t on_primary_container;
+    lv_color_t secondary;
+    lv_color_t on_secondary;
+    lv_color_t secondary_container;
+    lv_color_t on_secondary_container;
+    lv_color_t tertiary;
+    lv_color_t on_tertiary;
+    lv_color_t tertiary_container;
+    lv_color_t on_tertiary_container;
+    lv_color_t error;
+    lv_color_t on_error;
+    lv_color_t error_container;
+    lv_color_t on_error_container;
+    lv_color_t background;
+    lv_color_t on_background;
+    lv_color_t surface;
+    lv_color_t on_surface;
+    lv_color_t surface_variant;
+    lv_color_t on_surface_variant;
+    lv_color_t outline;
+};
+
 extern pros::MotorGroup drivebase;
 extern pros::MotorGroup intake_motors;
 
@@ -65,5 +91,7 @@ void create_stats_tab(lv_obj_t * parent_tab);
 void create_test_tab(lv_obj_t * parent_tab);
 
 const int MAX_IMAGES = 5;
+
+RobotTheme current_theme;
 
 #endif // _INTERFACE_HPP_
