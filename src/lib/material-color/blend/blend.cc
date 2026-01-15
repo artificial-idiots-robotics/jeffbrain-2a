@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#include "cpp/blend/blend.h"
+#include "lib/material-color/blend/blend.h"
 
 #include <algorithm>
 #include <cstdint>
 
-#include "cpp/cam/cam.h"
-#include "cpp/cam/hct.h"
-#include "cpp/cam/viewing_conditions.h"
-#include "cpp/utils/utils.h"
+#include "lib/material-color/cam/cam.h"
+#include "lib/material-color/cam/hct.h"
+#include "lib/material-color/cam/viewing_conditions.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 

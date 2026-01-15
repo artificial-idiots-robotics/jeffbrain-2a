@@ -21,7 +21,7 @@
 
 #include <vector>
 
-#include "cpp/utils/utils.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 

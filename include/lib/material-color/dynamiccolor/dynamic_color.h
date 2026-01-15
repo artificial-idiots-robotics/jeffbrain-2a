@@ -21,10 +21,10 @@
 #include <optional>
 #include <string>
 
-#include "cpp/cam/hct.h"
-#include "cpp/dynamiccolor/contrast_curve.h"
-#include "cpp/dynamiccolor/dynamic_scheme.h"
-#include "cpp/utils/utils.h"
+#include "lib/material-color/cam/hct.h"
+#include "lib/material-color/dynamiccolor/contrast_curve.h"
+#include "lib/material-color/dynamiccolor/dynamic_scheme.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 

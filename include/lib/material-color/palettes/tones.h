@@ -19,8 +19,8 @@
 
 #include <unordered_map>
 
-#include "cpp/cam/hct.h"
-#include "cpp/utils/utils.h"
+#include "lib/material-color/cam/hct.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 

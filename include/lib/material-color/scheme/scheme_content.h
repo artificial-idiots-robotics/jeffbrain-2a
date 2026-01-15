@@ -17,8 +17,8 @@
 #ifndef CPP_SCHEME_SCHEME_CONTENT_H_
 #define CPP_SCHEME_SCHEME_CONTENT_H_
 
-#include "cpp/cam/hct.h"
-#include "cpp/dynamiccolor/dynamic_scheme.h"
+#include "lib/material-color/cam/hct.h"
+#include "lib/material-color/dynamiccolor/dynamic_scheme.h"
 
 namespace material_color_utilities {
 

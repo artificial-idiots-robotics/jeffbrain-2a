@@ -17,8 +17,8 @@
 #ifndef CPP_CAM_CAM_H_
 #define CPP_CAM_CAM_H_
 
-#include "cpp/cam/viewing_conditions.h"
-#include "cpp/utils/utils.h"
+#include "lib/material-color/cam/viewing_conditions.h"
+#include "lib/material-color/utils/utils.h"
 
 namespace material_color_utilities {
 

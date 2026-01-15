@@ -17,7 +17,7 @@
 #ifndef CPP_DISLIKE_DISLIKE_H_
 #define CPP_DISLIKE_DISLIKE_H_
 
-#include "cpp/cam/hct.h"
+#include "lib/material-color/cam/hct.h"
 
 namespace material_color_utilities {
 
