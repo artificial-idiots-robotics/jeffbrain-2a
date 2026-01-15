@@ -26,15 +26,11 @@ lv_obj_t * create_settings_spinbox_row(lv_obj_t * parent, const char * label_tex
     lv_spinbox_set_range(spinbox, min, max);
     lv_spinbox_set_step(spinbox, step);
     lv_spinbox_set_value(spinbox, *bound_variable);
-    lv_obj_set_style_bg_color(spinbox, current_theme.surface, LV_PART_MAIN);
-    lv_obj_set_style_text_color(spinbox, current_theme.on_surface, LV_PART_MAIN);
 
     lv_obj_t * up_btn = lv_btn_create(cont);
     lv_obj_set_size(up_btn, 40, 40);
     lv_obj_t * up_label = lv_label_create(up_btn);
     lv_label_set_text(up_label, LV_SYMBOL_UP);
-    lv_obj_set_style_bg_color(up_btn, current_theme.primary, LV_PART_MAIN);
-    lv_obj_set_style_text_color(up_label, current_theme.on_primary, LV_PART_MAIN);
     lv_obj_add_event_cb(up_btn, [](lv_event_t * e) {
         if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
             lv_obj_t * sb = (lv_obj_t *)lv_event_get_user_data(e);
@@ -47,8 +43,6 @@ lv_obj_t * create_settings_spinbox_row(lv_obj_t * parent, const char * label_tex
     lv_obj_set_size(down_btn, 40, 40);
     lv_obj_t * down_label = lv_label_create(down_btn);
     lv_label_set_text(down_label, LV_SYMBOL_DOWN);
-    lv_obj_set_style_bg_color(down_btn, current_theme.primary, LV_PART_MAIN);
-    lv_obj_set_style_text_color(down_label, current_theme.on_primary, LV_PART_MAIN);
     lv_obj_add_event_cb(down_btn, [](lv_event_t * e) {
         if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
             lv_obj_t * sb = (lv_obj_t *)lv_event_get_user_data(e);

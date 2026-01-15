@@ -1,8 +1,5 @@
 #include "interface.hpp"
 #include "globals.hpp"
-#include "utils/helpers.hpp"
-
-RobotTheme current_theme;
 
 const lv_color_t M3_ACCENT_COLOR = lv_color_hex(0x6750A4);
 const lv_color_t M3_SURFACE_COLOR = lv_color_hex(0x201A2B);
