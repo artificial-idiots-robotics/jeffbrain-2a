@@ -17,7 +17,7 @@
 #ifndef CPP_CAM_HCT_H_
 #define CPP_CAM_HCT_H_
 
-#include "lib/material-color/utils/utils.h"
+#include "cpp/utils/utils.h"
 
 namespace material_color_utilities {
 

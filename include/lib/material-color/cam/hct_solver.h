@@ -17,7 +17,7 @@
 #ifndef CPP_CAM_HCT_SOLVER_H_
 #define CPP_CAM_HCT_SOLVER_H_
 
-#include "lib/material-color/cam/cam.h"
+#include "cpp/cam/cam.h"
 
 namespace material_color_utilities {
 

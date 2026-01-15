@@ -17,7 +17,7 @@
 #ifndef CPP_DYNAMICCOLOR_CONTRAST_CURVE_H_
 #define CPP_DYNAMICCOLOR_CONTRAST_CURVE_H_
 
-#include "lib/material-color/utils/utils.h"
+#include "cpp/utils/utils.h"
 
 namespace material_color_utilities {
 

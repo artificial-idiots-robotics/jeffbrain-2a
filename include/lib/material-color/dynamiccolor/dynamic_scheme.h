@@ -20,10 +20,10 @@
 #include <optional>
 #include <vector>
 
-#include "lib/material-color/cam/hct.h"
-#include "lib/material-color/dynamiccolor/variant.h"
-#include "lib/material-color/palettes/tones.h"
-#include "lib/material-color/utils/utils.h"
+#include "cpp/cam/hct.h"
+#include "cpp/dynamiccolor/variant.h"
+#include "cpp/palettes/tones.h"
+#include "cpp/utils/utils.h"
 
 namespace material_color_utilities {
 

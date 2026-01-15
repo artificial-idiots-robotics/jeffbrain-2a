@@ -17,8 +17,8 @@
 #ifndef CPP_SCHEME_SCHEME_TONAL_SPOT_H_
 #define CPP_SCHEME_SCHEME_TONAL_SPOT_H_
 
-#include "lib/material-color/cam/hct.h"
-#include "lib/material-color/dynamiccolor/dynamic_scheme.h"
+#include "cpp/cam/hct.h"
+#include "cpp/dynamiccolor/dynamic_scheme.h"
 
 namespace material_color_utilities {
 
