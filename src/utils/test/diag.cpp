@@ -279,7 +279,6 @@ void render_phase() {
             create_test_phase_label(phase_cont, "LED tests");
 
             lv_obj_t * status_led_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 1", status_LED_1);
-            lv_obj_t * status_led_2_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 2", status_LED_2);
 
             break;
         };
