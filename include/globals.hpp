@@ -20,8 +20,8 @@ extern pros::adi::Encoder horizontal_encoder;
 extern pros::adi::Encoder vertical_encoder;
 
 extern pros::adi::DigitalOut pneumatics_piston_1;
+extern pros::adi::DigitalOut pneumatics_piston_2;
 extern pros::adi::DigitalOut status_LED_1;
-extern pros::adi::DigitalOut status_LED_2;
 
 extern lemlib::Chassis chassis;
 
