@@ -16,11 +16,11 @@ pros::MotorGroup intake_motors({6, 8}, pros::MotorGears::red);
 pros::adi::Encoder horizontal_encoder('A', 'B', true);
 pros::adi::Encoder vertical_encoder('C', 'D', true);
 
-pros::adi::DigitalIn bumper_sensor('E');
+pros::adi::Pneumatics pneumatics_piston_1('E', false, false);
+pros::adi::Pneumatics pneumatics_piston_2('F', false, false);
 
-pros::adi::DigitalOut pneumatics_piston_1('F');
-pros::adi::DigitalOut pneumatics_piston_2('G');
-pros::adi::DigitalOut status_LED_1('H');
+pros::adi::DigitalOut status_LED_1('G');
+pros::adi::DigitalOut status_LED_2('H');
 
 // TODO: Replace numbers when Jeff 2+ is complete.
 lemlib::Drivetrain drivebase(

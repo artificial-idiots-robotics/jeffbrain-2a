@@ -14,13 +14,11 @@ extern pros::Motor chain_motor;
 extern pros::MotorGroup drivebase_l;
 extern pros::MotorGroup drivebase_r;
 
-extern pros::adi::DigitalIn bumper_sensor;
-
 extern pros::adi::Encoder horizontal_encoder;
 extern pros::adi::Encoder vertical_encoder;
 
-extern pros::adi::DigitalOut pneumatics_piston_1;
-extern pros::adi::DigitalOut pneumatics_piston_2;
+extern pros::adi::Pneumatics pneumatics_piston_1;
+extern pros::adi::Pneumatics pneumatics_piston_2;
 extern pros::adi::DigitalOut status_LED_1;
 
 extern lemlib::Chassis chassis;
@@ -40,6 +38,12 @@ enum class AutonRoutine {
     BLU_LEFT = 3,
     BLU_RIGHT = 4,
     SKILLS = 5
+};
+
+struct MotorConfig {
+    pros::Motor motor;
+    pros::v5::MotorGears gear;
+    pros::MotorEncoderUnits encoder_units;
 };
 
 #endif // _GLOBALS_HPP_

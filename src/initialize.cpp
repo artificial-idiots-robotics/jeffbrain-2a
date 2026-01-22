@@ -5,29 +5,20 @@
 void initialize() {
     chassis.setPose(0, 0, 0);
 
-    drivebase_lf.set_gearing(pros::v5::MotorGears::blue);
-    drivebase_rf.set_gearing(pros::v5::MotorGears::blue);
-    drivebase_lb.set_gearing(pros::v5::MotorGears::blue);
-    drivebase_rb.set_gearing(pros::v5::MotorGears::blue);
-    intake_motor_a.set_gearing(pros::v5::MotorGears::red);
-    intake_motor_b.set_gearing(pros::v5::MotorGears::red);
-    chain_motor.set_gearing(pros::v5::MotorGears::red);
+    std::array<MotorConfig, 7> motor_configs = {{
+        {drivebase_lf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {drivebase_rf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {drivebase_lb, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {drivebase_rb, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {intake_motor_a, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees},
+        {intake_motor_b, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees},
+        {chain_motor, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees}
+    }};
 
-    drivebase_lf.set_encoder_units(pros::MotorEncoderUnits::degrees);
-    drivebase_rf.set_encoder_units(pros::MotorEncoderUnits::degrees);
-    drivebase_lb.set_encoder_units(pros::MotorEncoderUnits::degrees);
-    drivebase_rb.set_encoder_units(pros::MotorEncoderUnits::degrees);
-    intake_motor_a.set_encoder_units(pros::MotorEncoderUnits::degrees);
-    intake_motor_b.set_encoder_units(pros::MotorEncoderUnits::degrees);
-    chain_motor.set_encoder_units(pros::MotorEncoderUnits::degrees);
-
-    drivebase_lf.set_reversed(false);
-    drivebase_rf.set_reversed(false);
-    drivebase_lb.set_reversed(false);
-    drivebase_rb.set_reversed(false);
-    intake_motor_a.set_reversed(false);
-    intake_motor_b.set_reversed(false);
-    chain_motor.set_reversed(false);
+    for (auto& cfg : motor_configs) {
+        cfg.motor.set_gearing(cfg.gear);
+        cfg.motor.set_encoder_units(cfg.encoder_units);
+    }
 
     initialize_interface();
 }

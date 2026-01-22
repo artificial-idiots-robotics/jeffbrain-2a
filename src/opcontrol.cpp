@@ -34,6 +34,13 @@ void opcontrol() {
             }
         }
 
+        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+            pneumatics_piston_1.toggle();
+            pneumatics_piston_2.toggle();
+
+            pros::delay(300);
+        }
+
         pros::delay(5);
 	}
 }
