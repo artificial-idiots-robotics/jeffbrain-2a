@@ -1,5 +1,4 @@
 #include "main.h"
-#include "globals.hpp"
 
 #ifndef _INTERFACE_HPP_
 #define _INTERFACE_HPP_
