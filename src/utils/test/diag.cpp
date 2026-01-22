@@ -11,7 +11,7 @@ enum class TestPhase {
     INTAKE_GROUP,
     CHAIN,
     PNEUMATICS,
-    STATUS_LEDS,
+    STATUS_LED,
     COMPLETE
 };
 
@@ -268,17 +268,17 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Ensure air tank is filled.");
             
             lv_obj_t * pneumatics_piston_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 1", pneumatics_piston_1);
+            lv_obj_t * pneumatics_piston_2_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 2", pneumatics_piston_2);
 
             break;
         };
 
-        case TestPhase::STATUS_LEDS: {
+        case TestPhase::STATUS_LED: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
             create_test_phase_label(phase_cont, "LED tests");
 
             lv_obj_t * status_led_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 1", status_LED_1);
-            lv_obj_t * status_led_2_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 2", status_LED_2);
 
             break;
         };

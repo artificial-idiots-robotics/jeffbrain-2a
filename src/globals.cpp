@@ -19,8 +19,8 @@ pros::adi::Encoder vertical_encoder('C', 'D', true);
 pros::adi::DigitalIn bumper_sensor('E');
 
 pros::adi::DigitalOut pneumatics_piston_1('F');
-pros::adi::DigitalOut status_LED_1('G');
-pros::adi::DigitalOut status_LED_2('H');
+pros::adi::DigitalOut pneumatics_piston_2('G');
+pros::adi::DigitalOut status_LED_1('H');
 
 // TODO: Replace numbers when Jeff 2+ is complete.
 lemlib::Drivetrain drivebase(
