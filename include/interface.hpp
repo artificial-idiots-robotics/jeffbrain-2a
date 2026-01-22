@@ -60,7 +60,6 @@ void create_auton_tab(lv_obj_t * parent_tab);
 void create_temp_tab(lv_obj_t * parent_tab);
 void create_image_tab(lv_obj_t * parent_tab);
 void create_settings_tab(lv_obj_t * parent_tab);
-void create_stats_tab(lv_obj_t * parent_tab);
 void create_test_tab(lv_obj_t * parent_tab);
 
 const int MAX_IMAGES = 5;

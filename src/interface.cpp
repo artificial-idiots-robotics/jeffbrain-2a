@@ -76,23 +76,16 @@ void initialize_interface() {
     lv_obj_set_style_bg_color(main_tabview, M3_SURFACE_COLOR, LV_PART_MAIN);
     lv_obj_set_style_pad_all(main_tabview, 0, LV_PART_MAIN);
 
-    // lv_obj_t * stats_tab = lv_tabview_add_tab(main_tabview, "Stats");
-    // create_stats_tab(stats_tab);
-
     lv_obj_t * temp_tab = lv_tabview_add_tab(main_tabview, "Monitor");
     create_temp_tab(temp_tab);
-
     lv_obj_t * auton_tab = lv_tabview_add_tab(main_tabview, "Auton");
     create_auton_tab(auton_tab);
-
     lv_obj_t * image_tab = lv_tabview_add_tab(main_tabview, "Images");
     create_image_tab(image_tab);
-
     lv_obj_t * settings_tab = lv_tabview_add_tab(main_tabview, "Settings");
     create_settings_tab(settings_tab);
-
     lv_obj_t * test_tab = lv_tabview_add_tab(main_tabview, "Test");
     create_test_tab(test_tab);
 
-    lv_tabview_set_act(main_tabview, 1, LV_ANIM_ON); 
+    lv_tabview_set_act(main_tabview, 0, LV_ANIM_ON); 
 }
