@@ -41,6 +41,22 @@ void opcontrol() {
             pros::delay(300);
         }
 
+        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+            intake_motors.move_velocity(200);
+        } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+            intake_motors.move_velocity(-200);
+        } else {
+            intake_motors.move_velocity(0);
+        }
+
+        if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
+            chain_motor.move_velocity(200);
+        } else if (master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+            chain_motor.move_velocity(-200);
+        } else {
+            chain_motor.move_velocity(0);
+        }
+
         pros::delay(5);
 	}
 }
