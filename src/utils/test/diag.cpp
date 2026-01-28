@@ -1,3 +1,4 @@
+#include "globals.hpp"
 #include "interface.hpp"
 #include "tabs/test.hpp"
 
@@ -11,7 +12,7 @@ enum class TestPhase {
     INTAKE_GROUP,
     CHAIN,
     PNEUMATICS,
-    STATUS_LED,
+    STATUS_LEDS,
     COMPLETE
 };
 
@@ -19,7 +20,6 @@ static TestPhase current_test_phase = TestPhase::IDLE;
 
 lv_obj_t * modal_cont = NULL;
 lv_obj_t * phase_cont = NULL;
-lv_obj_t * bumper_led_ptr = NULL;
 lv_obj_t * x_encoder_bar_ptr = NULL;
 lv_obj_t * y_encoder_bar_ptr = NULL;
 
@@ -95,14 +95,6 @@ lv_obj_t * create_digital_out_toggle_sw(lv_obj_t * parent, const char * label_te
 void diag_sensors_telemetry_task_fn(void* param) {
     while (true) {
         if (current_test_phase == TestPhase::SENSORS) {
-            if (bumper_led_ptr != NULL) {
-                if (bumper_sensor.get_value()) {
-                    lv_led_on(bumper_led_ptr);
-                } else {
-                    lv_led_off(bumper_led_ptr);
-                }
-            }
-
             if (x_encoder_bar_ptr != NULL) {
                 int x_encoder_value = horizontal_encoder.get_value() % 360;
                 lv_bar_set_value(x_encoder_bar_ptr, abs(x_encoder_value), LV_ANIM_OFF);
@@ -125,7 +117,6 @@ void create_test_phase_label(lv_obj_t * parent, const char * labelText) {
 }
 
 void render_phase() {
-    bumper_led_ptr = NULL;
     x_encoder_bar_ptr = NULL;
     y_encoder_bar_ptr = NULL;
 
@@ -142,18 +133,6 @@ void render_phase() {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
             create_test_phase_label(phase_cont, "Sensor tests");
-
-            lv_obj_t * bumper_monitor_cont = lv_obj_create(phase_cont);
-            lv_obj_set_width(bumper_monitor_cont, LV_PCT(100));
-            lv_obj_set_height(bumper_monitor_cont, LV_SIZE_CONTENT);
-            lv_obj_set_flex_flow(bumper_monitor_cont, LV_FLEX_FLOW_ROW);
-
-            bumper_led_ptr = lv_led_create(bumper_monitor_cont);
-            lv_obj_set_size(bumper_led_ptr, 20, 20);
-            lv_led_off(bumper_led_ptr);
-
-            lv_obj_t * bumper_monitor_label = lv_label_create(bumper_monitor_cont);
-            lv_label_set_text(bumper_monitor_label, "Bumper sensor");
 
             lv_obj_t * x_encoder_monitor_cont = lv_obj_create(phase_cont);
             lv_obj_set_width(x_encoder_monitor_cont, LV_PCT(100));
@@ -273,12 +252,13 @@ void render_phase() {
             break;
         };
 
-        case TestPhase::STATUS_LED: {
+        case TestPhase::STATUS_LEDS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
             create_test_phase_label(phase_cont, "LED tests");
 
             lv_obj_t * status_led_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 1", status_LED_1);
+            lv_obj_t * status_led_2_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 2", status_LED_2);
 
             break;
         };

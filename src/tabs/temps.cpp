@@ -1,20 +1,13 @@
+#include "globals.hpp"
 #include "interface.hpp"
 
-lv_obj_t * drivebase_lf_tempbar = NULL;
-lv_obj_t * drivebase_rf_tempbar = NULL;
-lv_obj_t * drivebase_lb_tempbar = NULL;
-lv_obj_t * drivebase_rb_tempbar = NULL;
-lv_obj_t * intake_motor_a_tempbar = NULL;
-lv_obj_t * intake_motor_b_tempbar = NULL;
-lv_obj_t * chain_motor_tempbar = NULL;
-
-lv_obj_t * drivebase_lf_templabel = NULL;
-lv_obj_t * drivebase_rf_templabel = NULL;
-lv_obj_t * drivebase_lb_templabel = NULL;
-lv_obj_t * drivebase_rb_templabel = NULL;
-lv_obj_t * intake_motor_a_templabel = NULL;
-lv_obj_t * intake_motor_b_templabel = NULL;
-lv_obj_t * chain_motor_templabel = NULL;
+motor_gauge_t drivebase_lf_gauge;
+motor_gauge_t drivebase_rf_gauge;
+motor_gauge_t drivebase_lb_gauge;
+motor_gauge_t drivebase_rb_gauge;
+motor_gauge_t intake_motor_a_gauge;
+motor_gauge_t intake_motor_b_gauge;
+motor_gauge_t chain_motor_gauge;
 
 motor_gauge_t create_motor_gauge(lv_obj_t * parent, const char * label_text) {
     motor_gauge_t motor_gauge;
@@ -37,29 +30,28 @@ motor_gauge_t create_motor_gauge(lv_obj_t * parent, const char * label_text) {
 
 void temp_update_task(void* param) {
     pros::Motor *motors[] = {
-        &drivebase_lf,
-        &drivebase_rf,
-        &drivebase_lb,
-        &drivebase_rb,
-        &intake_motor_a,
-        &intake_motor_b,
-        &chain_motor
+        &g_RobotMotors.drivebase_lf,
+        &g_RobotMotors.drivebase_rf,
+        &g_RobotMotors.drivebase_lb,
+        &g_RobotMotors.drivebase_rb,
+        &g_RobotMotors.intake_motor_a,
+        &g_RobotMotors.intake_motor_b,
+        &g_RobotMotors.chain_motor
     };
 
     lv_obj_t *bars[] = {
-        drivebase_lf_tempbar,
-        drivebase_rf_tempbar,
-        drivebase_lb_tempbar,
-        drivebase_rb_tempbar,
-        intake_motor_a_tempbar,
-        intake_motor_b_tempbar,
-        chain_motor_tempbar
+        drivebase_lf_gauge.bar,
+        drivebase_rf_gauge.bar,
+        drivebase_lb_gauge.bar,
+        drivebase_rb_gauge.bar,
+        intake_motor_a_gauge.bar,
+        intake_motor_b_gauge.bar,
+        chain_motor_gauge.bar
     };
 
     while (true) {
         for (int i = 0; i < 7; i++) {
             double current_temp = motors[i]->get_temperature();
-            // double current_temp = 42.0; <- Declare static value to debug task code.
             lv_obj_t *current_bar = bars[i];
             
             lv_bar_set_value(bars[i], current_temp, LV_ANIM_ON);
@@ -81,41 +73,21 @@ void create_temp_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
     motor_gauge_t drivebase_lf_gauge = create_motor_gauge(cont, "Drivebase front left");
-    drivebase_lf_tempbar = drivebase_lf_gauge.bar;
-    drivebase_lf_templabel = drivebase_lf_gauge.label;
-    
     motor_gauge_t drivebase_rf_gauge = create_motor_gauge(cont, "Drivebase front right");
-    drivebase_rf_tempbar = drivebase_rf_gauge.bar;
-    drivebase_rf_templabel = drivebase_rf_gauge.label;
-
     motor_gauge_t drivebase_lb_gauge = create_motor_gauge(cont, "Drivebase back left");
-    drivebase_lb_tempbar = drivebase_lb_gauge.bar;
-    drivebase_lb_templabel = drivebase_lb_gauge.label;
-
     motor_gauge_t drivebase_rb_gauge = create_motor_gauge(cont, "Drivebase back right");
-    drivebase_rb_tempbar = drivebase_rb_gauge.bar;
-    drivebase_rb_templabel = drivebase_rb_gauge.label;
-
     motor_gauge_t intake_motor_a_gauge = create_motor_gauge(cont, "Intake motor A");    
-    intake_motor_a_tempbar = intake_motor_a_gauge.bar;
-    intake_motor_a_templabel = intake_motor_a_gauge.label;  
-
     motor_gauge_t intake_motor_b_gauge = create_motor_gauge(cont, "Intake motor B");
-    intake_motor_b_tempbar = intake_motor_b_gauge.bar;
-    intake_motor_b_templabel = intake_motor_b_gauge.label;
-
     motor_gauge_t chain_motor_gauge = create_motor_gauge(cont, "Chain motor");
-    chain_motor_tempbar = chain_motor_gauge.bar;
-    chain_motor_templabel = chain_motor_gauge.label;
 
     lv_obj_t *bars[] = {
-        drivebase_lf_tempbar,
-        drivebase_rf_tempbar,
-        drivebase_lb_tempbar,
-        drivebase_rb_tempbar,
-        intake_motor_a_tempbar,
-        intake_motor_b_tempbar,
-        chain_motor_tempbar
+        drivebase_lf_gauge.bar,
+        drivebase_rf_gauge.bar,
+        drivebase_lb_gauge.bar,
+        drivebase_rb_gauge.bar,
+        intake_motor_a_gauge.bar,
+        intake_motor_b_gauge.bar,
+        chain_motor_gauge.bar
     };
 
     for (size_t i = 0; i < sizeof(bars) / sizeof(bars[0]); i++) {

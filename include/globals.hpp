@@ -3,28 +3,34 @@
 #ifndef _GLOBALS_
 #define _GLOBALS_
 
-extern pros::Motor drivebase_lf;
-extern pros::Motor drivebase_rf;
-extern pros::Motor drivebase_lb;
-extern pros::Motor drivebase_rb;
-extern pros::Motor intake_motor_a;
-extern pros::Motor intake_motor_b;
-extern pros::Motor chain_motor;
+struct RobotDevices {
+    pros::Motor drivebase_lf;
+    pros::Motor drivebase_rf;
+    pros::Motor drivebase_lb;
+    pros::Motor drivebase_rb;
+    pros::Motor intake_motor_a;
+    pros::Motor intake_motor_b;
+    pros::Motor chain_motor;
+    
+    pros::MotorGroup drivebase_l;
+    pros::MotorGroup drivebase_r;
 
-extern pros::MotorGroup drivebase_l;
-extern pros::MotorGroup drivebase_r;
+    pros::adi::Encoder horizontal_encoder;
+    pros::adi::Encoder vertical_encoder;
 
-extern pros::adi::Encoder horizontal_encoder;
-extern pros::adi::Encoder vertical_encoder;
+    pros::adi::Pneumatics pneumatics_piston_1;
+    pros::adi::Pneumatics pneumatics_piston_2;
 
-extern pros::adi::Pneumatics pneumatics_piston_1;
-extern pros::adi::Pneumatics pneumatics_piston_2;
-extern pros::adi::DigitalOut status_LED_1;
+    pros::adi::DigitalOut status_LED_1;
+    pros::adi::DigitalOut status_LED_2;
 
-extern lemlib::Chassis chassis;
+    lemlib::Chassis chassis;
 
-extern pros::Controller master_controller;
-extern pros::Controller partner_controller;
+    pros::Controller master_controller;
+    pros::Controller partner_controller;
+};
+
+extern RobotMotors g_RobotMotors;
 
 enum class ControlMode {
     ARCADE = 0,
@@ -45,5 +51,14 @@ struct MotorConfig {
     pros::v5::MotorGears gear;
     pros::MotorEncoderUnits encoder_units;
 };
+
+struct RobotConfig {
+    ControlMode control_mode;
+    AutonRoutine selected_auton;
+    int max_drive_speed;
+    int max_turn_speed;
+};
+
+extern RobotConfig g_RobotConfig;
 
 #endif // _GLOBALS_HPP_
