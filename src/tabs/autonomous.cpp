@@ -1,3 +1,4 @@
+#include "globals.hpp"
 #include "interface.hpp"
 
 lv_obj_t * auton_status_label = NULL;

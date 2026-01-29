@@ -43,9 +43,6 @@ typedef struct {
     const lv_img_dsc_t * src;
 } image_data_t;
 
-extern pros::MotorGroup drivebase;
-extern pros::MotorGroup intake_motors;
-
 extern const lv_img_dsc_t minnow;
 extern const lv_img_dsc_t beetle;
 extern const lv_img_dsc_t goose;

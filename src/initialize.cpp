@@ -3,16 +3,16 @@
 #include "interface.hpp"
 
 void initialize() {
-    chassis.setPose(0, 0, 0);
+    g_drivetrain.chassis.setPose(0, 0, 0);
 
     std::array<MotorConfig, 7> motor_configs = {{
-        {drivebase_lf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
-        {drivebase_rf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
-        {drivebase_lb, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
-        {drivebase_rb, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
-        {intake_motor_a, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees},
-        {intake_motor_b, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees},
-        {chain_motor, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees}
+        {g_motors.drivebase_lf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {g_motors.drivebase_rf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {g_motors.drivebase_lb, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {g_motors.drivebase_rb, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
+        {g_motors.intake_motor_a, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees},
+        {g_motors.intake_motor_b, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees},
+        {g_motors.chain_motor, pros::v5::MotorGears::red, pros::MotorEncoderUnits::degrees}
     }};
 
     for (auto& cfg : motor_configs) {

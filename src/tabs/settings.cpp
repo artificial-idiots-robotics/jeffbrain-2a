@@ -1,3 +1,4 @@
+#include "globals.hpp"
 #include "interface.hpp"
 
 static void drive_mode_dropdown_action(lv_event_t * e) {

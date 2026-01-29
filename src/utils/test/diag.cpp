@@ -1,3 +1,4 @@
+#include "globals.hpp"
 #include "interface.hpp"
 #include "tabs/test.hpp"
 
@@ -11,7 +12,7 @@ enum class TestPhase {
     INTAKE_GROUP,
     CHAIN,
     PNEUMATICS,
-    STATUS_LED,
+    STATUS_LEDS,
     COMPLETE
 };
 
@@ -95,21 +96,13 @@ lv_obj_t * create_digital_out_toggle_sw(lv_obj_t * parent, const char * label_te
 void diag_sensors_telemetry_task_fn(void* param) {
     while (true) {
         if (current_test_phase == TestPhase::SENSORS) {
-            if (bumper_led_ptr != NULL) {
-                if (bumper_sensor.get_value()) {
-                    lv_led_on(bumper_led_ptr);
-                } else {
-                    lv_led_off(bumper_led_ptr);
-                }
-            }
-
             if (x_encoder_bar_ptr != NULL) {
-                int x_encoder_value = horizontal_encoder.get_value() % 360;
+                int x_encoder_value = g_sensors.horizontal_encoder.get_value() % 360;
                 lv_bar_set_value(x_encoder_bar_ptr, abs(x_encoder_value), LV_ANIM_OFF);
             }
 
             if (y_encoder_bar_ptr != NULL) {
-                int y_encoder_value = vertical_encoder.get_value() % 360;
+                int y_encoder_value = g_sensors.vertical_encoder.get_value() % 360;
                 lv_bar_set_value(y_encoder_bar_ptr, abs(y_encoder_value), LV_ANIM_OFF);
             }
         }
@@ -188,10 +181,10 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Drivebase motor tests");
             create_test_phase_label(phase_cont, "Individual testing");
 
-            lv_obj_t * drivebase_lf_test_btn = create_motor_test_btn(phase_cont, "Test drivebase LF", drivebase_lf);
-            lv_obj_t * drivebase_rf_test_btn = create_motor_test_btn(phase_cont, "Test drivebase RF", drivebase_rf);
-            lv_obj_t * drivebase_lb_test_btn = create_motor_test_btn(phase_cont, "Test drivebase LB", drivebase_lb);
-            lv_obj_t * drivebase_rb_test_btn = create_motor_test_btn(phase_cont, "Test drivebase RB", drivebase_rb);
+            create_motor_test_btn(phase_cont, "Test drivebase LF", g_motors.drivebase_lf);
+            create_motor_test_btn(phase_cont, "Test drivebase RF", g_motors.drivebase_rf);
+            create_motor_test_btn(phase_cont, "Test drivebase LB", g_motors.drivebase_lb);
+            create_motor_test_btn(phase_cont, "Test drivebase RB", g_motors.drivebase_rb);
 
             break;
         };
@@ -202,8 +195,8 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Drivebase motor tests");
             create_test_phase_label(phase_cont, "Group testing");
 
-            lv_obj_t * drivebase_l_test_btn = create_motor_group_test_btn(phase_cont, "Test drivebase left", drivebase_l);
-            lv_obj_t * drivebase_r_test_btn = create_motor_group_test_btn(phase_cont, "Test drivebase right", drivebase_r);
+            create_motor_group_test_btn(phase_cont, "Test drivebase left", g_motor_groups.drivebase_l);
+            create_motor_group_test_btn(phase_cont, "Test drivebase right", g_motor_groups.drivebase_r);
 
             break;
         };
@@ -219,7 +212,7 @@ void render_phase() {
             lv_obj_align(forward_btn, LV_ALIGN_CENTER, -50, 0);
             lv_obj_add_event_cb(forward_btn, [](lv_event_t * e) {
                 if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
-                    chassis.moveToPoint(0, 12, 5000);
+                    g_drivetrain.chassis.moveToPoint(0, 12, 5000);
                 }
             }, LV_EVENT_ALL, NULL);
 
@@ -232,8 +225,8 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Intake motor tests");
             create_test_phase_label(phase_cont, "Individual testing");
 
-            lv_obj_t * intake_motor_a_test_btn = create_motor_test_btn(phase_cont, "Intake motor A test", intake_motor_a);
-            lv_obj_t * intake_motor_b_test_btn = create_motor_test_btn(phase_cont, "Intake motor B test", intake_motor_b);
+            create_motor_test_btn(phase_cont, "Intake motor A test", g_motors.intake_motor_a);
+            create_motor_test_btn(phase_cont, "Intake motor B test", g_motors.intake_motor_b);
 
             break;
         };
@@ -244,7 +237,7 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Intake motor tests");
             create_test_phase_label(phase_cont, "Group testing");
 
-            lv_obj_t * intake_motors_test_btn = create_motor_group_test_btn(phase_cont, "Intake motors test", intake_motors);
+            create_motor_group_test_btn(phase_cont, "Intake motors test", g_motor_groups.intake_motors);
 
             break;
         };
@@ -256,7 +249,7 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Chain motor");
             create_test_phase_label(phase_cont, "Individual testing");
 
-            lv_obj_t * chain_motor_test_btn = create_motor_test_btn(phase_cont, "Chain motor test", chain_motor);
+            create_motor_test_btn(phase_cont, "Chain motor test", g_motors.chain_motor);
 
             break;
         };
@@ -267,18 +260,19 @@ void render_phase() {
             create_test_phase_label(phase_cont, "Pneumatics tests");
             create_test_phase_label(phase_cont, "Ensure air tank is filled.");
             
-            lv_obj_t * pneumatics_piston_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 1", pneumatics_piston_1);
-            lv_obj_t * pneumatics_piston_2_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 2", pneumatics_piston_2);
+            create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 1", g_pneumatics.pneumatics_piston_1);
+            create_digital_out_toggle_sw(phase_cont, "Pneumatics piston 2", g_pneumatics.pneumatics_piston_2);
 
             break;
         };
 
-        case TestPhase::STATUS_LED: {
+        case TestPhase::STATUS_LEDS: {
             lv_obj_set_flex_flow(phase_cont, LV_FLEX_FLOW_COLUMN);
 
             create_test_phase_label(phase_cont, "LED tests");
 
-            lv_obj_t * status_led_1_test_sw_cont = create_digital_out_toggle_sw(phase_cont, "Status LED 1", status_LED_1);
+            create_digital_out_toggle_sw(phase_cont, "Status LED 1", g_leds.status_LED_1);
+            create_digital_out_toggle_sw(phase_cont, "Status LED 2", g_leds.status_LED_2);
 
             break;
         };
