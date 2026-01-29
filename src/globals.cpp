@@ -37,13 +37,13 @@ RobotLEDs g_leds{
     .status_LED_2 = pros::adi::DigitalOut('H')
 };
 
-lemlib::TrackingWheel horizontal_tracking_wheel(
+lemlib::TrackingWheel _horizontal_tracking_wheel(
     &g_sensors.horizontal_encoder,
     lemlib::Omniwheel::NEW_275,
     -5.75
 );
 
-lemlib::TrackingWheel vertical_tracking_wheel(
+lemlib::TrackingWheel _vertical_tracking_wheel(
     &g_sensors.vertical_encoder,
     lemlib::Omniwheel::NEW_275,
     -2.5
@@ -60,9 +60,9 @@ RobotDrivetrain g_drivetrain{
         2                              // Horizontal drift
     ),
     .sensors = lemlib::OdomSensors(
-        &vertical_tracking_wheel,      // Vertical tracking wheel 1
+        &_vertical_tracking_wheel,      // Vertical tracking wheel 1
         nullptr,                       // Vertical tracking wheel 2
-        &horizontal_tracking_wheel,    // Horizontal tracking wheel 1
+        &_horizontal_tracking_wheel,    // Horizontal tracking wheel 1
         nullptr,                       // Horizontal tracking wheel 2
         nullptr                        // IMU
     ),
