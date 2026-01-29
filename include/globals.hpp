@@ -3,29 +3,66 @@
 #ifndef _GLOBALS_
 #define _GLOBALS_
 
-extern pros::Motor drivebase_lf;
-extern pros::Motor drivebase_rf;
-extern pros::Motor drivebase_lb;
-extern pros::Motor drivebase_rb;
-extern pros::Motor intake_motor_a;
-extern pros::Motor intake_motor_b;
-extern pros::Motor chain_motor;
+// Motors
+struct RobotMotors {
+    pros::Motor drivebase_lf;
+    pros::Motor drivebase_rf;
+    pros::Motor drivebase_lb;
+    pros::Motor drivebase_rb;
+    pros::Motor intake_motor_a;
+    pros::Motor intake_motor_b;
+    pros::Motor chain_motor;
+};
 
-extern pros::MotorGroup drivebase_l;
-extern pros::MotorGroup drivebase_r;
+// Motor Groups
+struct RobotMotorGroups {
+    pros::MotorGroup drivebase_l;
+    pros::MotorGroup drivebase_r;
+    pros::MotorGroup intake_motors;
+};
 
-extern pros::adi::Encoder horizontal_encoder;
-extern pros::adi::Encoder vertical_encoder;
+// Sensors
+struct RobotSensors {
+    pros::adi::Encoder horizontal_encoder;
+    pros::adi::Encoder vertical_encoder;
+};
 
-extern pros::adi::Pneumatics pneumatics_piston_1;
-extern pros::adi::Pneumatics pneumatics_piston_2;
-extern pros::adi::DigitalOut status_LED_1;
+// Pneumatics
+struct RobotPneumatics {
+    pros::adi::Pneumatics pneumatics_piston_1;
+    pros::adi::Pneumatics pneumatics_piston_2;
+};
 
-extern lemlib::Chassis chassis;
+// LEDs
+struct RobotLEDs {
+    pros::adi::DigitalOut status_LED_1;
+    pros::adi::DigitalOut status_LED_2;
+};
 
-extern pros::Controller master_controller;
-extern pros::Controller partner_controller;
+// Drivetrain
+struct RobotDrivetrain {
+    lemlib::Drivetrain drivetrain;
+    lemlib::OdomSensors sensors;
+    lemlib::ControllerSettings lateral_controller;
+    lemlib::ControllerSettings angular_controller;
+    lemlib::Chassis chassis;
+};
 
+// Controllers
+struct RobotControllers {
+    pros::Controller master_controller;
+    pros::Controller partner_controller;
+};
+
+extern RobotMotors g_motors;
+extern RobotMotorGroups g_motor_groups;
+extern RobotSensors g_sensors;
+extern RobotPneumatics g_pneumatics;
+extern RobotLEDs g_leds;
+extern RobotDrivetrain g_drivetrain;
+extern RobotControllers g_controllers;
+
+// Enums
 enum class ControlMode {
     ARCADE = 0,
     TANK = 1
