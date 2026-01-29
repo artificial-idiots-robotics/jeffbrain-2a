@@ -1,4 +1,3 @@
-#include "globals.hpp"
 #include "interface.hpp"
 
 static void drive_mode_dropdown_action(lv_event_t * e) {
@@ -6,7 +5,7 @@ static void drive_mode_dropdown_action(lv_event_t * e) {
     
     if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
         int selected_index = lv_dropdown_get_selected(dropdown);
-        g_RobotConfig.control_mode = static_cast<ControlMode>(selected_index);
+        control_mode = static_cast<ControlMode>(selected_index);
     }
 }
 
@@ -77,6 +76,6 @@ void create_settings_tab(lv_obj_t * parent_tab) {
         lv_obj_set_style_text_color(list, lv_color_white(), LV_PART_SELECTED);
     }
 
-    create_settings_spinbox_row(cont, "Maximum drive speed", 0, 100, 5, 3, 0, &g_RobotConfig.max_drive_speed);
-    create_settings_spinbox_row(cont, "Maximum turn speed", 0, 100, 5, 3, 0, &g_RobotConfig.max_turn_speed);
+    create_settings_spinbox_row(cont, "Maximum drive speed", 0, 100, 5, 3, 0, &max_drive_speed);
+    create_settings_spinbox_row(cont, "Maximum turn speed", 0, 100, 5, 3, 0, &max_turn_speed);
 }
