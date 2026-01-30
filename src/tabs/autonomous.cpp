@@ -9,7 +9,7 @@ static void auton_btn_click_action(lv_event_t * e) {
     if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
         uint8_t id = (uint8_t)(intptr_t)lv_obj_get_user_data(btn);
 
-        selected_auton = static_cast<AutonRoutine>(id);
+        g_robot_config.selected_auton = static_cast<AutonRoutine>(id);
 
         const char *auton_names[] = {"None", "RED Left", "RED Right", "BLU Left", "BLU Right", "Skills"};
 
@@ -38,8 +38,9 @@ lv_obj_t * create_auton_button(lv_obj_t * parent, const auton_button_data_t * da
     return btn;
 }
 
-void create_auton_tab(lv_obj_t * parent_tab) {
-    lv_obj_t * cont = lv_obj_create(parent_tab);
+void create_auton_tab(lv_obj_t * parent_tabview) {
+    lv_obj_t * tab = lv_tabview_add_tab(parent_tabview, "Auton");
+    lv_obj_t * cont = lv_obj_create(tab);
 
     lv_obj_set_size(cont, LV_PCT(100), LV_PCT(100));
     lv_obj_set_layout(cont, LV_LAYOUT_FLEX);

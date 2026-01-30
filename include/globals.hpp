@@ -83,4 +83,13 @@ struct MotorConfig {
     pros::MotorEncoderUnits encoder_units;
 };
 
+struct RobotConfig {
+    ControlMode control_mode;
+    AutonRoutine selected_auton;
+    int max_drive_speed;
+    int max_turn_speed;
+};
+
+extern RobotConfig g_robot_config;
+
 #endif // _GLOBALS_HPP_

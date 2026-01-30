@@ -46,18 +46,34 @@ bool confirm_lemtuning_object_override() {
     lv_obj_set_flex_grow(yes_btn, 1);
     lv_obj_t * no_btn = lv_msgbox_add_footer_button(mbox, "No");
     lv_obj_set_flex_grow(no_btn, 1);
+    
+    static bool was_confirmed = false;
+    static bool response = false;
 
     lv_obj_add_event_cb(yes_btn, [](lv_event_t * e) {
         lv_obj_t * mbox = ((lv_obj_t *)lv_event_get_current_target(e))->parent;
         lv_msgbox_close(mbox);
-        return true;
+        was_confirmed = true;
+        response = true;
     }, LV_EVENT_CLICKED, nullptr);
 
     lv_obj_add_event_cb(no_btn, [](lv_event_t * e) {
         lv_obj_t * mbox = ((lv_obj_t *)lv_event_get_current_target(e))->parent;
         lv_msgbox_close(mbox);
-        return false;
+        was_confirmed = true;
+        response = false;
     }, LV_EVENT_CLICKED, nullptr);
+
+    while (!was_confirmed) {
+        lv_task_handler();
+        pros::delay(5);
+    }
+
+    if (response) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 void initialize_lemtuning_drivetrain_config_tab(lv_obj_t * parent_tab) {
@@ -69,6 +85,10 @@ void initialize_lemtuning_linear_controller_config_tab(lv_obj_t * parent_tab) {
 };
 
 void initialize_lemtuning_angular_controller_config_tab(lv_obj_t * parent_tab) {
+
+};
+
+void initialize_lemtuning_apply_tab(lv_obj_t * parent_tab) {
 
 };
 
@@ -96,9 +116,14 @@ void initialize_lemtuning_interface() {
     lv_obj_set_style_pad_all(main_tabview, 0, LV_PART_MAIN);
 
     if (confirm_lemtuning_object_override()) {
-        initialize_lemtuning_drivetrain_config_tab();
-        initialize_lemtuning_linear_controller_config_tab();
-        initialize_lemtuning_angular_controller_config_tab();
+        lv_obj_t * lemtuning_drivetrain_config_tab = lv_tabview_add_tab(main_tabview, "Drivetrain");
+        lv_obj_t * lemtuning_linear_controller_config_tab = lv_tabview_add_tab(main_tabview, "Linear Controller");
+        lv_obj_t * lemtuning_angular_controller_config_tab = lv_tabview_add_tab(main_tabview, "Angular Controller");
+        lv_obj_t * lemtuning_apply_tab = lv_tabview_add_tab(main_tabview, "Apply");
+        initialize_lemtuning_drivetrain_config_tab(lemtuning_drivetrain_config_tab);
+        initialize_lemtuning_linear_controller_config_tab(lemtuning_linear_controller_config_tab);
+        initialize_lemtuning_angular_controller_config_tab(lemtuning_angular_controller_config_tab);
+        initialize_lemtuning_apply_tab(lemtuning_apply_tab);
     } else {
         // User cancelled; close the lemtuning interface.
         close_lemtuning_interface();

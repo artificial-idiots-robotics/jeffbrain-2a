@@ -6,7 +6,7 @@ static void drive_mode_dropdown_action(lv_event_t * e) {
     
     if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
         int selected_index = lv_dropdown_get_selected(dropdown);
-        control_mode = static_cast<ControlMode>(selected_index);
+        g_robot_config.control_mode = static_cast<ControlMode>(selected_index);
     }
 }
 
@@ -55,8 +55,9 @@ lv_obj_t * create_settings_spinbox_row(lv_obj_t * parent, const char * label_tex
     return cont;
 }
 
-void create_settings_tab(lv_obj_t * parent_tab) {
-    lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
+void create_settings_tab(lv_obj_t * parent_tabview) {
+    lv_obj_t * tab = lv_tabview_add_tab(parent_tabview, "Settings");
+    lv_obj_t * cont = create_tab_content_container(tab, LV_FLEX_FLOW_COLUMN);
 
     lv_obj_t * control_mode_dropdown = lv_dropdown_create(cont);
     lv_obj_set_pos(control_mode_dropdown, 50, 10);
@@ -77,6 +78,6 @@ void create_settings_tab(lv_obj_t * parent_tab) {
         lv_obj_set_style_text_color(list, lv_color_white(), LV_PART_SELECTED);
     }
 
-    create_settings_spinbox_row(cont, "Maximum drive speed", 0, 100, 5, 3, 0, &max_drive_speed);
-    create_settings_spinbox_row(cont, "Maximum turn speed", 0, 100, 5, 3, 0, &max_turn_speed);
+    create_settings_spinbox_row(cont, "Maximum drive speed", 0, 100, 5, 3, 0, &g_robot_config.max_drive_speed);
+    create_settings_spinbox_row(cont, "Maximum turn speed", 0, 100, 5, 3, 0, &g_robot_config.max_turn_speed);
 }

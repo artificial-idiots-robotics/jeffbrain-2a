@@ -13,7 +13,7 @@ void opcontrol() {
 
                 int dir_limit = static_cast<int>(127.0 * (max_drive_speed / 100.0));
 
-                g_drivetrain.chassis.arcade(std::clamp(dir, -dir_limit, dir_limit), turn);
+                g_drivetrain.chassis.arcade(dir, turn);
                 break;
             }
 

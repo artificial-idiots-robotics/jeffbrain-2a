@@ -46,8 +46,9 @@ void create_modal_system() {
     lv_obj_add_event_cb(modal_img, hide_modal_event_cb, LV_EVENT_CLICKED, NULL);
 }
 
-void create_image_tab(lv_obj_t * parent_tab) {
-    lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
+void create_image_tab(lv_obj_t * parent_tabview) {
+    lv_obj_t * tab = lv_tabview_add_tab(parent_tabview, "Images");
+    lv_obj_t * cont = create_tab_content_container(tab, LV_FLEX_FLOW_COLUMN);
 
     const image_data_t images[] = {
         {"Minnow", &minnow},

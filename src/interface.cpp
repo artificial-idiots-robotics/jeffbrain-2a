@@ -13,10 +13,12 @@ lv_style_t style_tempbar_indicator;
 
 lv_obj_t * main_tabview = NULL;
 
-AutonRoutine selected_auton = AutonRoutine::NONE;
-ControlMode control_mode = ControlMode::ARCADE;
-int max_drive_speed = 100;
-int max_turn_speed = 100;
+RobotConfig g_robot_config{
+    .control_mode = ControlMode::ARCADE,
+    .selected_auton = AutonRoutine::NONE,
+    .max_drive_speed = 100,
+    .max_turn_speed = 100
+};
 
 lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow) {
     lv_obj_t * cont = lv_obj_create(parent_tab);
@@ -76,16 +78,11 @@ void initialize_interface() {
     lv_obj_set_style_bg_color(main_tabview, M3_SURFACE_COLOR, LV_PART_MAIN);
     lv_obj_set_style_pad_all(main_tabview, 0, LV_PART_MAIN);
 
-    lv_obj_t * temp_tab = lv_tabview_add_tab(main_tabview, "Monitor");
-    create_temp_tab(temp_tab);
-    lv_obj_t * auton_tab = lv_tabview_add_tab(main_tabview, "Auton");
-    create_auton_tab(auton_tab);
-    lv_obj_t * image_tab = lv_tabview_add_tab(main_tabview, "Images");
-    create_image_tab(image_tab);
-    lv_obj_t * settings_tab = lv_tabview_add_tab(main_tabview, "Settings");
-    create_settings_tab(settings_tab);
-    lv_obj_t * test_tab = lv_tabview_add_tab(main_tabview, "Test");
-    create_test_tab(test_tab);
+    create_temp_tab(main_tabview);
+    create_auton_tab(main_tabview);
+    create_image_tab(main_tabview);
+    create_settings_tab(main_tabview);
+    create_test_tab(main_tabview);
 
     lv_tabview_set_act(main_tabview, 0, LV_ANIM_ON); 
 }

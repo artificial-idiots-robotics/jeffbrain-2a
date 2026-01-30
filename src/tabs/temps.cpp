@@ -70,8 +70,9 @@ void temp_update_task(void* param) {
     }
 }
 
-void create_temp_tab(lv_obj_t * parent_tab) {
-    lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
+void create_temp_tab(lv_obj_t * parent_tabview) {
+    lv_obj_t * tab = lv_tabview_add_tab(parent_tabview, "Temps");
+    lv_obj_t * cont = create_tab_content_container(tab, LV_FLEX_FLOW_COLUMN);
 
     drivebase_lf_gauge = create_motor_gauge(cont, "Drivebase front left");
     drivebase_rf_gauge = create_motor_gauge(cont, "Drivebase front right");
