@@ -4,7 +4,7 @@
 #include "auton.hpp"
 
 void autonomous() {
-    switch (selected_auton) {
+    switch (g_robot_config.selected_auton) {
         case AutonRoutine::NONE: {
             break;
         }

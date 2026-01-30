@@ -77,6 +77,22 @@ enum class AutonRoutine {
     SKILLS = 5
 };
 
+enum class CompetitionAlliance {
+    RED,
+    BLUE,
+    SKILLS
+};
+
+enum class CompetitionSide {
+    LEFT,
+    RIGHT
+};
+
+struct AutonRoutineSelector {
+    CompetitionAlliance alliance;
+    CompetitionSide side;
+};
+
 struct MotorConfig {
     pros::Motor motor;
     pros::v5::MotorGears gear;

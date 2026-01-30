@@ -4,6 +4,7 @@
 
 void initialize() {
     g_drivetrain.chassis.setPose(0, 0, 0);
+    g_drivetrain.chassis.calibrate();
 
     std::array<MotorConfig, 7> motor_configs = {{
         {g_motors.drivebase_lf, pros::v5::MotorGears::blue, pros::MotorEncoderUnits::degrees},
@@ -21,4 +22,6 @@ void initialize() {
     }
 
     initialize_interface();
+
+    printf("Initialization complete.\n");
 }

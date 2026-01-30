@@ -56,4 +56,7 @@ void create_test_tab(lv_obj_t * parent_tab);
 
 const int MAX_IMAGES = 5;
 
+// Macros
+#define SET_STYLE(style, prop, value) lv_style_set_##prop(&style, value);
+
 #endif // _INTERFACE_HPP_

@@ -2,18 +2,19 @@
 #include "globals.hpp"
 #include "interface.hpp"
 
-void opcontrol() {
-    extern ControlMode control_mode;
+#include "auton.hpp"
 
+void opcontrol() {
 	while (true) {
-        switch (control_mode) {
+        if (!g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+        switch (g_robot_config.control_mode) {
             case ControlMode::ARCADE: {
                 int dir = g_controllers.master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
                 int turn = g_controllers.master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-                int dir_limit = static_cast<int>(127.0 * (max_drive_speed / 100.0));
+                int dir_limit = static_cast<int>(127.0 * (g_robot_config.max_drive_speed / 100.0));
 
-                g_drivetrain.chassis.arcade(dir, turn);
+                g_drivetrain.chassis.arcade(std::clamp(dir, -dir_limit, dir_limit), turn);
                 break;
             }
 
@@ -21,7 +22,7 @@ void opcontrol() {
                 int leftdrive = g_controllers.master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
                 int rightdrive = g_controllers.master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
-                int limit = static_cast<int>(127.0 * (max_drive_speed / 100.0));
+                int limit = static_cast<int>(127.0 * (g_robot_config.max_drive_speed / 100.0));
 
                 g_drivetrain.chassis.tank(std::clamp(leftdrive, -limit, limit), std::clamp(rightdrive, -limit, limit));
                 break;
@@ -29,9 +30,10 @@ void opcontrol() {
 
             default: {
                 // Default to ARCADE mode if control_mode is somehow invalid
-                control_mode = ControlMode::ARCADE;
+                g_robot_config.control_mode = ControlMode::ARCADE;
                 break;
             }
+        }
         }
 
         if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
@@ -55,6 +57,10 @@ void opcontrol() {
             g_motors.chain_motor.move_velocity(-200);
         } else {
             g_motors.chain_motor.move_velocity(0);
+        }
+
+        if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
+            auton_routine_skills();
         }
 
         pros::delay(5);

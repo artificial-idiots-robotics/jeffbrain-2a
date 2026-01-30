@@ -56,29 +56,29 @@ RobotDrivetrain g_drivetrain{
         &g_motor_groups.drivebase_r,   // Right motors
         10,                            // Track width (inches)
         lemlib::Omniwheel::NEW_4,      // Wheel type
-        200,                           // Drivetrain RPM
+        600,                           // Drivetrain RPM
         2                              // Horizontal drift
     ),
     .sensors = lemlib::OdomSensors(
-        &_vertical_tracking_wheel,      // Vertical tracking wheel 1
+        nullptr,                       // Vertical tracking wheel 1
         nullptr,                       // Vertical tracking wheel 2
-        &_horizontal_tracking_wheel,    // Horizontal tracking wheel 1
+        nullptr,                       // Horizontal tracking wheel 1
         nullptr,                       // Horizontal tracking wheel 2
         nullptr                        // IMU
     ),
     .lateral_controller = lemlib::ControllerSettings(
-        8,                            // kP (proportional gain)
+        0.5,                            // kP (proportional gain)
         0,                            // kI (integral gain)
-        0,                            // kD (derivative gain)
+        20,                            // kD (derivative gain)
         3,                            // anti windup
-        1,                            // small error range (degrees)
+        2,                            // small error range (degrees)
         100,                          // small error range timeout (msec)
-        3,                            // large error range (degrees)
+        4,                            // large error range (degrees)
         500,                          // large error range timeout (msec)
-        20                            // maximum acceleration (slew)
+        2                            // maximum acceleration (slew)
     ),
     .angular_controller = lemlib::ControllerSettings(
-        4,                            // kP (proportional gain)
+        0,                            // kP (proportional gain)
         0,                            // kI (integral gain)
         0,                            // kD (derivative gain)
         3,                            // anti windup

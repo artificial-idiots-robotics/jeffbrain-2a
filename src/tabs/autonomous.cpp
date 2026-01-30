@@ -1,7 +1,35 @@
 #include "globals.hpp"
 #include "interface.hpp"
 
-lv_obj_t * auton_status_label = NULL;
+bool auton_enabled = false;
+CompetitionAlliance current_alliance = CompetitionAlliance::RED;
+CompetitionSide current_side = CompetitionSide::LEFT;
+
+void update_auton_selection() {
+    static char buffer[64];
+    const char* alliance_str[] = {"RED, BLU, Skills"};
+    const char* side_str[] = {"Left", "Right", ""};
+
+    if (auton_enabled) {
+        if (current_alliance == CompetitionAlliance::SKILLS) {
+            g_robot_config.selected_auton = AutonRoutine::SKILLS;
+        } else if (current_alliance == CompetitionAlliance::RED) {
+            if (current_side == CompetitionSide::LEFT) {
+                g_robot_config.selected_auton = AutonRoutine::RED_LEFT;
+            } else {
+                g_robot_config.selected_auton = AutonRoutine::RED_RIGHT;
+            }
+        } else if (current_alliance == CompetitionAlliance::BLUE) {
+            if (current_side == CompetitionSide::LEFT) {
+                g_robot_config.selected_auton = AutonRoutine::BLU_LEFT;
+            } else {
+                g_robot_config.selected_auton = AutonRoutine::BLU_RIGHT;
+            }
+        }
+    } else {
+        g_robot_config.selected_auton = AutonRoutine::NONE;
+    }
+}
 
 static void auton_btn_click_action(lv_event_t * e) {
     lv_obj_t * btn = (lv_obj_t *)lv_event_get_target(e);
@@ -40,35 +68,34 @@ lv_obj_t * create_auton_button(lv_obj_t * parent, const auton_button_data_t * da
 
 void create_auton_tab(lv_obj_t * parent_tabview) {
     lv_obj_t * tab = lv_tabview_add_tab(parent_tabview, "Auton");
-    lv_obj_t * cont = lv_obj_create(tab);
+    lv_obj_t * cont = create_tab_content_container(tab, LV_FLEX_FLOW_COLUMN);
 
-    lv_obj_set_size(cont, LV_PCT(100), LV_PCT(100));
-    lv_obj_set_layout(cont, LV_LAYOUT_FLEX);
-    lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_ROW_WRAP);
-    lv_obj_set_style_pad_column(cont, 15, 0);
-    lv_obj_set_style_pad_row(cont, 15, 0); 
-    lv_obj_set_flex_align(cont, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER);
+    lv_obj_t * auton_enabled_switch = lv_switch_create(cont);
+    lv_obj_set_pos(auton_enabled_switch, 10, 50);
+    lv_obj_add_event_cb(auton_enabled_switch, [](lv_event_t * e) {
+        if (lv_event_get_code(e) == LV_EVENT_VALUE_CHANGED) {
+            lv_obj_t * sw = (lv_obj_t *)lv_event_get_target(e);
+            auton_enabled = lv_obj_has_state(sw, LV_STATE_CHECKED);
+            update_auton_selection();
+        }
+    }, LV_EVENT_VALUE_CHANGED, NULL);
 
-    lv_obj_set_style_border_width(cont, 0, 0);
-    lv_obj_set_style_pad_all(cont, 0, 0);
-    lv_obj_set_style_bg_opa(cont, LV_OPA_TRANSP, 0);
-    lv_obj_set_style_radius(cont, 0, 0);
+    lv_obj_t * auton_enabled_label = lv_label_create(cont);
+    lv_label_set_text(auton_enabled_label, "Enable autonomous routine");
 
-    auton_status_label = lv_label_create(cont);
-    lv_label_set_text(auton_status_label, "Selected: None");
-    lv_obj_set_pos(auton_status_label, 10, 10);
-    lv_obj_set_width(auton_status_label, LV_PCT(90));
+    lv_obj_t * alliance_selector = lv_btnmatrix_create(cont);
+    lv_btnmatrix_set_map(alliance_selector, (const char*[]){"RED", "BLU", "Skills", ""});
+    lv_btnmatrix_set_btn_ctrl_all(alliance_selector, LV_BTNMATRIX_CTRL_CHECKABLE);
+    lv_btnmatrix_set_one_checked(alliance_selector, true);
+    lv_obj_add_event_cb(alliance_selector, [](lv_event_t * e) {
+        update_auton_selection();
+    }, LV_EVENT_VALUE_CHANGED, NULL);
 
-    const auton_button_data_t auton_buttons[] = {
-        {"None", 10, 50, static_cast<int>(AutonRoutine::NONE)},
-        {"Skills", 230, 50, static_cast<int>(AutonRoutine::SKILLS)},
-        {"RED Left", 10, 110, static_cast<int>(AutonRoutine::RED_LEFT)},
-        {"RED Right", 230, 110, static_cast<int>(AutonRoutine::RED_RIGHT)},
-        {"BLU Left", 10, 170, static_cast<int>(AutonRoutine::BLU_LEFT)},
-        {"BLU Right", 230, 170, static_cast<int>(AutonRoutine::BLU_RIGHT)}
-    };
-
-    for (size_t i = 0; i < sizeof(auton_buttons) / sizeof(auton_buttons[0]); i++) {
-        create_auton_button(cont, &auton_buttons[i]);
-    }
+    lv_obj_t * side_selector = lv_btnmatrix_create(cont);
+    lv_btnmatrix_set_map(side_selector, (const char*[]){"Left", "Right", ""});
+    lv_btnmatrix_set_btn_ctrl_all(side_selector, LV_BTNMATRIX_CTRL_CHECKABLE);
+    lv_btnmatrix_set_one_checked(side_selector, true);
+    lv_obj_add_event_cb(side_selector, [](lv_event_t * e) {
+        update_auton_selection();
+    }, LV_EVENT_VALUE_CHANGED, NULL);
 }

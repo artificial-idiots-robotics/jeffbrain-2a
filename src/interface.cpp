@@ -11,13 +11,11 @@ lv_style_t style_m3_btn;
 lv_style_t style_tempbar_main;
 lv_style_t style_tempbar_indicator;
 
-lv_obj_t * main_tabview = NULL;
-
 RobotConfig g_robot_config{
     .control_mode = ControlMode::ARCADE,
-    .selected_auton = AutonRoutine::NONE,
-    .max_drive_speed = 100,
-    .max_turn_speed = 100
+    .selected_auton = AutonRoutine::SKILLS,
+    .max_drive_speed = 60,
+    .max_turn_speed = 60
 };
 
 lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t flow) {
@@ -35,7 +33,7 @@ lv_obj_t * create_tab_content_container(lv_obj_t * parent_tab, lv_flex_flow_t fl
     return cont;
 }
 
-void initialize_interface() {
+static void initialize_ui_styles() {
     lv_style_init(&style_base);
     lv_style_set_bg_color(&style_base, M3_BACKGROUND_COLOR);
     lv_style_set_text_color(&style_base, lv_color_white());
@@ -55,12 +53,10 @@ void initialize_interface() {
 
     lv_style_init(&style_tempbar_indicator);
     lv_style_set_radius(&style_tempbar_indicator, 8);
+}
 
-    lv_obj_t * screen = lv_scr_act();
-    lv_obj_add_style(screen, &style_base, 0);
-
-    main_tabview = lv_tabview_create(screen);
-    lv_obj_t * tab_bar = lv_tabview_get_tab_bar(main_tabview);
+void configure_tabview_style(lv_obj_t * tabview) {
+    lv_obj_t * tab_bar = lv_tabview_get_tab_bar(tabview);
     lv_obj_set_height(tab_bar, 40);
 
     lv_obj_set_style_bg_color(tab_bar, M3_SURFACE_COLOR, LV_PART_ITEMS);
@@ -75,8 +71,18 @@ void initialize_interface() {
     lv_obj_set_style_width(tab_bar, LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
     lv_obj_set_style_height(tab_bar, LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
 
-    lv_obj_set_style_bg_color(main_tabview, M3_SURFACE_COLOR, LV_PART_MAIN);
-    lv_obj_set_style_pad_all(main_tabview, 0, LV_PART_MAIN);
+    lv_obj_set_style_bg_color(tabview, M3_SURFACE_COLOR, LV_PART_MAIN);
+    lv_obj_set_style_pad_all(tabview, 0, LV_PART_MAIN);
+}
+
+void initialize_interface() {
+    initialize_ui_styles();
+
+    lv_obj_t * screen = lv_scr_act();
+    lv_obj_add_style(screen, &style_base, 0);
+
+    lv_obj_t * main_tabview = lv_tabview_create(screen);
+    configure_tabview_style(main_tabview);
 
     create_temp_tab(main_tabview);
     create_auton_tab(main_tabview);
