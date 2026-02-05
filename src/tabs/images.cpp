@@ -18,19 +18,22 @@ lv_obj_t * create_image_obj(lv_obj_t * parent, const lv_img_dsc_t * src) {
 }
 
 static void image_button_action(lv_event_t * e) {
-    int index = (int)(intptr_t)lv_obj_get_user_data((lv_obj_t *)lv_event_get_target(e));
+    lv_obj_t * btn = (lv_obj_t *)lv_event_get_target(e);
+    int index = (int)(intptr_t)lv_obj_get_user_data(btn);
 
     lv_obj_t * target_image = image_objects[index];
 
-    if (modal_overlay) {
-        lv_img_set_src((lv_obj_t *)lv_obj_get_child(modal_overlay, 0), lv_img_get_src(target_image));
+    if (modal_overlay && target_image) {
+        const void * src = lv_img_get_src(target_image);
+        lv_img_set_src(modal_img, src);
+        
         lv_obj_clear_flag(modal_overlay, LV_OBJ_FLAG_HIDDEN);
         lv_obj_move_foreground(modal_overlay);
     }
 }
 
 void create_modal_system() {
-    modal_overlay = lv_obj_create(lv_scr_act());
+    modal_overlay = lv_obj_create(lv_layer_top());
     lv_obj_set_size(modal_overlay, LV_PCT(100), LV_PCT(100));
     lv_obj_set_style_bg_color(modal_overlay, lv_color_black(), 0);
     lv_obj_set_style_bg_opa(modal_overlay, LV_OPA_50, 0);
@@ -61,14 +64,12 @@ void create_image_tab(lv_obj_t * parent_tabview) {
     int count = sizeof(images) / sizeof(images[0]);
 
     for (int i = 0; i < count; i++) {
-        image_objects[i] = create_image_obj(cont, images[i].src);
-
         lv_obj_t * btn = lv_btn_create(cont);
         lv_obj_set_size(btn, 100, 40);
         lv_obj_add_style(btn, &style_m3_btn, 0);
         lv_obj_set_style_bg_color(btn, LV_COLOR_MAKE(255, 0, 0), 0);
 
-        lv_obj_set_user_data(btn, (void*)(intptr_t)i);
+        lv_obj_set_user_data(btn, (void*)images[i].src);
         lv_obj_add_event_cb(btn, image_button_action, LV_EVENT_CLICKED, NULL);
         
         lv_obj_t * label = lv_label_create(btn);

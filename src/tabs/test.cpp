@@ -43,6 +43,16 @@ void create_test_tab(lv_obj_t * parent_tabview) {
     lv_obj_t * start_diag_label = lv_label_create(start_diag_btn);
     lv_label_set_text(start_diag_label, "Start diag");
 
+    lv_obj_t * start_lemtuning_btn = lv_btn_create(cont);
+    lv_obj_set_size(start_lemtuning_btn, 150, 40);
+    lv_obj_add_event_cb(start_lemtuning_btn, start_lemtuning_btn_action, LV_EVENT_CLICKED, NULL);
+    lv_obj_add_style(start_lemtuning_btn, &style_m3_btn, 0);
+    lv_obj_set_style_bg_color(start_lemtuning_btn, M3_ACCENT_COLOR, (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_PRESSED) | LV_STATE_CHECKED);
+    lv_obj_set_style_shadow_width(start_lemtuning_btn, 0, (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_PRESSED) | LV_STATE_CHECKED);
+
+    lv_obj_t * start_lemtuning_label = lv_label_create(start_lemtuning_btn);
+    lv_label_set_text(start_lemtuning_label, "Start lemtuning");
+
     lv_obj_t * test_selected_auton_btn = lv_btn_create(cont);
     lv_obj_set_size(test_selected_auton_btn, 150, 40);
     lv_obj_add_event_cb(test_selected_auton_btn, test_selected_auton_btn_action, LV_EVENT_CLICKED, NULL);

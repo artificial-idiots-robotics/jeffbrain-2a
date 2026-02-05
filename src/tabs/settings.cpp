@@ -59,24 +59,14 @@ void create_settings_tab(lv_obj_t * parent_tabview) {
     lv_obj_t * tab = lv_tabview_add_tab(parent_tabview, "Settings");
     lv_obj_t * cont = create_tab_content_container(tab, LV_FLEX_FLOW_COLUMN);
 
-    lv_obj_t * control_mode_dropdown = lv_dropdown_create(cont);
-    lv_obj_set_pos(control_mode_dropdown, 50, 10);
-    lv_dropdown_set_options(control_mode_dropdown, "Arcade\nTank");
-    lv_obj_add_event_cb(control_mode_dropdown, drive_mode_dropdown_action, LV_EVENT_VALUE_CHANGED, NULL);
+    static const char * drive_mode_map[] = {"Arcade", "Tank", ""};
 
-    lv_obj_set_style_radius(control_mode_dropdown, 15, LV_PART_MAIN);
-    lv_obj_set_style_bg_color(control_mode_dropdown, lv_color_hex(0x49454F), LV_PART_MAIN);    
-    lv_obj_set_style_bg_color(control_mode_dropdown, M3_ACCENT_COLOR, (lv_style_selector_t)((uint32_t)LV_PART_MAIN | (uint32_t)LV_STATE_PRESSED));
-    lv_obj_set_style_text_color(control_mode_dropdown, lv_color_white(), LV_PART_MAIN);
-
-    lv_obj_t * list = lv_dropdown_get_list(control_mode_dropdown);
-
-    if (list != NULL) {
-        lv_obj_set_style_bg_color(list, lv_color_hex(0x49454F), LV_PART_MAIN);
-        lv_obj_set_style_radius(list, 15, LV_PART_MAIN);
-        lv_obj_set_style_bg_color(list, M3_ACCENT_COLOR, LV_PART_SELECTED);
-        lv_obj_set_style_text_color(list, lv_color_white(), LV_PART_SELECTED);
-    }
+    lv_obj_t * drive_mode_selector = lv_btnmatrix_create(cont);
+    lv_obj_set_size(drive_mode_selector, LV_PCT(90), 60);
+    lv_btnmatrix_set_map(drive_mode_selector, drive_mode_map);
+    lv_btnmatrix_set_btn_ctrl_all(drive_mode_selector, LV_BTNMATRIX_CTRL_CHECKABLE);
+    lv_btnmatrix_set_one_checked(drive_mode_selector, true);
+    lv_obj_add_event_cb(drive_mode_selector, drive_mode_dropdown_action, LV_EVENT_VALUE_CHANGED, NULL);
 
     create_settings_spinbox_row(cont, "Maximum drive speed", 0, 100, 5, 3, 0, &g_robot_config.max_drive_speed);
     create_settings_spinbox_row(cont, "Maximum turn speed", 0, 100, 5, 3, 0, &g_robot_config.max_turn_speed);

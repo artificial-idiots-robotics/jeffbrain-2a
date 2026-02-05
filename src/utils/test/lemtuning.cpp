@@ -8,42 +8,42 @@ lv_obj_t * screen;
 
 struct SpinboxRowArgs {
     const char * label_text;
-    int min;
-    int max;
-    int step;
+    float min;
+    float max;
+    float step;
     int max_digits;
     int decimal_position;
-    int * bound_variable;
+    float * bound_variable;
 };
 
 struct LemtuningDrivetrainConfig {
-    int trackwidth;
-    int rpm;
-    int horizontal_drift;
+    float trackwidth;
+    float rpm;
+    float horizontal_drift;
 };
 
 struct LemtuningLinearControllerConfig {
-    int kp;
-    int ki;
-    int kd;
-    int antiwindup;
-    int small_error_range;
-    int small_error_range_timeout;
-    int large_error_range;
-    int large_error_range_timeout;
-    int max_accel;
+    float kp;
+    float ki;
+    float kd;
+    float antiwindup;
+    float small_error_range;
+    float small_error_range_timeout;
+    float large_error_range;
+    float large_error_range_timeout;
+    float max_accel;
 };
 
 struct LemtuningAngularControllerConfig {
-    int kp;
-    int ki;
-    int kd;
-    int antiwindup;
-    int small_error_range;
-    int small_error_range_timeout;
-    int large_error_range;
-    int large_error_range_timeout;
-    int max_accel;
+    float kp;
+    float ki;
+    float kd;
+    float antiwindup;
+    float small_error_range;
+    float small_error_range_timeout;
+    float large_error_range;
+    float large_error_range_timeout;
+    float max_accel;
 };
 
 struct LemtuningConfig {
@@ -128,7 +128,7 @@ bool confirm_lemtuning_object_override() {
     }
 }
 
-lv_obj_t * create_lemtuning_spinbox_row(lv_obj_t * parent, const char * label_text, int min, int max, int step, int max_digits, int decimal_position, int * bound_variable) {
+lv_obj_t * create_lemtuning_spinbox_row(lv_obj_t * parent, const char * label_text, float min, float max, float step, int max_digits, int decimal_position, float * bound_variable) {
     lv_obj_t * cont = lv_obj_create(parent);
     lv_obj_set_size(cont, LV_PCT(90), 50);
     lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_ROW);
@@ -338,4 +338,10 @@ void initialize_lemtuning_interface() {
     }
 
     lv_tabview_set_act(main_tabview, 0, LV_ANIM_ON);
+}
+
+void start_lemtuning_btn_action(lv_event_t * e) {
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+        initialize_lemtuning_interface();
+    }
 }
