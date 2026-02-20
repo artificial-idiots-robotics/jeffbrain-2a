@@ -1,4 +1,4 @@
-# jeffbrain2-c
-this is the code for our vex v5 robot, jeff 2. (now called jeff 2+.)
+# Jeffbrain 2a
+Jeffbrain 2a is the code for our VEX V5 robot, which we call Jeff 2+. (formerly just Jeff 2.)
 
-it has a gui, an autonomous routine selector, 6 autonomous routines, none of which currently do anything, a temperature monitor for the motors, an image viewer, 5 pictures of cats, two drive control modes, speed limiters, and a test mode.
+It has a full graphical user interface, with temperature monitors for the motors, an autonomous routine selector, an image viewer, a configuration menu, and a diagnostics mode.
