@@ -76,16 +76,85 @@ bool confirm_lemtuning_object_override() {
     }
 }
 
+lv_obj_t * create_lemtuning_spinbox_row(lv_obj_t * parent, const char * label_text, int min, int max, int step, int max_digits, int decimal_position, int * bound_variable) {
+    lv_obj_t * cont = lv_obj_create(parent);
+    lv_obj_set_size(cont, LV_PCT(90), 50);
+    lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_ROW);
+    lv_obj_set_flex_align(cont, LV_FLEX_ALIGN_START, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+    lv_obj_set_style_pad_row(cont, 0, LV_PART_MAIN);
+    lv_obj_set_style_pad_column(cont, 10, LV_PART_MAIN);
+    lv_obj_set_style_pad_all(cont, 0, LV_PART_MAIN);
+
+    lv_obj_t * label = lv_label_create(cont);
+    lv_label_set_text(label, label_text);
+
+    lv_obj_t * spinbox = lv_spinbox_create(cont);
+    lv_spinbox_set_digit_format(spinbox, max_digits, decimal_position);
+    lv_spinbox_set_range(spinbox, min, max);
+    lv_spinbox_set_step(spinbox, step);
+    lv_spinbox_set_value(spinbox, *bound_variable);
+
+    lv_obj_t * up_btn = lv_btn_create(cont);
+    lv_obj_set_size(up_btn, 40, 40);
+    lv_obj_t * up_label = lv_label_create(up_btn);
+    lv_label_set_text(up_label, LV_SYMBOL_UP);
+    lv_obj_add_event_cb(up_btn, [](lv_event_t * e) {
+        if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+            lv_obj_t * sb = (lv_obj_t *)lv_event_get_user_data(e);
+            lv_spinbox_increment(sb);
+            lv_obj_send_event(sb, LV_EVENT_VALUE_CHANGED, NULL);
+        }
+    }, LV_EVENT_CLICKED, spinbox);
+
+    lv_obj_t * down_btn = lv_btn_create(cont);
+    lv_obj_set_size(down_btn, 40, 40);
+    lv_obj_t * down_label = lv_label_create(down_btn);
+    lv_label_set_text(down_label, LV_SYMBOL_DOWN);
+    lv_obj_add_event_cb(down_btn, [](lv_event_t * e) {
+        if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+            lv_obj_t * sb = (lv_obj_t *)lv_event_get_user_data(e);
+            lv_spinbox_decrement(sb);
+            lv_obj_send_event(sb, LV_EVENT_VALUE_CHANGED, NULL);
+        }
+    }, LV_EVENT_CLICKED, spinbox);
+
+    return cont;
+}
+
 void initialize_lemtuning_drivetrain_config_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
+    create_lemtuning_spinbox_row(cont, "Track width (in):", 5, 25, 1, 2, 0, &lemtuning_drivetrain_trackwidth);
+    create_lemtuning_spinbox_row(cont, "Max RPM:", 100, 600, 10, 3, 0, &lemtuning_drivetrain_rpm);
+    create_lemtuning_spinbox_row(cont, "Horizontal drift (in):", -10, 10, 1, 2, 0, &lemtuning_drivetrain_horizontal_drift);
 };
 
 void initialize_lemtuning_linear_controller_config_tab(lv_obj_t * parent_tab) {
+    lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
+    
+    create_lemtuning_spinbox_row(cont, "kP:", 0, 15, 0.25, 4, 2, &lemtuning_linear_controller_kp);
+    create_lemtuning_spinbox_row(cont, "kI:", 0, 15, 0.25, 4, 2, &lemtuning_linear_controller_ki);
+    create_lemtuning_spinbox_row(cont, "kD:", 0, 15, 0.25, 4, 2, &lemtuning_linear_controller_kd);
+    create_lemtuning_spinbox_row(cont, "Anti-windup:", 0, 1000, 10, 4, 0, &lemtuning_linear_controller_antiwindup);
+    create_lemtuning_spinbox_row(cont, "Small error range (degrees):", 0, 50, 1, 3, 0, &lemtuning_linear_controller_small_error_range);
+    create_lemtuning_spinbox_row(cont, "Small error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_linear_controller_small_error_range_timeout);
+    create_lemtuning_spinbox_row(cont, "Large error range (degrees):", 0, 100, 1, 3, 0, &lemtuning_linear_controller_large_error_range);
+    create_lemtuning_spinbox_row(cont, "Large error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_linear_controller_large_error_range_timeout);
+    create_lemtuning_spinbox_row(cont, "Max acceleration:", 0, 10, 1, 2, 0, &lemtuning_linear_controller_max_accel);
 };
 
 void initialize_lemtuning_angular_controller_config_tab(lv_obj_t * parent_tab) {
+    lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
+    create_lemtuning_spinbox_row(cont, "kP:", 0, 15, 0.25, 4, 2, &lemtuning_angular_controller_kp);
+    create_lemtuning_spinbox_row(cont, "kI:", 0, 15, 0.25, 4, 2, &lemtuning_angular_controller_ki);
+    create_lemtuning_spinbox_row(cont, "kD:", 0, 15, 0.25, 4, 2, &lemtuning_angular_controller_kd);
+    create_lemtuning_spinbox_row(cont, "Anti-windup:", 0, 1000, 10, 4, 0, &lemtuning_angular_controller_antiwindup);
+    create_lemtuning_spinbox_row(cont, "Small error range (degrees):", 0, 50, 1, 3, 0, &lemtuning_angular_controller_small_error_range);
+    create_lemtuning_spinbox_row(cont, "Small error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_angular_controller_small_error_range_timeout);
+    create_lemtuning_spinbox_row(cont, "Large error range (degrees):", 0, 100, 1, 3, 0, &lemtuning_angular_controller_large_error_range);
+    create_lemtuning_spinbox_row(cont, "Large error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_angular_controller_large_error_range_timeout);
+    create_lemtuning_spinbox_row(cont, "Max acceleration:", 0, 10, 1, 2, 0, &lemtuning_angular_controller_max_accel);
 };
 
 void initialize_lemtuning_apply_tab(lv_obj_t * parent_tab) {

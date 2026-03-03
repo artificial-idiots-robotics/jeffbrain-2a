@@ -4,6 +4,7 @@
 const lv_color_t M3_ACCENT_COLOR = lv_color_hex(0xA450A4);
 const lv_color_t M3_SURFACE_COLOR = lv_color_hex(0x2B1A2B);
 const lv_color_t M3_BACKGROUND_COLOR = lv_color_hex(0x1F1B1F);
+const lv_color_t J2_COLOR_GREY = lv_color_hex(0x49454F);
 const int M3_RADIUS = 20;
 
 lv_style_t style_base;
@@ -42,14 +43,13 @@ static void initialize_ui_styles() {
     lv_style_set_radius(&style_m3_btn, M3_RADIUS);
     lv_style_set_shadow_width(&style_m3_btn, 8);
     lv_style_set_shadow_opa(&style_m3_btn, LV_OPA_50);
-    lv_style_set_bg_color(&style_m3_btn, lv_color_hex(0x49454F));
-    lv_style_set_text_color(&style_m3_btn, lv_color_white());
+    lv_style_set_bg_color(&style_m3_btn, J2_COLOR_GREY);
 
     lv_style_init(&style_tempbar_main);
     lv_style_set_radius(&style_tempbar_main, 8);
     lv_style_set_bg_color(&style_tempbar_main, lv_color_hex(0x353139));
     lv_style_set_border_width(&style_tempbar_main, 1);
-    lv_style_set_border_color(&style_tempbar_main, lv_color_hex(0x49454F));
+    lv_style_set_border_color(&style_tempbar_main, J2_COLOR_GREY);
 
     lv_style_init(&style_tempbar_indicator);
     lv_style_set_radius(&style_tempbar_indicator, 8);
@@ -68,8 +68,7 @@ void configure_tabview_style(lv_obj_t * tabview) {
     lv_obj_set_style_bg_color(tab_bar, M3_ACCENT_COLOR, LV_PART_INDICATOR);
     lv_obj_set_style_text_color(tab_bar, lv_color_hex(0xFFFBFE), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_ITEMS));
 
-    lv_obj_set_style_width(tab_bar, LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
-    lv_obj_set_style_height(tab_bar, LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
+    lv_obj_set_style_size(tab_bar, LV_PCT(100), LV_PCT(100), (lv_style_selector_t)((uint32_t)LV_STATE_CHECKED | (uint32_t)LV_PART_INDICATOR));
 
     lv_obj_set_style_bg_color(tabview, M3_SURFACE_COLOR, LV_PART_MAIN);
     lv_obj_set_style_pad_all(tabview, 0, LV_PART_MAIN);

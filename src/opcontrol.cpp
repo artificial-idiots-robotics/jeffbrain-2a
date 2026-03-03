@@ -34,22 +34,6 @@ void opcontrol() {
                 break;
             }
         }
-        }
-
-        if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
-            g_pneumatics.pneumatics_piston_1.toggle();
-            g_pneumatics.pneumatics_piston_2.toggle();
-
-            pros::delay(300);
-        }
-
-        if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
-            g_motor_groups.intake_motors.move_velocity(200);
-        } else if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
-            g_motor_groups.intake_motors.move_velocity(-200);
-        } else {
-            g_motor_groups.intake_motors.move_velocity(0);
-        }
 
         if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
             g_motors.chain_motor.move_velocity(200);
