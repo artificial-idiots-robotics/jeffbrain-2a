@@ -6,29 +6,81 @@
 
 lv_obj_t * screen;
 
-int lemtuning_drivetrain_trackwidth;
-int lemtuning_drivetrain_rpm;
-int lemtuning_drivetrain_horizontal_drift;
+struct SpinboxRowArgs {
+    const char * label_text;
+    float min;
+    float max;
+    float step;
+    int max_digits;
+    int decimal_position;
+    float * bound_variable;
+};
 
-int lemtuning_linear_controller_kp;
-int lemtuning_linear_controller_ki;
-int lemtuning_linear_controller_kd;
-int lemtuning_linear_controller_antiwindup;
-int lemtuning_linear_controller_small_error_range;
-int lemtuning_linear_controller_small_error_range_timeout;
-int lemtuning_linear_controller_large_error_range;
-int lemtuning_linear_controller_large_error_range_timeout;
-int lemtuning_linear_controller_max_accel;
+struct LemtuningDrivetrainConfig {
+    float trackwidth;
+    float rpm;
+    float horizontal_drift;
+};
 
-int lemtuning_angular_controller_kp;
-int lemtuning_angular_controller_ki;
-int lemtuning_angular_controller_kd;
-int lemtuning_angular_controller_antiwindup;
-int lemtuning_angular_controller_small_error_range;
-int lemtuning_angular_controller_small_error_range_timeout;
-int lemtuning_angular_controller_large_error_range;
-int lemtuning_angular_controller_large_error_range_timeout;
-int lemtuning_angular_controller_max_accel;
+struct LemtuningLinearControllerConfig {
+    float kp;
+    float ki;
+    float kd;
+    float antiwindup;
+    float small_error_range;
+    float small_error_range_timeout;
+    float large_error_range;
+    float large_error_range_timeout;
+    float max_accel;
+};
+
+struct LemtuningAngularControllerConfig {
+    float kp;
+    float ki;
+    float kd;
+    float antiwindup;
+    float small_error_range;
+    float small_error_range_timeout;
+    float large_error_range;
+    float large_error_range_timeout;
+    float max_accel;
+};
+
+struct LemtuningConfig {
+    LemtuningDrivetrainConfig drivetrain;
+    LemtuningLinearControllerConfig linear_controller;
+    LemtuningAngularControllerConfig angular_controller;
+};
+
+LemtuningConfig lemtuning_test_config = {
+    .drivetrain = {
+        10,
+        600,
+        2
+    },
+    .linear_controller = {
+        0.5,
+        0,
+        20,
+        3,
+        2,
+        100,
+        4,
+        500,
+        2
+    },
+    .angular_controller = {
+        0,
+        0,
+        0,
+        3,
+        1,
+        100,
+        3,
+        500,
+        0
+    }
+};
 
 void close_lemtuning_interface() {
     lv_obj_clean(screen);
@@ -76,7 +128,11 @@ bool confirm_lemtuning_object_override() {
     }
 }
 
+<<<<<<< HEAD
 lv_obj_t * create_lemtuning_spinbox_row(lv_obj_t * parent, const char * label_text, int min, int max, int step, int max_digits, int decimal_position, int * bound_variable) {
+=======
+lv_obj_t * create_lemtuning_spinbox_row(lv_obj_t * parent, const char * label_text, float min, float max, float step, int max_digits, int decimal_position, float * bound_variable) {
+>>>>>>> b18c280110f360cbef7dc2b970c05b1bbe344042
     lv_obj_t * cont = lv_obj_create(parent);
     lv_obj_set_size(cont, LV_PCT(90), 50);
     lv_obj_set_flex_flow(cont, LV_FLEX_FLOW_ROW);
@@ -124,13 +180,49 @@ lv_obj_t * create_lemtuning_spinbox_row(lv_obj_t * parent, const char * label_te
 void initialize_lemtuning_drivetrain_config_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
+<<<<<<< HEAD
     create_lemtuning_spinbox_row(cont, "Track width (in):", 5, 25, 1, 2, 0, &lemtuning_drivetrain_trackwidth);
     create_lemtuning_spinbox_row(cont, "Max RPM:", 100, 600, 10, 3, 0, &lemtuning_drivetrain_rpm);
     create_lemtuning_spinbox_row(cont, "Horizontal drift (in):", -10, 10, 1, 2, 0, &lemtuning_drivetrain_horizontal_drift);
+=======
+    create_lemtuning_spinbox_row(
+        cont,
+        "Track width:",
+        1,
+        36,
+        1,
+        2,
+        0,
+        &lemtuning_test_config.drivetrain.trackwidth
+    );
+
+    create_lemtuning_spinbox_row(
+        cont,
+        "Drivetrain RPM:",
+        100,
+        600,
+        50,
+        3,
+        0,
+        &lemtuning_test_config.drivetrain.rpm
+    );
+
+    create_lemtuning_spinbox_row(
+        cont,
+        "Horizontal drift:",
+        -10,
+        10,
+        1,
+        2,
+        0,
+        &lemtuning_test_config.drivetrain.horizontal_drift
+    );
+>>>>>>> b18c280110f360cbef7dc2b970c05b1bbe344042
 };
 
 void initialize_lemtuning_linear_controller_config_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
+<<<<<<< HEAD
     
     create_lemtuning_spinbox_row(cont, "kP:", 0, 15, 0.25, 4, 2, &lemtuning_linear_controller_kp);
     create_lemtuning_spinbox_row(cont, "kI:", 0, 15, 0.25, 4, 2, &lemtuning_linear_controller_ki);
@@ -141,11 +233,30 @@ void initialize_lemtuning_linear_controller_config_tab(lv_obj_t * parent_tab) {
     create_lemtuning_spinbox_row(cont, "Large error range (degrees):", 0, 100, 1, 3, 0, &lemtuning_linear_controller_large_error_range);
     create_lemtuning_spinbox_row(cont, "Large error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_linear_controller_large_error_range_timeout);
     create_lemtuning_spinbox_row(cont, "Max acceleration:", 0, 10, 1, 2, 0, &lemtuning_linear_controller_max_accel);
+=======
+
+    std::array<SpinboxRowArgs, 9> linear_controller_settings = {{
+        {"kP:", 0, 100, 1, 3, 0, &lemtuning_test_config.linear_controller.kp},
+        {"kI:", 0, 100, 1, 3, 0, &lemtuning_test_config.linear_controller.ki},
+        {"kD:", 0, 100, 1, 3, 0, &lemtuning_test_config.linear_controller.kd},
+        {"Anti-windup:", 0, 100, 1, 3, 0, &lemtuning_test_config.linear_controller.antiwindup},
+        {"Small error range:", 0, 20, 1, 2, 0, &lemtuning_test_config.linear_controller.small_error_range},
+        {"Small error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_test_config.linear_controller.small_error_range_timeout},
+        {"Large error range:", 0, 50, 1, 2, 0, &lemtuning_test_config.linear_controller.large_error_range},
+        {"Large error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_test_config.linear_controller.large_error_range_timeout},
+        {"Max acceleration:", 0, 10, 1, 2, 0, &lemtuning_test_config.linear_controller.max_accel}
+    }};
+
+    for (const auto & setting : linear_controller_settings) {
+        create_lemtuning_spinbox_row(cont, setting.label_text, setting.min, setting.max, setting.step, setting.max_digits, setting.decimal_position, setting.bound_variable);
+    }
+>>>>>>> b18c280110f360cbef7dc2b970c05b1bbe344042
 };
 
 void initialize_lemtuning_angular_controller_config_tab(lv_obj_t * parent_tab) {
     lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
 
+<<<<<<< HEAD
     create_lemtuning_spinbox_row(cont, "kP:", 0, 15, 0.25, 4, 2, &lemtuning_angular_controller_kp);
     create_lemtuning_spinbox_row(cont, "kI:", 0, 15, 0.25, 4, 2, &lemtuning_angular_controller_ki);
     create_lemtuning_spinbox_row(cont, "kD:", 0, 15, 0.25, 4, 2, &lemtuning_angular_controller_kd);
@@ -155,10 +266,73 @@ void initialize_lemtuning_angular_controller_config_tab(lv_obj_t * parent_tab) {
     create_lemtuning_spinbox_row(cont, "Large error range (degrees):", 0, 100, 1, 3, 0, &lemtuning_angular_controller_large_error_range);
     create_lemtuning_spinbox_row(cont, "Large error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_angular_controller_large_error_range_timeout);
     create_lemtuning_spinbox_row(cont, "Max acceleration:", 0, 10, 1, 2, 0, &lemtuning_angular_controller_max_accel);
+=======
+    std::array<SpinboxRowArgs, 9> angular_controller_settings = {{
+        {"kP:", 0, 100, 1, 3, 0, &lemtuning_test_config.angular_controller.kp},
+        {"kI:", 0, 100, 1, 3, 0, &lemtuning_test_config.angular_controller.ki},
+        {"kD:", 0, 100, 1, 3, 0, &lemtuning_test_config.angular_controller.kd},
+        {"Anti-windup:", 0, 100, 1, 3, 0, &lemtuning_test_config.angular_controller.antiwindup},
+        {"Small error range:", 0, 20, 1, 2, 0, &lemtuning_test_config.angular_controller.small_error_range},
+        {"Small error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_test_config.angular_controller.small_error_range_timeout},
+        {"Large error range:", 0, 50, 1, 2, 0, &lemtuning_test_config.angular_controller.large_error_range},
+        {"Large error timeout (ms):", 0, 5000, 100, 4, 0, &lemtuning_test_config.angular_controller.large_error_range_timeout},
+        {"Max acceleration:", 0, 10, 1, 2, 0, &lemtuning_test_config.angular_controller.max_accel}
+    }};
+
+    for (const auto & setting : angular_controller_settings) {
+        create_lemtuning_spinbox_row(cont, setting.label_text, setting.min, setting.max, setting.step, setting.max_digits, setting.decimal_position, setting.bound_variable);
+    }
+>>>>>>> b18c280110f360cbef7dc2b970c05b1bbe344042
 };
 
-void initialize_lemtuning_apply_tab(lv_obj_t * parent_tab) {
+void apply_lemtuning_settings() {
+    g_drivetrain.drivetrain = lemlib::Drivetrain(
+        g_drivetrain.drivetrain.leftMotors,
+        g_drivetrain.drivetrain.rightMotors,
+        lemtuning_test_config.drivetrain.trackwidth,
+        lemlib::Omniwheel::NEW_4,
+        lemtuning_test_config.drivetrain.rpm,
+        lemtuning_test_config.drivetrain.horizontal_drift
+    );
 
+    g_drivetrain.lateral_controller = lemlib::ControllerSettings(
+        lemtuning_test_config.linear_controller.kp,
+        lemtuning_test_config.linear_controller.ki,
+        lemtuning_test_config.linear_controller.kd,
+        lemtuning_test_config.linear_controller.antiwindup,
+        lemtuning_test_config.linear_controller.small_error_range,
+        lemtuning_test_config.linear_controller.small_error_range_timeout,
+        lemtuning_test_config.linear_controller.large_error_range,
+        lemtuning_test_config.linear_controller.large_error_range_timeout,
+        lemtuning_test_config.linear_controller.max_accel
+    );
+
+    g_drivetrain.angular_controller = lemlib::ControllerSettings(
+        lemtuning_test_config.angular_controller.kp,
+        lemtuning_test_config.angular_controller.ki,
+        lemtuning_test_config.angular_controller.kd,
+        lemtuning_test_config.angular_controller.antiwindup,
+        lemtuning_test_config.angular_controller.small_error_range,
+        lemtuning_test_config.angular_controller.small_error_range_timeout,
+        lemtuning_test_config.angular_controller.large_error_range,
+        lemtuning_test_config.angular_controller.large_error_range_timeout,
+        lemtuning_test_config.angular_controller.max_accel
+    );
+}
+
+void initialize_lemtuning_apply_tab(lv_obj_t * parent_tab) {
+    lv_obj_t * cont = create_tab_content_container(parent_tab, LV_FLEX_FLOW_COLUMN);
+
+    lv_obj_t * apply_btn = lv_btn_create(cont);
+    lv_obj_set_size(apply_btn, LV_PCT(60), 60);
+    lv_obj_set_flex_align(apply_btn, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+
+    lv_obj_add_event_cb(apply_btn, [](lv_event_t * e) {
+        apply_lemtuning_settings();
+    }, LV_EVENT_CLICKED, nullptr);
+
+    lv_obj_t * apply_label = lv_label_create(apply_btn);
+    lv_label_set_text(apply_label, "Apply tuning");
 };
 
 void initialize_lemtuning_interface() {
@@ -186,18 +360,23 @@ void initialize_lemtuning_interface() {
 
     if (confirm_lemtuning_object_override()) {
         lv_obj_t * lemtuning_drivetrain_config_tab = lv_tabview_add_tab(main_tabview, "Drivetrain");
-        lv_obj_t * lemtuning_linear_controller_config_tab = lv_tabview_add_tab(main_tabview, "Linear Controller");
-        lv_obj_t * lemtuning_angular_controller_config_tab = lv_tabview_add_tab(main_tabview, "Angular Controller");
+        lv_obj_t * lemtuning_linear_controller_config_tab = lv_tabview_add_tab(main_tabview, "Linear");
+        lv_obj_t * lemtuning_angular_controller_config_tab = lv_tabview_add_tab(main_tabview, "Angular");
         lv_obj_t * lemtuning_apply_tab = lv_tabview_add_tab(main_tabview, "Apply");
         initialize_lemtuning_drivetrain_config_tab(lemtuning_drivetrain_config_tab);
         initialize_lemtuning_linear_controller_config_tab(lemtuning_linear_controller_config_tab);
         initialize_lemtuning_angular_controller_config_tab(lemtuning_angular_controller_config_tab);
         initialize_lemtuning_apply_tab(lemtuning_apply_tab);
     } else {
-        // User cancelled; close the lemtuning interface.
         close_lemtuning_interface();
         return;
     }
 
     lv_tabview_set_act(main_tabview, 0, LV_ANIM_ON);
+}
+
+void start_lemtuning_btn_action(lv_event_t * e) {
+    if (lv_event_get_code(e) == LV_EVENT_CLICKED) {
+        initialize_lemtuning_interface();
+    }
 }
