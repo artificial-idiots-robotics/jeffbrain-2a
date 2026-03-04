@@ -42,10 +42,6 @@ void opcontrol() {
             g_motors.chain_motor.move_velocity(0);
         }
 
-        if (g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
-            auton_routine_skills();
-        }
-
         pros::delay(5);
 	}
 }
