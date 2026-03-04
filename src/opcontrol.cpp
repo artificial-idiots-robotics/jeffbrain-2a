@@ -6,7 +6,6 @@
 
 void opcontrol() {
 	while (true) {
-        if (!g_controllers.master_controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)) {
         switch (g_robot_config.control_mode) {
             case ControlMode::ARCADE: {
                 int dir = g_controllers.master_controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
