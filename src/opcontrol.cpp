@@ -12,8 +12,9 @@ void opcontrol() {
                 int turn = g_controllers.master_controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
                 int dir_limit = static_cast<int>(127.0 * (g_robot_config.max_drive_speed / 100.0));
+                int turn_limit = static_cast<int>(127.0 * (g_robot_config.max_turn_speed / 100.0));
 
-                g_drivetrain.chassis.arcade(std::clamp(dir, -dir_limit, dir_limit), turn);
+                g_drivetrain.chassis.arcade(std::clamp(dir, -dir_limit, dir_limit), std::clamp(turn, -turn_limit, turn_limit));
                 break;
             }
 
@@ -28,7 +29,6 @@ void opcontrol() {
             }
 
             default: {
-                // Default to ARCADE mode if control_mode is somehow invalid
                 g_robot_config.control_mode = ControlMode::ARCADE;
                 break;
             }
